@@ -1,17 +1,17 @@
 #title in header
-title: "Welcome"
+title: "changediff"
 
 #main info
 #owner
-owner: "changediff"
+owner: "Hi, there"
 email: changediff@outlook.com
-info: "所谓人生，皆为记忆；话自谁出？已然忘记"
+info: "所谓人生，皆为记忆；话自谁出？已然忘记。"
 #description
-desc: "欢迎来到我的博客，我这里记录我的技术、我的学习、我的生活~"
+desc: "欢迎来到我的博客，这里记录我的技术、我的折腾、我的生活~"
 
 #menu
 menu:
-  Archives: /archives
+  Works: /works
   About: /about
 
 #index/main page max show posts (in number)
