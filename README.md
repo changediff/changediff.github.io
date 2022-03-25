@@ -1,2 +1,2 @@
 # blog
-[changediff.github.com](https://changediff.github.com/)
+[changediff.github.io](https://changediff.github.io/)
