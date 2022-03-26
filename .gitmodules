@@ -1,3 +1,9 @@
 [submodule "themes/one-paper"]
 	path = themes/one-paper
 	url = https://github.com/zheli-design/hexo-theme-one-paper.git
+[submodule "themes/themes/stellar"]
+	path = themes/themes/stellar
+	url = https://github.com/xaoxuu/hexo-theme-stellar.git
+[submodule "themes/stellar"]
+	path = themes/stellar
+	url = https://github.com/xaoxuu/hexo-theme-stellar.git
