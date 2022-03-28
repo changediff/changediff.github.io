@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='zh'>
+<html lang='zh-CN'>
 
 <head>
   <meta name="generator" content="Hexo 6.1.0">
@@ -18,20 +18,20 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>about - changediff</title>
+  <title>notes - changediff</title>
 
   
 
   
-    <meta name="description" content="运维工程师@北京 旧博客在cnblogs，2022-03迁移到GitHub Pages Email: &amp;#99;&amp;#104;&amp;#x61;&amp;#x6e;&amp;#x67;&amp;#101;&amp;#x64;&amp;#x69;&amp;#102;&amp;#x66;&amp;#x40;&amp;#x6f;&amp;#117;&amp;#x74;&amp;#108;&amp;#x6f;&amp;#x6f;&amp;#x6b;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#x6d;">
+    <meta name="description" content="好记性不如烂笔头 macOS相关macOS时间不同步问题解决1sudo sntp -sS time.apple.com">
 <meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://changediff.github.io/about/index.html">
+<meta property="og:title" content="notes">
+<meta property="og:url" content="https://changediff.github.io/notes/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="运维工程师@北京 旧博客在cnblogs，2022-03迁移到GitHub Pages Email: &amp;#99;&amp;#104;&amp;#x61;&amp;#x6e;&amp;#x67;&amp;#101;&amp;#x64;&amp;#x69;&amp;#102;&amp;#x66;&amp;#x40;&amp;#x6f;&amp;#117;&amp;#x74;&amp;#108;&amp;#x6f;&amp;#x6f;&amp;#x6b;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#x6d;">
-<meta property="og:locale">
-<meta property="article:published_time" content="2022-03-25T16:09:52.000Z">
-<meta property="article:modified_time" content="2022-03-25T16:36:26.252Z">
+<meta property="og:description" content="好记性不如烂笔头 macOS相关macOS时间不同步问题解决1sudo sntp -sS time.apple.com">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-28T09:37:28.000Z">
+<meta property="article:modified_time" content="2022-03-28T10:30:10.685Z">
 <meta property="article:author" content="changediff">
 <meta name="twitter:card" content="summary">
   
@@ -63,16 +63,15 @@
 <header class="header">
 
 <div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
-<nav class="menu dis-select"></nav></header>
+<nav class="menu dis-select"><a class="nav-item" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">更多</a></nav></header>
 
 <div class="widgets">
-<div class="widget-wrap" id="markdown"><div class="widget-header cap dis-select"><span class="name">Stellar 入门指南</span></div><div class="widget-body fs14"><p>欢迎使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/">Stellar</a> 主题，下面是您的入门指南，祝您使用愉快！<br><br><br><strong>第一步</strong><br>创建 <code>blog/_config.stellar.yml</code> 文件，在此文件中填写需要自定义的主题配置。<br><br><br><strong>第二步</strong><br>创建 <code>blog/source/_data/widgets.yml</code> 文件，此文件中填写需要自定义的侧边栏组件，例如 <code>welcome</code> 组件。<br><br><br>如果有任何疑问，请先查阅<a target="_blank" rel="noopener" href="https://xaoxuu.com/wiki/stellar/">文档</a>，如果文档中没有提供，请提 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/issues/">issue</a> 向开发中询问。</p>
+<div class="widget-wrap" id="markdown"><div class="widget-header cap dis-select"><span class="name">Welcome</span></div><div class="widget-body fs14"><p>欢迎光临我的小破站，这里记录我的技术、我的折腾、我的生活~</p>
+<p>2022年3月迁移到GitHub Pages，旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a></p>
 </div></div>
 
 
-
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/03/26/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%88%B0hexo/">使用hexo搭博客</a></div><div class="more-item"><a class="title" href="/2022/03/25/hello-world/">Hello World</a></div></div></div>
-
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-text">macOS时间不同步问题解决</span></a></li></ol></div></div></div>
 </div>
 
 
@@ -91,19 +90,32 @@
       
 
   
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/about/index.html">about</a></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/notes/index.html">notes</a></div></div>
 
   <article class='content md page'>
-  <h1 class="article-title"><span>about</span></h1>
+  <h1 class="article-title"><span>notes</span></h1>
   
-    <p>运维工程师@北京</p>
-<p>旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a>，2022-03迁移到GitHub Pages</p>
-<p>Email: <a href="mailto:&#99;&#104;&#x61;&#x6e;&#x67;&#101;&#x64;&#x69;&#102;&#x66;&#x40;&#x6f;&#117;&#x74;&#108;&#x6f;&#x6f;&#x6b;&#46;&#x63;&#x6f;&#x6d;">&#99;&#104;&#x61;&#x6e;&#x67;&#101;&#x64;&#x69;&#102;&#x66;&#x40;&#x6f;&#117;&#x74;&#108;&#x6f;&#x6f;&#x6b;&#46;&#x63;&#x6f;&#x6d;</a></p>
+    <p>好记性不如烂笔头</p>
+<h1 id="macOS相关"><a href="#macOS相关" class="headerlink" title="macOS相关"></a>macOS相关</h1><h2 id="macOS时间不同步问题解决"><a href="#macOS时间不同步问题解决" class="headerlink" title="macOS时间不同步问题解决"></a>macOS时间不同步问题解决</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sntp -sS time.apple.com</span><br></pre></td></tr></table></figure>
 
   
   </article>
 
 
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
 
 
 
@@ -260,6 +272,34 @@
 
 
 <!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
 
 
 

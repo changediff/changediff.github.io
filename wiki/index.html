@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='zh'>
+<html lang='zh-CN'>
 
 <head>
   <meta name="generator" content="Hexo 6.1.0">
@@ -18,22 +18,17 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>使用hexo搭博客 - changediff</title>
+  <title>项目 - changediff</title>
 
   
 
   
-    <meta name="description" content="hexo的官网文档很详细，这里主要记载使用hexo+Github Pages过程中遇到的坑  GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》 如果是按照步骤1新建的项目，_config.yml中的url只需要填写网址即可，不用加上project12345678# URL## Set your site url here. For example, if you use">
-<meta property="og:type" content="article">
-<meta property="og:title" content="使用hexo搭博客">
-<meta property="og:url" content="https://changediff.github.io/2022/03/26/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%88%B0hexo/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="项目">
+<meta property="og:url" content="https://changediff.github.io/wiki/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="hexo的官网文档很详细，这里主要记载使用hexo+Github Pages过程中遇到的坑  GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》 如果是按照步骤1新建的项目，_config.yml中的url只需要填写网址即可，不用加上project12345678# URL## Set your site url here. For example, if you use">
-<meta property="og:locale">
-<meta property="article:published_time" content="2022-03-25T17:32:18.000Z">
-<meta property="article:modified_time" content="2022-03-25T17:54:18.420Z">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="changediff">
-<meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
   
   
@@ -56,55 +51,49 @@
   
 
 
-
-
   <div class='l_body' id='start'>
-    <aside class='l_left' layout='post'>
+    <aside class='l_left' layout='index'>
     
 
 
 <header class="header">
 
 <div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
-<nav class="menu dis-select"></nav></header>
+<nav class="menu dis-select"><a class="nav-item" href="/">文章</a><a class="nav-item active" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">更多</a></nav></header>
 
 <div class="widgets">
+<div class="widget-wrap" id="markdown"><div class="widget-header cap dis-select"><span class="name">Welcome</span></div><div class="widget-body fs14"><p>欢迎光临我的小破站，这里记录我的技术、我的折腾、我的生活~</p>
+<p>2022年3月迁移到GitHub Pages，旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a></p>
+</div></div>
 
-
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/03/26/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%88%B0hexo/">使用hexo搭博客</a></div><div class="more-item"><a class="title" href="/2022/03/25/hello-world/">Hello World</a></div></div></div>
-
-
-
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/wiki/dahl/index.html"><span>Dahl：</span>常用脚本工具</a></div></div></div>
 </div>
 
 
     </aside>
-    <div class='l_main'>
+    <div class='l_main list'>
+      
+  
+
+<header class="header mobile-only">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
+</header>
+
+
+
       
 
-      
-
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-03-25T17:32:18.000Z">2022-03-26</time></div></div>
-
-<article class='content md post'>
-<h1 class="article-title"><span>使用hexo搭博客</span></h1>
-<p>hexo的<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/setup">官网文档</a>很详细，这里主要记载使用<code>hexo+Github Pages</code>过程中遇到的坑</p>
-<ol>
-<li>GitHub项目创建可参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35668237">《超详细Hexo+Github博客搭建小白教程》</a></li>
-<li>如果是按照步骤1新建的项目，<code>_config.yml</code>中的<code>url</code>只需要填写网址即可，不用加上project<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://changediff.github.io</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br></pre></td></tr></table></figure></li>
-</ol>
+  
 
 
-<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section></div>
+  
 
-</article>
+<div class="nav-wrap"><nav class="sub wiki cap"><a class="active" href="/wiki/">所有项目</a></a><a href="/wiki/tags/%E5%B7%A5%E5%85%B7/index.html">工具</a></a></nav></div>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/03/25/hello-world/">Hello World<span class="note">较早</span></a><div class="line"></div></section></div>
-
-
-
-
+  <div class="post-list wiki"><a class="post-card wiki " href="/wiki/dahl/index.html">
+<article class="md"><div class="excerpt"><div class="cap breadcrumb">工具</div><h2 class="post-title">Dahl</h2><p>日常运维工具合集, 希望它们当Dahl公司生产的武器一样稳定、精准、好用</p></div></article>
+</a></div>
 
 
 
@@ -262,6 +251,34 @@
 
 
 <!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
 
 
 
