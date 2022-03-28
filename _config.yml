@@ -8,7 +8,9 @@ subtitle: ''
 description: ''
 keywords:
 author: changediff
-language: zh
+language:
+  - zh-CN
+  - en
 timezone: ''
 
 # URL

@@ -1,0 +1,7 @@
+welcome:
+  layout: markdown
+  title: Welcome
+  content: | # support markdown
+    欢迎光临我的小破站，这里记录我的技术、我的折腾、我的生活~
+
+    2022年3月迁移到GitHub Pages，旧博客在[cnblogs](https://www.cnblogs.com/carlsplace/)
