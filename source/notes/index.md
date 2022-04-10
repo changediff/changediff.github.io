@@ -37,4 +37,6 @@ racket --cask
 ```
 RunCat #状态栏负载监控
 Hidden Bar #状态栏图标隐藏
+Xnip #截图
+Magnet #窗口手势
 ```
