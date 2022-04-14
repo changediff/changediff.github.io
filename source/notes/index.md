@@ -31,6 +31,7 @@ wiznote
 workflowy
 vmware-fusion-tech-preview
 racket --cask
+md5sha1sum
 ```
 
 ### App Store安装
