@@ -18,14 +18,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>归档 - changediff</title>
+  <title>标签：k8s - changediff</title>
 
   
 
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://changediff.github.io/archives/1970/01/index.html">
+<meta property="og:title" content="changediff">
+<meta property="og:url" content="https://changediff.github.io/tags/k8s/index.html">
 <meta property="og:site_name" content="changediff">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="changediff">
@@ -85,6 +85,8 @@
       
 
   
+
+
   <div class='nav-wrap'>
   <nav class='sub post cap'>
     
@@ -93,90 +95,25 @@
     
     
       
-        <a href='/tags'>标签</a>
+        <a class='active' href='/tags'>标签：k8s</a>
       
     
     
       
-        <a class='active' href='/archives'>归档</a>
+        <a href='/archives'>归档</a>
       
     
   </nav>
 </div>
 
-  <div class='post-list'>
-  	
-  	
-  		
-  		
-  			
-  		
-  	
-  		
-  		
-  	
-  		
-  		
-  			
-  		
-  	
-  	
-  		<article class='' id='archive'>
-  			<div class='archive-header h4'>2021</div>
-  			
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2021/02/28/rpi4b-usb-boot/">
-    					<time>02-28</time>
-    					<span>
-                
-      						从外接USB设备启动树莓派4b
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  				<div class='archive-list'>
-            <a class='post fs14' href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">
-    					<time>02-09</time>
-    					<span>
-                
-      						利用kube-state-metrics自动生成prometheus的配置文件
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  		</article>
-  	
-  		<article class='' id='archive'>
-  			<div class='archive-header h4'>1970</div>
-  			
-  				
-  		    
-  				
-  		    
-  				
-  		    
-  				<div class='archive-list'>
-            <a class='post fs14' href="/1970/01/01/hello-world/">
-    					<time>01-01</time>
-    					<span>
-                
-      						Hello World
-      					
-              </span>
-    				</a>
-          </div>
-  			
-  		</article>
-  	
-  </div>
+  <div class="post-list post"><a class="post-card post " href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">
+<article class="md"><h2 class="post-title">利用kube-state-metrics自动生成prometheus的配置文件</h2><div class="excerpt"><p>最近运维的k8s集群的node节点变动频繁，总是要手动更新prometheus配置文件表示很蛋疼。所以研究一下怎么对node节点做service discovery，自动更新监控targets列表。
+先看看已有的配置维护方案prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件。...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-09T05:05:00.000Z">2021-02-09</time></span></div></article>
+</a></div>
+  
+
+
+
 
 
       
