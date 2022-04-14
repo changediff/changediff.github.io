@@ -18,21 +18,23 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>Dahl：常用脚本工具 - changediff</title>
+  <title>rpi4b-usb-boot - changediff</title>
 
   
 
   
-    <meta name="description" content="工欲善其事必先利其器">
-<meta property="og:type" content="website">
-<meta property="og:title" content="常用脚本工具">
-<meta property="og:url" content="https://changediff.github.io/wiki/dahl/index.html">
+    <meta name="description" content="树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。 方案调查一番查资料，目前支持两种启动方案：  升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。找到的靠谱教程如下：1. New Raspberry Pi 4 Bootl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rpi4b-usb-boot">
+<meta property="og:url" content="https://changediff.github.io/2021/02/28/rpi4b-usb-boot/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="工欲善其事必先利其器">
+<meta property="og:description" content="树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。 方案调查一番查资料，目前支持两种启动方案：  升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。找到的靠谱教程如下：1. New Raspberry Pi 4 Bootl">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-28T10:02:02.781Z">
-<meta property="article:modified_time" content="2022-03-28T10:02:02.781Z">
+<meta property="article:published_time" content="2021-02-28T12:46:00.000Z">
+<meta property="article:modified_time" content="2022-04-14T16:08:48.795Z">
 <meta property="article:author" content="changediff">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="rpi">
 <meta name="twitter:card" content="summary">
   
   
@@ -58,20 +60,18 @@
 
 
   <div class='l_body' id='start'>
-    <aside class='l_left' layout='wiki'>
+    <aside class='l_left' layout='post'>
     
 
 
 <header class="header">
 
-<div class="logo-wrap wiki"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有项目</a><a class="title" href="/wiki/dahl/index.html"><div class="main">Dahl</div><div class="sub cap">Dahl makes weapons for professional mercs. They're heavy, accurate and effective, assuming you are strong enough to hold one!</div></a></div>
-</header>
+<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">更多</a></nav></header>
 
 <div class="widgets">
 
 <div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"></div></div></div>
-
-<div class="widget-wrap" id="repo-info"><div class="widget-header cap dis-select"><span class="name">项目仓库</span></div><div class="widget-body fs14"><div class="items"><div class="line"></div><a class="item-link" title="https://github.com/changediff/Dahl" href="https://github.com/changediff/Dahl" target="_blank" rel="external nofollow noopener noreferrer"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a><div class="line"></div><a class="item-link" title="https://github.com/changediff/Dahl/releases" href="https://github.com/changediff/Dahl/releases" target="_blank" rel="external nofollow noopener noreferrer"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M2.5 7.775V2.75a.25.25 0 01.25-.25h5.025a.25.25 0 01.177.073l6.25 6.25a.25.25 0 010 .354l-5.025 5.025a.25.25 0 01-.354 0l-6.25-6.25a.25.25 0 01-.073-.177zm-1.5 0V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 010 2.474l-5.026 5.026a1.75 1.75 0 01-2.474 0l-6.25-6.25A1.75 1.75 0 011 7.775zM6 5a1 1 0 100 2 1 1 0 000-2z"></path></svg><span>Releases</span></a><div class="line"></div><a class="item-link" title="https://github.com/changediff/Dahl/archive/refs/heads/main.zip" href="https://github.com/changediff/Dahl/archive/refs/heads/main.zip" target="_blank" rel="external nofollow noopener noreferrer"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M7.47 10.78a.75.75 0 001.06 0l3.75-3.75a.75.75 0 00-1.06-1.06L8.75 8.44V1.75a.75.75 0 00-1.5 0v6.69L4.78 5.97a.75.75 0 00-1.06 1.06l3.75 3.75zM3.75 13a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5z"></path></svg><span>Download</span></a><div class="line"></div><a class="item-link" title="https://github.com/changediff/Dahl/issues" href="https://github.com/changediff/Dahl/issues" target="_blank" rel="external nofollow noopener noreferrer"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path><path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"></path></svg><span>Issues</span></a></div></div></div>
 
 
 </div>
@@ -83,38 +83,63 @@
 
       
 
-  
-  
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">项目</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/dahl/index.html">Dahl</a></div><div id="post-meta">更新于&nbsp;<time datetime="2022-03-28T10:02:02.781Z">2022-03-28</time></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2021-02-28T12:46:00.000Z">2021-02-28</time></div></div>
 
-  <article class='content md wiki'>
-  <h1 class="article-title"><span>常用脚本工具</span></h1>
-  <p>工欲善其事必先利其器</p>
+<article class='content md post'>
+<h1 class="article-title"><span>rpi4b-usb-boot</span></h1>
+<p>树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。</p>
+<h1 id="方案调查"><a href="#方案调查" class="headerlink" title="方案调查"></a>方案调查</h1><p>一番查资料，目前支持两种启动方案：</p>
+<ol>
+<li>升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。<br>找到的靠谱教程如下：<br><a target="_blank" rel="noopener" href="https://jamesachambers.com/new-raspberry-pi-4-bootloader-usb-network-boot-guide/">1. New Raspberry Pi 4 Bootloader USB &#x2F; Network Boot Guide</a><br><a target="_blank" rel="noopener" href="https://www.instructables.com/Raspberry-Pi-4-USB-Boot-No-SD-Card/">2. Raspberry Pi 4 Ubuntu USB Boot (No SD Card)</a></li>
+</ol>
+<p>然鹅，我现在用的是Ubuntu系统，这个方案折腾起来比较麻烦，可能还需要重装系统。pass</p>
+<ol start="2">
+<li>从tf卡引导，将根目录替换成ssd的分区。这样理论上兼容性更好，而且可以在现有的系统上升级。不犹豫，马上开搞。<br>参考教程：<a target="_blank" rel="noopener" href="https://jamesachambers.com/raspberry-pi-4-usb-boot-config-guide-for-ssd-flash-drives/">Raspberry Pi 4 USB Boot Config Guide for SSD &#x2F; Flash Drives</a></li>
+</ol>
+<h1 id="方案实施"><a href="#方案实施" class="headerlink" title="方案实施"></a>方案实施</h1><ol>
+<li><p>复制现有系统到ssd，&#x3D;&#x3D;注意，这个操作会清空SSD上面的数据&#x3D;&#x3D;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd bs=4M if=/dev/mmcblk0 of=/dev/sda</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>确认usb设备id，我的是<code>174c:55aa</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsusb</span><br><span class="line"></span><br><span class="line">Bus 002 Device 003: ID 174c:55aa ASMedia Technology Inc. Name: ASM1051E SATA 6Gb</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改cmdline.txt，树莓派是通过这个文件来确认系统启动目录的，直接修改fstab无效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 备份</span><br><span class="line">cp cmdline.txt cmdline.txt.bak</span><br><span class="line"># 修改为如下内容：</span><br><span class="line">## 1. 注意将XXXX:XXXX替换为上一步获取的usb id</span><br><span class="line">## 2. 注意root=的配置，需要和硬盘对应的LABEL或者UUID一致（如果是dd复制的数据，这块应该不用改）</span><br><span class="line">usb-storage.quirks=XXXX:XXXX:u net.ifnames=0 dwc_otg.lpm_enable=0 console=serial</span><br><span class="line">0,115200 console=tty1 root=LABEL=writable rootfstype=ext4 elevator=deadline</span><br><span class="line">rootwait fixrtc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新<code>/etc/fstab</code>，这一步其实不是必须的，为了不造成迷惑，还是和<code>cmdline.txt</code>的配置保持一致了。</p>
+</li>
+<li><p>reboot之后就可以看到<code>/</code>目录已经切换到ssd上面了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@rpi:~$ findmnt -n -o SOURCE /</span><br><span class="line">/dev/sdb2</span><br></pre></td></tr></table></figure></li>
+<li><p>不服跑个分，io速度提升10倍，哈哈：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo curl https://raw.githubusercontent.com/TheRemote/PiBenchmarks/master/Storage.sh | sudo bash</span><br><span class="line"></span><br><span class="line">     Category                  Test                      Result</span><br><span class="line">HDParm                    Disk Read                 185.42 MB/s</span><br><span class="line">HDParm                    Cached Disk Read          185.55 MB/s</span><br><span class="line">DD                        Disk Write                92.6 MB/s</span><br><span class="line">FIO                       4k random read            4429 IOPS (17716 KB/s)</span><br><span class="line">FIO                       4k random write           5109 IOPS (20439 KB/s)</span><br><span class="line">IOZone                    4k read                   21790 KB/s</span><br><span class="line">IOZone                    4k write                  19337 KB/s</span><br><span class="line">IOZone                    4k random read            16226 KB/s</span><br><span class="line">IOZone                    4k random write           20809 KB/s</span><br><span class="line"></span><br><span class="line">                          Score: 4777</span><br></pre></td></tr></table></figure></li>
+</ol>
 
-  
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><div class="line"></div><a id="prev" href="/2022/03/25/hello-world/">Hello World<span class="note">较新</span></a></section></div>
 
 
-  </article>
-  
-<br>
 
-  
+
+
 
   <div class='related-wrap md reveal' id="comments">
     <div class='cmt-title cap theme'>
-      <p>评论区仅供交流，有问题请提 <a target="_blank" rel="noopener" href="https://github.com/changediff/Dahl/issues">issue</a> 反馈。</p>
-
+      快来参与讨论吧
     </div>
     <div class='cmt-body beaudar'>
       
 
 <svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
 
-<div id="beaudar" repo="changediff/Dahl" issue-term="blog-comments" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+<div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
 
     </div>
   </div>
-
 
 
 
