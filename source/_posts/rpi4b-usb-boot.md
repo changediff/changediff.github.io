@@ -6,7 +6,7 @@ tags: ["rpi", "Linux"]
 
 树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。
 
-# 方案调查
+## 方案调查
 一番查资料，目前支持两种启动方案：
 1. 升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。
 找到的靠谱教程如下：
@@ -18,7 +18,7 @@ tags: ["rpi", "Linux"]
 2. 从tf卡引导，将根目录替换成ssd的分区。这样理论上兼容性更好，而且可以在现有的系统上升级。不犹豫，马上开搞。
 参考教程：[Raspberry Pi 4 USB Boot Config Guide for SSD / Flash Drives](https://jamesachambers.com/raspberry-pi-4-usb-boot-config-guide-for-ssd-flash-drives/)
 
-# 方案实施
+## 方案实施
 
 1. 复制现有系统到ssd，==注意，这个操作会清空SSD上面的数据==
 ```
