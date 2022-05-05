@@ -1755,6 +1755,7 @@ details.folding[open] >div.body >:last-child {
 details.folding[child=codeblock]>div.body {
   padding: 0;
   background: transparent;
+  overflow: hidden;
 }
 details.folding[child=codeblock]>div.body .highlight {
   border: none;
@@ -3832,6 +3833,9 @@ article.md.content h6:hover a.headerlink:before {
 .md p table,
 .md .tag-plugin table {
   --gap-p: 1rem;
+}
+.md iframe {
+  display: block;
 }
 article.md.content a.headerlink:before {
   opacity: 0;
