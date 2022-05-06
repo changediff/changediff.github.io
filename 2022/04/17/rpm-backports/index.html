@@ -1,49 +1,94 @@
 <!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <link rel="alternate icon" type="image/png" href="/img/favicon.png">
-    <title>changediff | </title>
-    
-<link rel="stylesheet" href="/css/reset.css">
+<html lang='zh-CN'>
 
-    
-<link rel="stylesheet" href="/css/style.css">
+<head>
+  <meta name="generator" content="Hexo 6.1.0">
+  <meta charset="utf-8">
+  
 
-    
-<link rel="stylesheet" href="/css/markdown.css">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
 
-    
-<link rel="stylesheet" href="/css/fonts.css">
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>CentOS7升级systemd版本到416.1 - changediff</title>
 
-<meta name="generator" content="Hexo 6.1.0"></head>
-    <body>
-        <div class="paper">
-            <div class="paper-main">
-                
-                    <div class="post-header">
-    <a class="logo" href="/">changediff</a>
-    <a class="go-home" href="/">
-        <svg width="8" height="14" viewBox="0 0 8 14">
-            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </a>
+  
+
+  
+    <meta name="description" content="本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的backports 具体打包过程中见GitHub 0. 搭建本地仓库打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror 1234567891011">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7升级systemd版本到416.1">
+<meta property="og:url" content="https://changediff.github.io/2022/04/17/rpm-backports/index.html">
+<meta property="og:site_name" content="changediff">
+<meta property="og:description" content="本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的backports 具体打包过程中见GitHub 0. 搭建本地仓库打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror 1234567891011">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-17T09:19:56.000Z">
+<meta property="article:modified_time" content="2022-04-17T09:19:56.748Z">
+<meta property="article:author" content="changediff">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="rpm">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="toc-text">0. 搭建本地仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AEmock"><span class="toc-text">1. 安装并配置mock</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%8C%85%E5%AE%89%E8%A3%85"><span class="toc-text">工具包安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%BA%90%E9%85%8D%E7%BD%AE"><span class="toc-text">自定义源配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%88%B6%E4%BD%9Cdependencies%E7%9A%84rpm%E5%8C%85"><span class="toc-text">2. 制作dependencies的rpm包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%88%B6%E4%BD%9Cbackport-rpm%E5%8C%85"><span class="toc-text">3. 制作backport rpm包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E5%8C%85%E7%9A%84%E7%BC%96%E8%AF%91%E9%A1%BA%E5%BA%8F%E6%9C%89%E4%BE%9D%E8%B5%96"><span class="toc-text">部分包的编译顺序有依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4"><span class="toc-text">编译命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E8%AF%B4%E6%98%8E"><span class="toc-text">4. 其他说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%8C%85%E7%BB%B4%E6%8A%A4%E8%AF%B4%E6%98%8E"><span class="toc-text">4.1 包维护说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-systemd%E5%AE%89%E8%A3%85%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-text">4.2 systemd安装注意点</span></a></li></ol></li></ol></div></div></div>
+
+
 </div>
-                
-                <div class="post-main">
 
-    
-        <div class="post-main-title">
-            CentOS7升级systemd版本到416.1
-        </div>
-        <div class="post-meta">
-            2022-04-17
-        </div>
-    
 
-    <div class="post-md">
-        <p>本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的<a target="_blank" rel="noopener" href="https://github.com/facebookarchive/rpm-backports">backports</a></p>
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-04-17T09:19:56.000Z">2022-04-17</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>CentOS7升级systemd版本到416.1</span></h1>
+<p>本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的<a target="_blank" rel="noopener" href="https://github.com/facebookarchive/rpm-backports">backports</a></p>
 <p>具体打包过程中见<a target="_blank" rel="noopener" href="https://github.com/changediff/rpm-backports">GitHub</a></p>
 <h2 id="0-搭建本地仓库"><a href="#0-搭建本地仓库" class="headerlink" title="0. 搭建本地仓库"></a>0. 搭建本地仓库</h2><p>打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建repodate</span></span><br><span class="line">createrepo repo/</span><br><span class="line"><span class="built_in">cd</span> repo</span><br><span class="line"><span class="comment"># 启动http服务提供本地rpm源服务</span></span><br><span class="line"><span class="built_in">nohup</span> python -m SimpleHTTPServer &amp;</span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF | tee /etc/yum.repos.d/localhost</span></span><br><span class="line"><span class="string">[localhost]</span></span><br><span class="line"><span class="string">name=localhost</span></span><br><span class="line"><span class="string">baseurl=http://127.0.0.1:8000/</span></span><br><span class="line"><span class="string">enabled=1</span></span><br><span class="line"><span class="string">gpgcheck=0</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
@@ -87,30 +132,222 @@
 <li>升级systemd，注意要<strong>先升级systemd</strong>再升级内核，不然需要在重启后用dracut工具重新生成initrd</li>
 </ol>
 
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2021/02/28/rpi4b-usb-boot/">从外接USB设备启动树莓派4b<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/2022/05/06/iptables-howto/">iptables入门笔记<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
     </div>
+    <div class='cmt-body beaudar'>
+      
 
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://changediff.github.io/">@changediff</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0" title="v1.7.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
 </div>
-                <div class="footer">
-    <span>Copyright © 2022 changediff</span>
-    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這Li</a></span>
-</div>
 
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
 
-<link rel="stylesheet" href="/css/a11y-dark.min.css">
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
 
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.7.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
 
-<script src="/js/highlight.min.js"></script>
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
 
-
-<script src="/js/highlightjs-line-numbers.js"></script>
-
-
-<script>
-    hljs.initHighlightingOnLoad();
-    hljs.initLineNumbersOnLoad();
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
 </script>
 
-            </div>
-        </div>
-    </body>
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
 </html>
