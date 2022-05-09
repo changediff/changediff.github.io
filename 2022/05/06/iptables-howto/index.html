@@ -30,16 +30,16 @@
 <meta property="og:site_name" content="changediff">
 <meta property="og:description" content="iptables是基于Linux内核模块Netfilter的防火墙工具，可以按照一定的规则对ip packet执行监控、修改、转发、重定向、丢弃等操作；ipv6版本的是ip6talbles；nftables则是iptables的新实现。目前，iptables还是使用最广泛的Linux防火墙模块，本文也聚焦于iptables的入门使用。 关键概念iptables的操作对象是ip包。Tables --">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://changediff.github.io/iptables-howto/flow_chart.png">
-<meta property="og:image" content="https://changediff.github.io/iptables-howto/ip_packet.png">
-<meta property="og:image" content="https://changediff.github.io/iptables-howto/iptables-summary.png">
+<meta property="og:image" content="https://changediff.github.io/2022/05/06/iptables-howto/flow_chart.png">
+<meta property="og:image" content="https://changediff.github.io/2022/05/06/iptables-howto/ip_packet.png">
+<meta property="og:image" content="https://changediff.github.io/2022/05/06/iptables-howto/iptables-summary.png">
 <meta property="article:published_time" content="2022-05-05T16:37:22.000Z">
-<meta property="article:modified_time" content="2022-05-06T11:33:26.136Z">
+<meta property="article:modified_time" content="2022-05-09T08:12:40.215Z">
 <meta property="article:author" content="changediff">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="iptables">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://changediff.github.io/iptables-howto/flow_chart.png">
+<meta name="twitter:image" content="https://changediff.github.io/2022/05/06/iptables-howto/flow_chart.png">
   
   
 
@@ -93,8 +93,9 @@
 <h1 class="article-title"><span>iptables入门笔记</span></h1>
 <p><code>iptables</code>是基于Linux内核模块<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Netfilter">Netfilter</a>的防火墙工具，可以按照一定的规则对ip packet执行监控、修改、转发、重定向、丢弃等操作；ipv6版本的是<code>ip6talbles</code>；<code>nftables</code>则是iptables的新实现。目前，iptables还是使用最广泛的Linux防火墙模块，本文也聚焦于iptables的入门使用。</p>
 <h2 id="关键概念"><a href="#关键概念" class="headerlink" title="关键概念"></a>关键概念</h2><p>iptables的操作对象是ip包。<code>Tables --&gt; Chains --&gt; Rules --&gt; IP Packets</code>，可以按照这样的层级来理解iptables的组织逻辑</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/iptables-howto/flow_chart.png" alt="flow chart"></p>
-<h3 id="IP-packet-IP包"><a href="#IP-packet-IP包" class="headerlink" title="IP packet IP包"></a>IP packet IP包</h3><p>对于ip包的详细讲解可以参考这篇<a target="_blank" rel="noopener" href="https://fasionchan.com/network/ip/ip-packet/">博客</a><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/iptables-howto/ip_packet.png" alt="ip packet"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/05/06/iptables-howto/flow_chart.png" alt="flow chart"></p>
+<h3 id="IP-packet-IP包"><a href="#IP-packet-IP包" class="headerlink" title="IP packet IP包"></a>IP packet IP包</h3><p>对于ip包的详细讲解可以参考这篇<a target="_blank" rel="noopener" href="https://fasionchan.com/network/ip/ip-packet/">博客</a></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/05/06/iptables-howto/ip_packet.png" alt="ip packet"></p>
 <p>部分iptables的功能需要修改ip包的内容，例如通过修改ip包的源地址实现、目的地址实现SNAT、DNAT、包FORWARD等等功能。</p>
 <h3 id="Tables-表"><a href="#Tables-表" class="headerlink" title="Tables 表"></a>Tables 表</h3><p>iptables共有5张表，分别是：</p>
 <ol>
@@ -115,7 +116,8 @@
 <li><code>POSTROUTING</code>，路由后修改包相关操作，例如SNAT</li>
 <li>自定义链</li>
 </ol>
-<p>上面的iptables流程图可能比较难以理解，它实际上是将入包、出包、转发的流程画到了一张图里面，如果将这三个流程分别标记出来就能够比较清晰地知道在入包、出包、转发过程中iptables做了哪些操作<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/iptables-howto/iptables-summary.png" alt="iptables-summary"></p>
+<p>上面的iptables流程图可能比较难以理解，它实际上是将入包、出包、转发的流程画到了一张图里面，如果将这三个流程分别标记出来就能够比较清晰地知道在入包、出包、转发过程中iptables做了哪些操作</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/05/06/iptables-howto/iptables-summary.png" alt="iptables-summary"></p>
 <h3 id="Rules-规则"><a href="#Rules-规则" class="headerlink" title="Rules 规则"></a>Rules 规则</h3><h2 id="常见用途"><a href="#常见用途" class="headerlink" title="常见用途"></a>常见用途</h2><h3 id="1-网络防火墙"><a href="#1-网络防火墙" class="headerlink" title="1. 网络防火墙"></a>1. 网络防火墙</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 封禁dockerd默认端口2375的外部访问</span><br><span class="line">iptables -A INPUT -p tcp --dport 2375 -j REJECT</span><br><span class="line"></span><br><span class="line"># 允许192.168.64.2访问本机2375端口</span><br><span class="line">iptables -I INPUT -p tcp --dport 2375 -s 192.168.64.2 -j ACCEPT</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="2-docker-proxy网络代理"><a href="#2-docker-proxy网络代理" class="headerlink" title="2. docker-proxy网络代理"></a>2. docker-proxy网络代理</h3><p>运行nginx测试容器，并添加端口映射。看出容器之间的通信走docker0网桥，端口映射则是通过docker-proxy转发</p>
