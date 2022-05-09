@@ -1,7 +1,11 @@
 ---
 title: 使用hexo将博客迁移到GitHub Pages
-tags: ["hexo", "GitHub Pages"]
+tags:
+  - hexo
+  - GitHub Pages
+date: 2022-05-09 16:25:28
 ---
+
 
 ## 博客搭建和迁移
 hexo的[官网文档](https://hexo.io/zh-cn/docs/setup)很详细，这里主要记载使用`hexo+Github Pages`过程中遇到的坑
@@ -41,7 +45,7 @@ menu:
 
 ## 使用技巧
 
-### 插入本地图片
+### 插入图片
 
 1. 安装markdown插件
 ```
@@ -56,7 +60,7 @@ marked:
   postAsset: true
 ```
 
-3. 插入本地图片的时候注意语法，**只填写图片文件名**，图片放在和md同级的资源目录中
+3. 插入图片的时候注意语法，**只填写图片文件名**，图片放在和md同级的资源目录中
 
 ```
 # migrate-my-blog-to-github-pages-with-hexo/test-img.png
@@ -66,6 +70,3 @@ marked:
 ![我是一张图片](test-image.png)
 
 **后遗症：本地无法正常渲染预览markdown**
-
-## end
-至此，虽然有点小瑕疵，我的博客发布流程全部迁移到了GitHub pages上面，可以愉快地使用`vscode+git`来写博客啦~
