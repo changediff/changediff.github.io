@@ -67,6 +67,9 @@ marked:
 ![我是一张图片](flow_chart.png)
 ```
 
-![我是一张图片](test-image.png)
+![我是一张图片](test-img.png)
 
 **后遗症：本地无法正常渲染预览markdown**
+
+## end
+至此，虽然有点小瑕疵，我的博客发布流程全部迁移到了GitHub pages上面，可以愉快地使用`vscode+git`来写博客啦~
