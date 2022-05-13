@@ -41,14 +41,23 @@ vmware-fusion-tech-preview
 racket --cask
 md5sha1sum
 bartender
+mos #鼠标滚轮优化
+balenaetcher #iso刻录到u盘
 ```
 
 #### App Store安装
 ```
 RunCat #状态栏负载监控
-Hidden Bar #状态栏图标隐藏
+Hidden Bar #状态栏图标隐藏 
 Xnip #截图
 Magnet #窗口手势
+MenuMate #顶栏菜单改为右键
+Keka #压缩
+```
+
+#### 其他
+```
+Downie #在线视频下载
 ```
 
 ## 搜索引擎
