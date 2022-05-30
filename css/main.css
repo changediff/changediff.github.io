@@ -1797,7 +1797,7 @@ details.folding[child=codeblock]>div.body .highlight .code:before {
   margin-bottom: 20px;
 }
 .md .frame-wrap#iphone11 .frame {
-  background-image: url("https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/frame/iphone11.svg");
+  background-image: url("https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/frame/iphone11.svg");
   width: 329px;
   height: 658px;
 }
@@ -2029,6 +2029,16 @@ details.folding[child=codeblock]>div.body .highlight .code:before {
   line-height: 1;
   font-weight: 700;
   font-family: Menlo, Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif;
+}
+.md h1 sup,
+.md h2 sup,
+.md h3 sup,
+.md h4 sup,
+.md h1 sub,
+.md h2 sub,
+.md h3 sub,
+.md h4 sub {
+  font-size: 0.85rem;
 }
 .md .tag-plugin.link {
   max-width: 400px;
@@ -2963,7 +2973,7 @@ details.toc[open] >div.body section .header+.doc_tree {
 }
 .logo-wrap a.avatar:hover div.bg {
   opacity: 1 !important;
-  animation: spin infinite 1s;
+  animation: spin infinite 4s;
   animation-timing-function: linear;
 }
 .logo-wrap a.title {
