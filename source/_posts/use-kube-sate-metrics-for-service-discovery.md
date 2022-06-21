@@ -1,7 +1,7 @@
 ---
 title: 利用kube-state-metrics自动生成prometheus的配置文件 
 date: 2021-02-09 13:05:00
-tags: ["k8s", "kubernetes", "prometheus"]
+tags: ["k8s", "kubernetes", "prometheus", "monitoring"]
 ---
 
 最近运维的k8s集群的node节点变动频繁，总是要手动更新prometheus配置文件表示很蛋疼。所以研究一下怎么对node节点做service discovery，自动更新监控targets列表。

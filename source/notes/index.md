@@ -15,9 +15,25 @@ lsof +L1 | sort -nk7
 
 ## macOS使用笔记
 
-### macOS时间不同步问题解决
+### 常见使用问题
+
+#### macOS时间不同步问题解决
 ```
 sudo sntp -sS time.apple.com
+```
+
+#### 触发角失效
+```
+defaults write com.apple.dock mcx-expose-disabled -bool FALSE; killall Dock
+```
+
+#### macOS版本升级
+macOS有时会更新失败，可通过下载最新版本macOS的全量安装包来完成更新
+https://support.apple.com/zh-cn/macos/upgrade
+
+更新后可能需要重新安装developer tools
+```
+xcode-select --install
 ```
 
 ### 好用的软件
@@ -58,6 +74,18 @@ Keka #压缩
 #### 其他
 ```
 Downie #在线视频下载
+```
+
+##### flash player
+
+360极速浏览器是目前macOS下唯一可用的支持flash的浏览器
+https://browser.360.cn/ee/mac/index.html
+
+## Windows
+```
+CHKenPlayer #曾经最小的播放器
+foobar2000
+Ventory
 ```
 
 ## 搜索引擎
