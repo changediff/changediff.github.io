@@ -18,12 +18,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>标签：Linux - changediff</title>
+  <title>标签：linux - changediff</title>
 
   
     <meta property="og:type" content="website">
 <meta property="og:title" content="changediff">
-<meta property="og:url" content="https://changediff.github.io/tags/Linux/index.html">
+<meta property="og:url" content="https://changediff.github.io/tags/linux/index.html">
 <meta property="og:site_name" content="changediff">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="changediff">
@@ -41,6 +41,11 @@
   
 
   
+
+  
+
+  
+
 
   
 </head>
@@ -64,7 +69,7 @@
 <p>2022年3月迁移到GitHub Pages，旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a></p>
 </div></div>
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件</a></div><div class="more-item"><a class="title" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件</a></div><div class="more-item"><a class="title" href="/2022/05/16/learning-network/">计算机网络学习笔记</a></div><div class="more-item"><a class="title" href="/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/">使用hexo将博客迁移到GitHub Pages</a></div><div class="more-item"><a class="title" href="/2022/05/06/iptables-howto/">iptables入门笔记</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div><div class="more-item"><a class="title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件</a></div><div class="more-item"><a class="title" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件</a></div><div class="more-item"><a class="title" href="/2022/05/16/learning-network/">计算机网络学习笔记</a></div><div class="more-item"><a class="title" href="/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/">使用hexo将博客迁移到GitHub Pages</a></div></div></div>
 </div>
 
 
@@ -93,7 +98,7 @@
     
     
       
-        <a class='active' href='/tags'>标签：Linux</a>
+        <a class='active' href='/tags'>标签：linux</a>
       
     
     
@@ -104,19 +109,12 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post " href="/2022/05/06/iptables-howto/">
-<article class="md"><h2 class="post-title">iptables入门笔记</h2><div class="excerpt"><p>iptables是基于Linux内核模块Netfilter的防火墙工具，可以按照一定的规则对ip packet执行监控、修改、转发、重定向、丢弃等操作；ipv6版本的是ip6talbles；nftables则是iptables的新实现。目前，iptables还是使用最广泛的Linux防火墙模块，本文也聚焦于iptables的入门使用。
-关键概念iptables的操作对象是ip包。Tables...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-05-05T16:37:22.000Z">2022-05-06</time></span></div></article>
-</a><a class="post-card post " href="/2022/04/17/rpm-backports/">
-<article class="md"><h2 class="post-title">CentOS7升级systemd版本到416.1</h2><div class="excerpt"><p>本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的backports
-具体打包过程中见GitHub
-0. 搭建本地仓库打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror
-1234567891...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-04-17T09:19:56.000Z">2022-04-17</time></span></div></article>
-</a><a class="post-card post " href="/2021/02/28/rpi4b-usb-boot/">
-<article class="md"><h2 class="post-title">从外接USB设备启动树莓派4b</h2><div class="excerpt"><p>树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。
-方案调查一番查资料，目前支持两种启动方案：
-
-升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。找到的靠谱教程如下：1. New Raspberry Pi 4 Bo...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-28T12:46:00.000Z">2021-02-28</time></span></div></article>
+  <div class="post-list post"><a class="post-card post " href="/2022/06/21/user-space-kernel-space/">
+<article class="md"><h2 class="post-title">理解用户空间与内核空间</h2><div class="excerpt"><p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间又一段差距，就用写作来填平吧。
+什么是用户空间和内核空间？
+在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。
+为什么要区分用户空间和内核空间
+系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></span></div></article>
 </a></div>
   
 
@@ -260,6 +258,61 @@
   }
   if ('true' == 'true') {
     stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
+);
   }
   if ('true' == 'true') {
     stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});

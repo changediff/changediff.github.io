@@ -18,12 +18,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>标签：CentOS - changediff</title>
+  <title>标签：kernel-space - changediff</title>
 
   
     <meta property="og:type" content="website">
 <meta property="og:title" content="changediff">
-<meta property="og:url" content="https://changediff.github.io/tags/CentOS/index.html">
+<meta property="og:url" content="https://changediff.github.io/tags/kernel-space/index.html">
 <meta property="og:site_name" content="changediff">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="changediff">
@@ -98,7 +98,7 @@
     
     
       
-        <a class='active' href='/tags'>标签：CentOS</a>
+        <a class='active' href='/tags'>标签：kernel-space</a>
       
     
     
@@ -109,11 +109,12 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post " href="/2022/04/17/rpm-backports/">
-<article class="md"><h2 class="post-title">CentOS7升级systemd版本到416.1</h2><div class="excerpt"><p>本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的backports
-具体打包过程中见GitHub
-0. 搭建本地仓库打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror
-1234567891...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-04-17T09:19:56.000Z">2022-04-17</time></span></div></article>
+  <div class="post-list post"><a class="post-card post " href="/2022/06/21/user-space-kernel-space/">
+<article class="md"><h2 class="post-title">理解用户空间与内核空间</h2><div class="excerpt"><p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间又一段差距，就用写作来填平吧。
+什么是用户空间和内核空间？
+在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。
+为什么要区分用户空间和内核空间
+系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></span></div></article>
 </a></div>
   
 
