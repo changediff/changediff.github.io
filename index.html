@@ -2,7 +2,7 @@
 <html lang='zh-CN'>
 
 <head>
-  <meta name="generator" content="Hexo 6.1.0">
+  <meta name="generator" content="Hexo 6.2.0">
   <meta charset="utf-8">
   
 
@@ -48,7 +48,11 @@
 
 
   
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body>
   
@@ -69,7 +73,7 @@
 <p>2022年3月迁移到GitHub Pages，旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a></p>
 </div></div>
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div><div class="more-item"><a class="title" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div><div class="more-item"><a class="title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件</a></div><div class="more-item"><a class="title" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件</a></div><div class="more-item"><a class="title" href="/2022/05/16/learning-network/">计算机网络学习笔记</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/08/03/algorithm-interview/">算法复杂度计算</a></div><div class="more-item"><a class="title" href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div><div class="more-item"><a class="title" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div><div class="more-item"><a class="title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件</a></div><div class="more-item"><a class="title" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件</a></div></div></div>
 </div>
 
 
@@ -107,7 +111,10 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post " href="/2022/08/03/what-is-overlay2/">
+  <div class="post-list post"><a class="post-card post " href="/2022/08/03/algorithm-interview/">
+<article class="md"><h2 class="post-title">算法复杂度计算</h2><div class="excerpt"><p>定义算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下:
+$$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;c_1g(n)&lt;&#x3D;f(n)&lt;&#x3D;c_2g(n)}...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T13:05:19.000Z">2022-08-03</time></span></div></article>
+</a><a class="post-card post " href="/2022/08/03/what-is-overlay2/">
 <article class="md"><h2 class="post-title">overlay2笔记</h2><div class="excerpt"><p>overlay2文件系统的原理overlay2的实现原理直观如下图：
 可以使用下面的命令做简单的模拟：
 123mkdir -p /overlaytest/client_1/&#123;upperdir,workdir&#125; /overlaytest/client_2/&#123;upperdir,workdir&#125; lowerdir merged/&#123;client_1,...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T12:58:42.000Z">2022-08-03</time></span></div></article>
@@ -149,11 +156,20 @@ GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》
 </a><a class="post-card post " href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">
 <article class="md"><h2 class="post-title">利用kube-state-metrics自动生成prometheus的配置文件</h2><div class="excerpt"><p>最近运维的k8s集群的node节点变动频繁，总是要手动更新prometheus配置文件表示很蛋疼。所以研究一下怎么对node节点做service discovery，自动更新监控targets列表。
 先看看已有的配置维护方案prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件。...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-09T05:05:00.000Z">2021-02-09</time></span></div></article>
-</a><a class="post-card post " href="/1970/01/01/hello-world/">
-<article class="md"><h2 class="post-title">Hello World</h2><div class="excerpt"><p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="1970-01-01T00:00:00.000Z">1970-01-01</time></span></div></article>
 </a></div>
   
+  <div class='paginator-wrap dis-select'>
+    <a class='paginator prev disable' href='/'>
+      <img src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/arrow/f049bbd4e88ec.svg'/>
+    </a>
+    <div class='paginator current'>
+      1<span class='sep'></span>2
+    </div>
+    <a class='paginator next' href='/page/2/'>
+      <img src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/arrow/064b95430caf4.svg'/>
+    </a>
+  </div>
+
 
 
 
