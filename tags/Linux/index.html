@@ -69,7 +69,7 @@
 <p>2022年3月迁移到GitHub Pages，旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a></p>
 </div></div>
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div><div class="more-item"><a class="title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件</a></div><div class="more-item"><a class="title" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件</a></div><div class="more-item"><a class="title" href="/2022/05/16/learning-network/">计算机网络学习笔记</a></div><div class="more-item"><a class="title" href="/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/">使用hexo将博客迁移到GitHub Pages</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div><div class="more-item"><a class="title" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div><div class="more-item"><a class="title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件</a></div><div class="more-item"><a class="title" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件</a></div><div class="more-item"><a class="title" href="/2022/05/16/learning-network/">计算机网络学习笔记</a></div></div></div>
 </div>
 
 
@@ -110,11 +110,9 @@
 </div>
 
   <div class="post-list post"><a class="post-card post " href="/2022/06/21/user-space-kernel-space/">
-<article class="md"><h2 class="post-title">理解用户空间与内核空间</h2><div class="excerpt"><p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间又一段差距，就用写作来填平吧。
-什么是用户空间和内核空间？
-在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。
-为什么要区分用户空间和内核空间
-系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></span></div></article>
+<article class="md"><h2 class="post-title">理解用户空间与内核空间</h2><div class="excerpt"><p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。
+什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。
+为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></span></div></article>
 </a></div>
   
 
@@ -258,61 +256,6 @@
   }
   if ('true' == 'true') {
     stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
-  }
-  if ('false' == 'true') {
-    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
-  }
-</script>
-
-<!-- required -->
-
-  
-<script src="/js/main.js" async></script>
-
-
-
-<!-- optional -->
-
-  <script>
-  function loadBeaudar() {
-    const els = document.querySelectorAll("#comments #beaudar");
-    if (els.length === 0) return;
-    els.forEach((el, i) => {
-      try {
-        el.innerHTML = '';
-      } catch (error) {
-        console.log(error);
-      }
-      var script = document.createElement('script');
-      script.src = 'https://beaudar.lipk.org/client.js';
-      script.async = true;
-      for (let key of Object.keys(el.attributes)) {
-        let attr = el.attributes[key];
-        if (['class', 'id'].includes(attr.name) === false) {
-          script.setAttribute(attr.name, attr.value);
-        }
-      }
-      el.appendChild(script);
-    });
-  }
-  window.addEventListener('DOMContentLoaded', (event) => {
-      loadBeaudar();
-  });
-</script>
-
-
-
-
-<!-- inject -->
-
-
-  </div>
-</body>
-</html>
-);
   }
   if ('true' == 'true') {
     stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});

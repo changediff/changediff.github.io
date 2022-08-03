@@ -21,19 +21,19 @@
   <title>理解用户空间与内核空间 - changediff</title>
 
   
-    <meta name="description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间又一段差距，就用写作来填平吧。 什么是用户空间和内核空间？ 在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间 系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了">
+    <meta name="description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口">
 <meta property="og:type" content="article">
 <meta property="og:title" content="理解用户空间与内核空间">
 <meta property="og:url" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间又一段差距，就用写作来填平吧。 什么是用户空间和内核空间？ 在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间 系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了">
+<meta property="og:description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png">
 <meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-system-calls-gears.png">
 <meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/macro-micro-kernel.webp">
 <meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/type-of-syscalls.png">
 <meta property="article:published_time" content="2022-06-21T15:13:31.000Z">
-<meta property="article:modified_time" content="2022-06-21T15:13:31.755Z">
+<meta property="article:modified_time" content="2022-06-21T15:19:44.596Z">
 <meta property="article:author" content="changediff">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="user-space">
@@ -98,45 +98,30 @@
 
 <article class='content md post'>
 <h1 class="article-title"><span>理解用户空间与内核空间</span></h1>
-<p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间又一段差距，就用写作来填平吧。</p>
-<h2 id="什么是用户空间和内核空间？">什么是用户空间和内核空间？</h2>
-<p>在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。</p>
-<h2 id="为什么要区分用户空间和内核空间">为什么要区分用户空间和内核空间</h2>
-<p>系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口，可以让用户进程访问硬件资源，并且负责管理硬件资源的调度。<br>
-具体来说，内核主要干这四件事情：</p>
+<p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。</p>
+<h2 id="什么是用户空间和内核空间？"><a href="#什么是用户空间和内核空间？" class="headerlink" title="什么是用户空间和内核空间？"></a>什么是用户空间和内核空间？</h2><p>在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。</p>
+<h2 id="为什么要区分用户空间和内核空间"><a href="#为什么要区分用户空间和内核空间" class="headerlink" title="为什么要区分用户空间和内核空间"></a>为什么要区分用户空间和内核空间</h2><p>系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口，可以让用户进程访问硬件资源，并且负责管理硬件资源的调度。<br>具体来说，内核主要干这四件事情：</p>
 <ol>
 <li>内存管理：跟踪所有进程用了哪些内存、用了多少、存在了哪个物理地址等等</li>
 <li>进程管理：管理进程对CPU时间分片的占用</li>
 <li>设备驱动：作为中间人或者解释器，替进程访问硬件设备（Unix系统中一切皆文件的思想，就是对硬件设备的绝妙抽象）</li>
 <li>系统调用system calls与安全：接收从用户空间传来的系统调用，做安全检查并执行（什么是系统调用后面细说）</li>
 </ol>
-<p>以上可以看出为什么要区分用户空间和内核空间，一方面这样的分层设计可以让系统内核的维护更加灵活，另一方面可以让系统更加安全，敏感的操作通过统一的syscalls接口切换到内核空间中完成。<br>
-<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="user-space-vs-kernel-space-basic-system-calls.png" alt="syscalls"></p>
-<p>Linux中的系统调用流程如下图，syscalls是通过汇编语言指令的方式提供的，我们最经常接触的进程实际上是调用的<code>glibc/解释器/编译器</code>等库提供的功能，这也是为什么Linux发行版中单独升级glibc版本是一个风险很大的操作（glibc的版本变更可能导致很多系统基础组件的syscalls不兼容）<br>
-<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="user-space-vs-kernel-space-system-calls-gears.png" alt="syscalls调用"></p>
-<h2 id="system-calls">system calls</h2>
-<p>系统调用如此重要，那么它具体提供了哪些功能呢？syscalls的详细内容可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">man syscalls</a>，主要包含进程控制(fork,exit,wait)、文件管理(open,read,write,close)、设备管理(ioctl,read,write)、进程信息维护(getpid,alarm,sleep)、进程间通信(pipe,shmget,mmap)等等。</p>
-<p>下面简单介绍下常见的syscall的作用：<br>
-<code>open()</code>：打开文件，返回文件描述符，详细可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kelamoyujuzhen/p/9638710.html">链接</a></p>
+<p>以上可以看出为什么要区分用户空间和内核空间，一方面这样的分层设计可以让系统内核的维护更加灵活，另一方面可以让系统更加安全，敏感的操作通过统一的syscalls接口切换到内核空间中完成。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png" alt="syscalls"></p>
+<p>Linux中的系统调用流程如下图，syscalls是通过汇编语言指令的方式提供的，我们最经常接触的进程实际上是调用的<code>glibc/解释器/编译器</code>等库提供的功能，这也是为什么Linux发行版中单独升级glibc版本是一个风险很大的操作（glibc的版本变更可能导致很多系统基础组件的syscalls不兼容）<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-system-calls-gears.png" alt="syscalls调用"></p>
+<h2 id="system-calls"><a href="#system-calls" class="headerlink" title="system calls"></a>system calls</h2><p>系统调用如此重要，那么它具体提供了哪些功能呢？syscalls的详细内容可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">man syscalls</a>，主要包含进程控制(fork,exit,wait)、文件管理(open,read,write,close)、设备管理(ioctl,read,write)、进程信息维护(getpid,alarm,sleep)、进程间通信(pipe,shmget,mmap)等等。</p>
+<p>下面简单介绍下常见的syscall的作用：<br><code>open()</code>：打开文件，返回文件描述符，详细可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kelamoyujuzhen/p/9638710.html">链接</a></p>
 <p><code>read()</code>：读取文件，读取的文件需要有文件描述符标识，读取前需要先执行<code>open()</code>，read()系统调用需要传入三个参数（文件描述符fd、文件读缓存的地址、读取的字节数）；这里涉及到了读写缓存的概念，这个缓存是由内核维护在内存中的page cache，具体可参考<a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/understanding-the-linux/0596005652/ch15s01.html#:~:text=The%20page%20cache%20is%20the,User%20Mode%20processes's%20read%20requests.">链接</a></p>
 <p><code>write()</code>：写入文件，这是程序输入的常见方式之一，write()系统调用需要传入三个参数（文件描述符、写缓存的地址、写入的字节数）</p>
 <p><code>close()</code>：关闭文件，释放文件描述符</p>
 <p><code>fork()</code>：创建子进程，详细参考<a target="_blank" rel="noopener" href="https://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/fork/create.html">链接</a></p>
-<p><code>wait()</code>：等待子进程结束，返回子进程的返回值。如果子进程执行结束了，父进程没有执行wait，就会产生僵尸进程。运维层面解决僵尸进程的方法是kill父进程，让僵尸进程成为孤儿进程，又init进程来执行wait，让僵尸进程死亡。程序代码实现层面有两种方式避免僵尸进程，1)调用wait(), 2) fork()两次让init进程来管理子进程。<strong>需要注意的是</strong>，kill父进程和fork()两次在容器里面不管用，因为容器里面通常没有init进程存在，这种情况需要重启容器来解决。<br>
-对于僵尸进程的详细讲解可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/anker/p/3271773.html">链接</a></p>
+<p><code>wait()</code>：等待子进程结束，返回子进程的返回值。如果子进程执行结束了，父进程没有执行wait，就会产生僵尸进程。运维层面解决僵尸进程的方法是kill父进程，让僵尸进程成为孤儿进程，又init进程来执行wait，让僵尸进程死亡。程序代码实现层面有两种方式避免僵尸进程，1)调用wait(), 2) fork()两次让init进程来管理子进程。<strong>需要注意的是</strong>，kill父进程和fork()两次在容器里面不管用，因为容器里面通常没有init进程存在，这种情况需要重启容器来解决。<br>对于僵尸进程的详细讲解可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/anker/p/3271773.html">链接</a></p>
 <p><code>exit()</code>：退出进程，返回值为0，在多线程场景中则表示该线程执行结束。操作系统会回收exit()进程的资源</p>
 <p><code>kill()</code>：可以参考常用的kill命令理解，发送不同信号量例如SIGINT、SIGKILL等等。</p>
-<h2 id="中断">中断</h2>
-<p>pass</p>
-<h2 id="用户空间和内核空间在Linux、Windows和MacOS中的区别？">用户空间和内核空间在Linux、Windows和MacOS中的区别？</h2>
-<p>上面关于用户空间和内核空间的讨论都是基于Linux的，这些功能在Windows和macOS上的实现是又差别的，具体又涉及到了宏内核和微内核设计的差异，我的知识还不足以讲清楚这些。<strong>但不管那种实现都提供了类似的用户空间和内核空间的抽象。</strong><br>
-下面仅提供文章和图片用于参考~</p>
-<p><a target="_blank" rel="noopener" href="https://www.yinwang.org/blog-cn/2019/08/19/microkernel">关于微内核的对话</a><br>
-<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040898100">聊了聊宏内核和微内核，并吹了一波 Linux</a><br>
-<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="macro-micro-kernel.webp" alt="宏内核和微内核"><br>
-<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="type-of-syscalls.png" alt="windows-linux"></p>
-<h2 id="参考资料">参考资料</h2>
-<ol>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>pass</p>
+<h2 id="用户空间和内核空间在Linux、Windows和MacOS中的区别？"><a href="#用户空间和内核空间在Linux、Windows和MacOS中的区别？" class="headerlink" title="用户空间和内核空间在Linux、Windows和MacOS中的区别？"></a>用户空间和内核空间在Linux、Windows和MacOS中的区别？</h2><p>上面关于用户空间和内核空间的讨论都是基于Linux的，这些功能在Windows和macOS上的实现是又差别的，具体又涉及到了宏内核和微内核设计的差异，我的知识还不足以讲清楚这些。<strong>但不管那种实现都提供了类似的用户空间和内核空间的抽象。</strong><br>下面仅提供文章和图片用于参考~</p>
+<p><a target="_blank" rel="noopener" href="https://www.yinwang.org/blog-cn/2019/08/19/microkernel">关于微内核的对话</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040898100">聊了聊宏内核和微内核，并吹了一波 Linux</a><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/macro-micro-kernel.webp" alt="宏内核和微内核"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/type-of-syscalls.png" alt="windows-linux"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/topics/linux/what-is-the-linux-kernel">https://www.redhat.com/en/topics/linux/what-is-the-linux-kernel</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/architecting-containers-part-1-why-understanding-user-space-vs-kernel-space-matters">https://www.redhat.com/en/blog/architecting-containers-part-1-why-understanding-user-space-vs-kernel-space-matters</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/architecting-containers-part-2-why-user-space-matters">https://www.redhat.com/en/blog/architecting-containers-part-2-why-user-space-matters</a></li>
@@ -154,7 +139,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件<span class="note">较早</span></a><div class="line"></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/2022/08/03/what-is-overlay2/">overlay2笔记<span class="note">较新</span></a></section></div>
 
 
 
