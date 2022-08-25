@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Windows上的shell环境折腾笔记 - changediff</title>
+
+  
+    <meta name="description" content="最近工作电脑从MacOS换到了Windows，shell环境的缺失让我很不习惯，于是便开启我的折腾之旅。 工作电脑的Windows系统没有管理员UAC权限，没有微软应用商店，只能从内网软件中心安装软件，这也就导致操作有很多限制。 下面按照时间顺序记录下尝试过的方案 Cygwin类都是基于Cygwin的方案，使用mingw64编译器移植的Linux系工具 git for windows软件中心有gi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows上的shell环境折腾笔记">
+<meta property="og:url" content="https://changediff.github.io/2022/08/25/notes-on-wsl/index.html">
+<meta property="og:site_name" content="changediff">
+<meta property="og:description" content="最近工作电脑从MacOS换到了Windows，shell环境的缺失让我很不习惯，于是便开启我的折腾之旅。 工作电脑的Windows系统没有管理员UAC权限，没有微软应用商店，只能从内网软件中心安装软件，这也就导致操作有很多限制。 下面按照时间顺序记录下尝试过的方案 Cygwin类都是基于Cygwin的方案，使用mingw64编译器移植的Linux系工具 git for windows软件中心有gi">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-25T14:52:38.000Z">
+<meta property="article:modified_time" content="2022-08-25T15:57:29.470Z">
+<meta property="article:author" content="changediff">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="WSL">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cygwin%E7%B1%BB"><span class="toc-text">Cygwin类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-for-windows"><span class="toc-text">git for windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmder"><span class="toc-text">cmder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mobaxterm"><span class="toc-text">mobaxterm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PowerShell"><span class="toc-text">PowerShell</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PowerShell5-cmder-x2F-Windows-Terminal"><span class="toc-text">PowerShell5 + cmder&#x2F;Windows-Terminal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PowerShell7-cmder-x2F-Windows-Terminal"><span class="toc-text">PowerShell7 + cmder&#x2F;Windows-Terminal</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WSL"><span class="toc-text">WSL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-Desktop"><span class="toc-text">Docker Desktop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu-22-04-on-WSL"><span class="toc-text">Ubuntu-22.04 on WSL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu-22-04-on-WSL2"><span class="toc-text">Ubuntu-22.04 on WSL2</span></a></li></ol></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-08-25T14:52:38.000Z">2022-08-25</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>Windows上的shell环境折腾笔记</span></h1>
+<p>最近工作电脑从MacOS换到了Windows，shell环境的缺失让我很不习惯，于是便开启我的折腾之旅。</p>
+<p>工作电脑的Windows系统没有管理员UAC权限，没有微软应用商店，只能从内网软件中心安装软件，这也就导致操作有很多限制。</p>
+<p>下面按照时间顺序记录下尝试过的方案</p>
+<h2 id="Cygwin类"><a href="#Cygwin类" class="headerlink" title="Cygwin类"></a>Cygwin类</h2><p>都是基于Cygwin的方案，使用mingw64编译器移植的Linux系工具</p>
+<h3 id="git-for-windows"><a href="#git-for-windows" class="headerlink" title="git for windows"></a>git for windows</h3><p>软件中心有git，windows版本的git是自带一个mintty的bash环境的，可以当做简单的shell环境使用。然而该方案有很大的缺点：</p>
+<ol>
+<li>没有包管理器，无法安装Linux生态工具</li>
+<li>快捷键不方便</li>
+</ol>
+<h3 id="cmder"><a href="#cmder" class="headerlink" title="cmder"></a>cmder</h3><p><a target="_blank" rel="noopener" href="https://cmder.app/">https://cmder.app/</a></p>
+<p>优点：</p>
+<ol>
+<li>有绿色Portable版本，解压即用，不需要提权</li>
+<li>终端界面更美观了，也可以用来调用PowerShell</li>
+</ol>
+<p>缺点</p>
+<ol>
+<li>没法使用<code>ctrl+w</code>等快捷键</li>
+<li>没有包管理器</li>
+</ol>
+<h3 id="mobaxterm"><a href="#mobaxterm" class="headerlink" title="mobaxterm"></a>mobaxterm</h3><p><a target="_blank" rel="noopener" href="https://mobaxterm.mobatek.net/">https://mobaxterm.mobatek.net/</a></p>
+<p>优点：</p>
+<ol>
+<li>有绿色Portable版本，解压即用，不需要提权</li>
+<li>有自己的包管理器，可以安装一些常见的软件包</li>
+<li>兼容常见的终端快捷键</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>源的使用体验一般，部分软件包的链接已失效</li>
+<li>界面复杂，个人更喜欢简洁风格</li>
+</ol>
+<h2 id="PowerShell"><a href="#PowerShell" class="headerlink" title="PowerShell"></a>PowerShell</h2><p>Windows自带的PowerShell同样很大</p>
+<h3 id="PowerShell5-cmder-x2F-Windows-Terminal"><a href="#PowerShell5-cmder-x2F-Windows-Terminal" class="headerlink" title="PowerShell5 + cmder&#x2F;Windows-Terminal"></a>PowerShell5 + cmder&#x2F;Windows-Terminal</h3><p>Shell环境不好用之后，也考虑过使用PowerShell作为替代，不过系统自带的版本不好用。其和bash的功能和使用习惯差异巨大，例如没法<code>ctrl+r</code>搜索历史命令，没法使用<code>&amp;&amp;</code>等等。</p>
+<p>不过在折腾PowerShell期间发现了另外的神器<code>Windows-Terminal</code>。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/microsoft/terminal/releases">https://github.com/microsoft/terminal/releases</a></p>
+<p>从上面的链接下载最新版本的<code>msixbundle</code>安装包，双击打开安装即可拥有。或者使用PowerShell命令安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Add-AppxPackage .\app_name.appx</span><br></pre></td></tr></table></figure>
+
+<p>如果是低版本的Win10，可能需要参考以下教程去先安装<code>VC++ v14 Desktop Framework Package</code></p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/troubleshoot/cpp/c-runtime-packages-desktop-bridge#how-to-install-and-update-desktop-framework-packages">https://docs.microsoft.com/troubleshoot/cpp/c-runtime-packages-desktop-bridge#how-to-install-and-update-desktop-framework-packages</a></p>
+<p>上述安装操作都<strong>不需要UAC提权</strong>。</p>
+<h3 id="PowerShell7-cmder-x2F-Windows-Terminal"><a href="#PowerShell7-cmder-x2F-Windows-Terminal" class="headerlink" title="PowerShell7 + cmder&#x2F;Windows-Terminal"></a>PowerShell7 + cmder&#x2F;Windows-Terminal</h3><p><a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell">https://github.com/PowerShell/PowerShell</a></p>
+<p>PowerShell的使用体验和bash更加接近，支持了<code>ctrl+w</code>, <code>ctrl+r</code>, <code>&amp;&amp;</code>等功能，且脚本可全平台运行。</p>
+<p>安装方式双击打开或者使用下述命令都可以，同样不需要UAC提权</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Add-AppxPackage .\app_name.appx</span><br></pre></td></tr></table></figure>
+
+<h2 id="WSL"><a href="#WSL" class="headerlink" title="WSL"></a>WSL</h2><p>之所以一开始不选择WSL，是因为没有应用商店安装比较麻烦，且安装过程中<strong>需要申请UAC提权</strong>。</p>
+<h3 id="Docker-Desktop"><a href="#Docker-Desktop" class="headerlink" title="Docker Desktop"></a>Docker Desktop</h3><p>上面折腾了一圈，总觉得用着不爽，所以考虑了容器方案，申请了临时管理员权限，使用了官方推荐的<code>WSL2</code>后端。</p>
+<p>安装步骤如下，以下操作<strong>需要UAC提权</strong>：</p>
+<ol>
+<li>docker官网下载安装包并安装：<a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop/">https://www.docker.com/products/docker-desktop/</a></li>
+<li>按照教程加的docker-user用户组权限<code>C:\WINDOWS\system32\compmgmt.msc</code>：<a target="_blank" rel="noopener" href="https://blog.csdn.net/fragrant_no1/article/details/84256775">https://blog.csdn.net/fragrant_no1/article/details/84256775</a></li>
+<li>安装的【 Linux 内核更新包】：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package">https://docs.microsoft.com/zh-cn/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package</a></li>
+<li>重启笔记本</li>
+</ol>
+<p>至此，已经拥有了完整的Linux环境。然而容器环境启动和文件操作不方便，每次重启笔记本都需要重新启动容器，Docker本身的冷启动时间较长。</p>
+<h3 id="Ubuntu-22-04-on-WSL"><a href="#Ubuntu-22-04-on-WSL" class="headerlink" title="Ubuntu-22.04 on WSL"></a>Ubuntu-22.04 on WSL</h3><p>既然已经安装好了<code>wsl</code>环境，那干脆尝试安装下其他发行版吧，考虑到使用便利性，我选择了<code>Ubuntu22.04</code>(<a target="_blank" rel="noopener" href="https://aka.ms/wslubuntu2204">下载地址</a>)<br>下载完成后使用一下命令安装，<strong>注意，双击打开安装会报错</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Add-AppxPackage .\app_name.appx</span><br></pre></td></tr></table></figure>
+<p>此时打开Windows-Terminal发现已经添加好了Ubuntu-22.04的启动配置，新建终端标签启动即可。第一次启动需要初始化，耗时较长。</p>
+<p>其他发行版安装可参考官方教程：<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/wsl/install-manual">https://docs.microsoft.com/en-us/windows/wsl/install-manual</a></p>
+<p>至此，已经拥有了可以快速启动，无缝启动，丝般顺滑。然而WSL无法使用systemd，这就导致dockerd无法启动</p>
+<h3 id="Ubuntu-22-04-on-WSL2"><a href="#Ubuntu-22-04-on-WSL2" class="headerlink" title="Ubuntu-22.04 on WSL2"></a>Ubuntu-22.04 on WSL2</h3><p>于是我将目标瞄准了虚拟化更彻底的WSL2</p>
+<p>将WSL的Linux发行版转换成WSL2很方便，只需要一条命令即可拥有，过程中不需要UAC提权：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-version Ubuntu-22.04 2</span><br></pre></td></tr></table></figure>
+
+<p>使用wsl-distrod方案安装systemd，具体教程见官方repo：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/nullpo-head/wsl-distrod">https://github.com/nullpo-head/wsl-distrod</a></p>
+<p>至此，我就在Windows上拥有了无缝的bash体验，使用过程中不需要UAC提权，还拥有WSL系统的root权限，完美，撒花！！！</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/08/17/cidr/">cidr网段划分笔记<span class="note">较早</span></a><div class="line"></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://changediff.github.io/">@changediff</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0" title="v1.8.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
