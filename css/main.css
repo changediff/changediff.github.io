@@ -181,6 +181,7 @@ a[onclick]:hover {
 .cap {
   font-weight: 500;
   font-size: 0.75rem;
+  scrollbar-width: none;
   color: var(--text-p3);
 }
 .cap.blue {
@@ -435,7 +436,8 @@ article.md .highlight.python .code:before {
 article.md .highlight.php .code:before {
   content: "PHP";
 }
-article.md .highlight.rust .code:before {
+article.md .highlight.rust .code:before,
+article.md .highlight.rs .code:before {
   content: "Rust";
 }
 article.md .highlight.sql .code:before {
@@ -450,8 +452,9 @@ article.md .highlight.makefile .code:before {
 article.md .highlight.go .code:before {
   content: "Go";
 }
-article.md .highlight.typescript .code:before {
-  content: "TypeScript";
+article.md .highlight.typescript .code:before,
+article.md .highlight.ts .code:before {
+  content: "TS";
 }
 pre .code:before {
   display: none;
@@ -980,6 +983,7 @@ div.toast {
 .page-footer .sitemap {
   margin: 0.5rem 0 2rem;
   display: grid;
+  scrollbar-width: none;
   grid-gap: 1rem 1rem;
   grid-auto-flow: column dense;
   overflow: scroll;
@@ -3090,6 +3094,7 @@ nav.menu a.nav-item:hover {
 .l_left .widgets {
   overflow: scroll;
   flex-grow: 1;
+  scrollbar-width: none;
   z-index: 1;
 }
 .l_left .widgets::-webkit-scrollbar {
