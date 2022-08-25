@@ -1,7 +1,12 @@
 ---
-title: algorithm-interview
-tags: ["algorithm", "排序", "面试"]
+title: 算法复杂度计算
+tags:
+  - algorithm
+  - 排序
+  - 面试
+date: 2022-08-03 21:05:19
 ---
+
 
 # 定义
 算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下:
@@ -17,7 +22,7 @@ $$ 非渐进紧确下界:  \omega(g(n))=\{f(n): 对任意常量c>0, 存在常量
 2. $\Omega$描述了最好情况下的时间复杂度量级;
 3. $\Theta$是由$O$和$\Omega$组成的一个区间;
 
-![](https://img2020.cnblogs.com/blog/817058/202005/817058-20200524214628577-1211551574.png)
+![定义](3-1.png)
 
 将渐进记号和实数之间的大小比较作类比, 也更好理解:
 $$ f(n) = O(n) 类似于 a <= b $$
@@ -58,4 +63,4 @@ $$
 
 - 附上不同算法复杂度的增长趋势:
 https://www.geogebra.org/calculator/brd6wjte
-![](https://img2020.cnblogs.com/blog/817058/202005/817058-20200524235100754-923872025.png)
+![compare](compare.png)
