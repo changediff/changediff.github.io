@@ -73,7 +73,7 @@
 <p>2022年3月迁移到GitHub Pages，旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a></p>
 </div></div>
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/08/25/notes-on-wsl/">Windows上的shell环境折腾笔记</a></div><div class="more-item"><a class="title" href="/2022/08/17/cidr/">cidr网段划分笔记</a></div><div class="more-item"><a class="title" href="/2022/08/03/algorithm-interview/">算法复杂度计算</a></div><div class="more-item"><a class="title" href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div><div class="more-item"><a class="title" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/09/20/dnsmasq-in-docker/">dnsmasq容器部署折腾</a></div><div class="more-item"><a class="title" href="/2022/08/25/notes-on-wsl/">Windows上的shell环境折腾笔记</a></div><div class="more-item"><a class="title" href="/2022/08/17/cidr/">cidr网段划分笔记</a></div><div class="more-item"><a class="title" href="/2022/08/03/algorithm-interview/">算法复杂度计算</a></div><div class="more-item"><a class="title" href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div></div></div>
 </div>
 
 
@@ -111,7 +111,10 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post " href="/2022/08/25/notes-on-wsl/">
+  <div class="post-list post"><a class="post-card post " href="/2022/09/20/dnsmasq-in-docker/">
+<article class="md"><h2 class="post-title">dnsmasq容器部署折腾</h2><div class="excerpt"><p>蛋疼的华为云K8s的DNS问题最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。
+华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-09-20T13:31:46.000Z">2022-09-20</time></span></div></article>
+</a><a class="post-card post " href="/2022/08/25/notes-on-wsl/">
 <article class="md"><h2 class="post-title">Windows上的shell环境折腾笔记</h2><div class="excerpt"><p>最近工作电脑从MacOS换到了Windows 10，shell环境的缺失让我很不习惯，于是便开启我的折腾之旅。
 工作电脑的Windows系统没有管理员UAC权限，没有微软应用商店，只能从内网软件中心安装软件，这也就导致操作有很多限制。
 下面按照时间顺序记录下尝试过的方案
@@ -153,11 +156,6 @@ GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》
 </a><a class="post-card post " href="/2022/05/06/iptables-howto/">
 <article class="md"><h2 class="post-title">iptables入门笔记</h2><div class="excerpt"><p>iptables是基于Linux内核模块Netfilter的防火墙工具，可以按照一定的规则对ip packet执行监控、修改、转发、重定向、丢弃等操作；ipv6版本的是ip6talbles；nftables则是iptables的新实现。目前，iptables还是使用最广泛的Linux防火墙模块，本文也聚焦于iptables的入门使用。
 关键概念iptables的操作对象是ip包。Tables...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-05-05T16:37:22.000Z">2022-05-06</time></span></div></article>
-</a><a class="post-card post " href="/2022/04/17/rpm-backports/">
-<article class="md"><h2 class="post-title">CentOS7升级systemd版本到416.1</h2><div class="excerpt"><p>本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的backports
-具体打包过程中见GitHub
-0. 搭建本地仓库打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror
-1234567891...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-04-17T09:19:56.000Z">2022-04-17</time></span></div></article>
 </a></div>
   
   <div class='paginator-wrap dis-select'>

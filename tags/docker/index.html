@@ -73,7 +73,7 @@
 <p>2022年3月迁移到GitHub Pages，旧博客在<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">cnblogs</a></p>
 </div></div>
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/08/25/notes-on-wsl/">Windows上的shell环境折腾笔记</a></div><div class="more-item"><a class="title" href="/2022/08/17/cidr/">cidr网段划分笔记</a></div><div class="more-item"><a class="title" href="/2022/08/03/algorithm-interview/">算法复杂度计算</a></div><div class="more-item"><a class="title" href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div><div class="more-item"><a class="title" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="more-item"><a class="title" href="/2022/09/20/dnsmasq-in-docker/">dnsmasq容器部署折腾</a></div><div class="more-item"><a class="title" href="/2022/08/25/notes-on-wsl/">Windows上的shell环境折腾笔记</a></div><div class="more-item"><a class="title" href="/2022/08/17/cidr/">cidr网段划分笔记</a></div><div class="more-item"><a class="title" href="/2022/08/03/algorithm-interview/">算法复杂度计算</a></div><div class="more-item"><a class="title" href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div></div></div>
 </div>
 
 
@@ -113,7 +113,10 @@
   </nav>
 </div>
 
-  <div class="post-list post"><a class="post-card post " href="/2022/08/03/what-is-overlay2/">
+  <div class="post-list post"><a class="post-card post " href="/2022/09/20/dnsmasq-in-docker/">
+<article class="md"><h2 class="post-title">dnsmasq容器部署折腾</h2><div class="excerpt"><p>蛋疼的华为云K8s的DNS问题最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。
+华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-09-20T13:31:46.000Z">2022-09-20</time></span></div></article>
+</a><a class="post-card post " href="/2022/08/03/what-is-overlay2/">
 <article class="md"><h2 class="post-title">overlay2笔记</h2><div class="excerpt"><p>overlay2文件系统的原理overlay2的实现原理直观如下图：
 可以使用下面的命令做简单的模拟：
 123mkdir -p /overlaytest/client_1/&#123;upperdir,workdir&#125; /overlaytest/client_2/&#123;upperdir,workdir&#125; lowerdir merged/&#123;client_1,...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T12:58:42.000Z">2022-08-03</time></span></div></article>
