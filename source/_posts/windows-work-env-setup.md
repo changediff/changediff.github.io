@@ -146,8 +146,77 @@ function Get-Size {
 ```
 
 ## WSL(Windows Subsystem for Linux)
+
+### WSL安装
 1. WSL的安装可以参考之前的博文 [Windows上的shell环境折腾笔记](https://changediff.github.io/2022/08/25/notes-on-wsl/)
 2. 同时附上官方教程：https://learn.microsoft.com/en-us/windows/wsl/install-manual
+
+### 发行版选择
+#### 图形界面kali
+需要图形界面推荐`kali-linux`，图形界面配置参考：https://www.kali.org/docs/wsl/
+
+```
+> winget search kali
+名称                ID                       版本    匹配      源
+----------------------------------------------------------------------
+Kali Linux          9PKR34TNCV07             Unknown           msstore
+KALITI              9WZDNCRDBPKV             Unknown           msstore
+Kalipso Profesyonel 9N4DWTDRZT9C             Unknown           msstore
+Kalipso Tüketici    9N7BL6GKFB2C             Unknown           msstore
+Kali Linux          kalilinux.kalilinux      1.1.9.0 Tag: kali winget
+SiriKali            FrancisBanyikwa.SiriKali 1.5.0             winget
+
+> winget install 9PKR34TNCV07
+```
+
+#### 简洁高效Arch
+官方网址：https://github.com/yuk7/ArchWSL
+```
+scoop bucket add extras
+scoop install archwsl
+```
+
+#### 官方默认Ubuntu
+
+```
+> winget search ubuntu
+名称               ID                    版本            匹配        源
+----------------------------------------------------------------------------
+Ubuntu             9PDXGNCFSCZV          Unknown                     msstore
+Ubuntu 20.04.5 LTS 9MTTCL66CPXJ          Unknown                     msstore
+Ubuntu 22.04.1 LTS 9PN20MSR04DW          Unknown                     msstore
+Ubuntu 18.04.5 LTS 9PNKSF5ZN4SW          Unknown                     msstore
+Ubuntu (Preview)   9P7BDVKVNXZ6          Unknown                     msstore
+Ubuntu             Canonical.Ubuntu      2004.2021.825.0             winget
+Ubuntu 22.04 LTS   Canonical.Ubuntu.2204 2204.0.10.0     Tag: ubuntu winget
+Ubuntu 20.04 LTS   Canonical.Ubuntu.2004 2004.2021.825.0 Tag: ubuntu winget
+Ubuntu 18.04 LTS   Canonical.Ubuntu.1804 1804.2019.522.0 Tag: ubuntu winget
+Ubuntu 16.04 LTS   Canonical.Ubuntu.1604 1604.2019.523.0 Tag: ubuntu winget
+
+> winget install Canonical.Ubuntu.2204
+```
+
+### WSL配置管理
+
+#### `wsl --help`
+优先参考wsl帮助命令
+
+#### easyWSL
+提供图形界面管理已安装发行版，同时支持将Docker镜像转化成WSL子系统
+```
+> winget search easyWSL
+名称    ID           版本    源
+-------------------------------------
+easyWSL 9NHBTMKS47RB Unknown msstore
+```
+
+#### 默认登录用户修改
+非官方版本的wsl可能没有初始化创建用户的过程，默认账户为`root`，可手动创建用户后，添加对应的配置实现默认用户更改
+```
+$ cat /etc/wsl.conf
+[user]
+default=用户名
+```
 
 ## 快捷键 PowerToys
 
