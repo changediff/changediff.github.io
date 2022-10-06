@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Windows10(2009)工作环境配置 - changediff</title>
+
+  
+    <meta name="description" content="最近工作电脑换成了Windows 10，也就重新开始了我的Windows折腾之旅。回顾下当年的操作系统折腾时间线 123win98 --&gt; winxp --&gt; win vista（第一台自己的电脑） --&gt; win7 --&gt; win8 &amp; windows phone 8 --&gt; win10 &amp; win10mobile --&gt; win11 (Ste">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows10(2009)工作环境配置">
+<meta property="og:url" content="https://changediff.github.io/2022/10/06/windows-work-env-setup/index.html">
+<meta property="og:site_name" content="changediff">
+<meta property="og:description" content="最近工作电脑换成了Windows 10，也就重新开始了我的Windows折腾之旅。回顾下当年的操作系统折腾时间线 123win98 --&gt; winxp --&gt; win vista（第一台自己的电脑） --&gt; win7 --&gt; win8 &amp; windows phone 8 --&gt; win10 &amp; win10mobile --&gt; win11 (Ste">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://changediff.github.io/2022/10/06/windows-work-env-setup/powertoy1.png">
+<meta property="og:image" content="https://changediff.github.io/2022/10/06/windows-work-env-setup/powertoy2.png">
+<meta property="og:image" content="https://changediff.github.io/2022/10/06/windows-work-env-setup/powertoy3.png">
+<meta property="article:published_time" content="2022-10-06T14:35:52.000Z">
+<meta property="article:modified_time" content="2022-10-06T16:48:19.832Z">
+<meta property="article:author" content="changediff">
+<meta property="article:tag" content="WSL">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://changediff.github.io/2022/10/06/windows-work-env-setup/powertoy1.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Terminal-%E7%BB%88%E7%AB%AF"><span class="toc-text">Terminal 终端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scoop"><span class="toc-text">scoop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-Terminal"><span class="toc-text">Windows Terminal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#scoop-install-winget"><span class="toc-text">scoop install winget</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#winget-install"><span class="toc-text">winget install</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmder"><span class="toc-text">cmder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-Terminal-1"><span class="toc-text">Windows Terminal</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E5%AD%97%E4%BD%93%E5%AE%89%E8%A3%85"><span class="toc-text">终端字体安装</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Visual-Studio-Code"><span class="toc-text">Visual Studio Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PowerShell%E9%85%8D%E7%BD%AE"><span class="toc-text">PowerShell配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Shell%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85-awk-grep-vim-git"><span class="toc-text">Shell工具安装(awk, grep, vim, git)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PowerShell-profile%E9%85%8D%E7%BD%AE"><span class="toc-text">PowerShell profile配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WSL-Windows-Subsystem-for-Linux"><span class="toc-text">WSL(Windows Subsystem for Linux)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE-PowerToys"><span class="toc-text">快捷键 PowerToys</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%94%AE%E7%9B%98%E9%85%8D%E7%BD%AE"><span class="toc-text">参考键盘配置</span></a></li></ol></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-10-06T14:35:52.000Z">2022-10-06</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>Windows10(2009)工作环境配置</span></h1>
+<p>最近工作电脑换成了<code>Windows 10</code>，也就重新开始了我的Windows折腾之旅。回顾下当年的操作系统折腾时间线</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">win98 --&gt; winxp --&gt; win vista（第一台自己的电脑） --&gt; win7 --&gt; win8 &amp; windows phone 8 --&gt; win10 &amp; win10mobile --&gt; win11 (Steam游戏机) --&gt; win10(2009版本，工作使用)</span><br><span class="line">                --&gt; Ubuntu --&gt; Debian --&gt; Linux Mint --&gt; Deepin --&gt; Arch --&gt; LFS --&gt; Manjaro --&gt; kali --&gt; Arch / Debian / Ubuntu (个人服务器)</span><br><span class="line">                                                                                             --&gt; macOS10 --&gt; macOS11 --&gt; macOS12 (日常使用)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Terminal-终端"><a href="#Terminal-终端" class="headerlink" title="Terminal 终端"></a>Terminal 终端</h2><blockquote>
+<p>因为域管控的原因，工作电脑无法升级系统版本，所以以下的操作都是基于<code>win10(2009)</code>版本</p>
+</blockquote>
+<h3 id="scoop"><a href="#scoop" class="headerlink" title="scoop"></a>scoop</h3><p>官方网址：<a target="_blank" rel="noopener" href="https://scoop.sh/">https://scoop.sh/</a></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">Set-ExecutionPolicy</span> RemoteSigned <span class="literal">-Scope</span> CurrentUser <span class="comment"># Optional: Needed to run a remote script the first time</span></span><br><span class="line">&gt; <span class="built_in">irm</span> get.scoop.sh | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+<h3 id="Windows-Terminal"><a href="#Windows-Terminal" class="headerlink" title="Windows Terminal"></a>Windows Terminal</h3><p>官方网址：<a target="_blank" rel="noopener" href="https://github.com/microsoft/terminal">https://github.com/microsoft/terminal</a></p>
+<p>推荐先试用scoop安装winget，再使用winget安装Windows Terminal。Windows生态下另外一款包管理器<a target="_blank" rel="noopener" href="https://chocolatey.org/">choco</a>和公司安装的麦咖啡冲突导致蓝屏，所以略过。</p>
+<h4 id="scoop-install-winget"><a href="#scoop-install-winget" class="headerlink" title="scoop install winget"></a>scoop install winget</h4><p>高版本的Windows10和Windows11自带winget，对于没有集成winget的版本，推荐使用scoop安装winget，这也是目前找到的唯一可行不升级操作系统安装winget的方式。</p>
+<h4 id="winget-install"><a href="#winget-install" class="headerlink" title="winget install"></a>winget install</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 安装winget</span><br><span class="line">scoop bucket add main</span><br><span class="line">scoop install winget</span><br><span class="line"># 安装c++库</span><br><span class="line">scoop bucket add extras</span><br><span class="line">scoop install vcredist</span><br></pre></td></tr></table></figure>
+
+<h3 id="cmder"><a href="#cmder" class="headerlink" title="cmder"></a>cmder</h3><p>官方网址：<a target="_blank" rel="noopener" href="https://cmder.app/">https://cmder.app/</a></p>
+<p>推荐使用scoop安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket add main</span><br><span class="line">scoop install cmder-full</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-Terminal-1"><a href="#Windows-Terminal-1" class="headerlink" title="Windows Terminal"></a>Windows Terminal</h3><p>官方网址：<a target="_blank" rel="noopener" href="https://github.com/microsoft/terminal">https://github.com/microsoft/terminal</a></p>
+<p>推荐使用winget安装，方便后续更新</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install --id=Microsoft.WindowsTerminal -e</span><br></pre></td></tr></table></figure>
+
+<h4 id="终端字体安装"><a href="#终端字体安装" class="headerlink" title="终端字体安装"></a>终端字体安装</h4><p>推荐使用Fira Code <a target="_blank" rel="noopener" href="https://github.com/tonsky/FiraCode">https://github.com/tonsky/FiraCode</a></p>
+<h3 id="Visual-Studio-Code"><a href="#Visual-Studio-Code" class="headerlink" title="Visual Studio Code"></a>Visual Studio Code</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install --id=Microsoft.VisualStudioCode -e</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="PowerShell配置"><a href="#PowerShell配置" class="headerlink" title="PowerShell配置"></a>PowerShell配置</h3><h4 id="Shell工具安装-awk-grep-vim-git"><a href="#Shell工具安装-awk-grep-vim-git" class="headerlink" title="Shell工具安装(awk, grep, vim, git)"></a>Shell工具安装(awk, grep, vim, git)</h4><p>以下4个工具建议使用scoop安装，scoop安装的软件大多为portable模式，方便管理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># awk</span><br><span class="line">scoop bucket add main</span><br><span class="line">scoop install gawk</span><br><span class="line"></span><br><span class="line"># grep</span><br><span class="line">scoop bucket add main</span><br><span class="line">scoop install grep</span><br><span class="line"></span><br><span class="line"># vim</span><br><span class="line">scoop bucket add main</span><br><span class="line">scoop install vim</span><br><span class="line"></span><br><span class="line"># git</span><br><span class="line">scoop bucket add main</span><br><span class="line">scoop install git</span><br></pre></td></tr></table></figure>
+
+<h4 id="PowerShell-profile配置"><a href="#PowerShell-profile配置" class="headerlink" title="PowerShell profile配置"></a>PowerShell profile配置</h4><p><code>PowerShell</code>的<code>$profile</code>，相当于Linux的<code>.bashrc</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 参考博客</span></span><br><span class="line"><span class="comment"># https://blog.batkiz.com/posts/2020/some-pwsh-scripts/</span></span><br><span class="line"><span class="comment"># https://blog.batkiz.com/posts/2020/some-pwsh-scripts-2/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">nali</span></span> &#123;</span><br><span class="line">    <span class="keyword">param</span> (</span><br><span class="line">        <span class="variable">$Query</span> = <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        [<span class="type">Alias</span>(<span class="string">&#x27;l&#x27;</span>)]</span><br><span class="line">        <span class="variable">$Lang</span> = <span class="string">&#x27;zh&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$Lang</span>.ToLower() <span class="operator">-eq</span> <span class="string">&#x27;en&#x27;</span> ) &#123;</span><br><span class="line">        <span class="variable">$Lang</span> = <span class="string">&#x27;en&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$Lang</span> = <span class="string">&#x27;zh-CN&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$ApiUrl</span> = <span class="string">&quot;http://ip-api.com/json/&#123;0&#125;?lang=&#123;1&#125;&quot;</span> <span class="operator">-f</span> <span class="variable">$Query</span>, <span class="variable">$Lang</span></span><br><span class="line"></span><br><span class="line">    <span class="variable">$info</span> = (<span class="built_in">Invoke-WebRequest</span> <span class="variable">$ApiUrl</span>).Content | <span class="built_in">ConvertFrom-Json</span></span><br><span class="line"></span><br><span class="line">    <span class="variable">$printInfo</span> = <span class="string">&quot;&#123;0&#125;`t[&#123;1&#125; @ &#123;2&#125;, &#123;3&#125;]&quot;</span> <span class="operator">-f</span> <span class="variable">$info</span>.query, <span class="variable">$info</span>.isp, <span class="variable">$info</span>.city, <span class="variable">$info</span>.country</span><br><span class="line"></span><br><span class="line">    <span class="variable">$printInfo</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">which</span></span> &#123;</span><br><span class="line">    <span class="variable">$results</span> = <span class="built_in">New-Object</span> System.Collections.Generic.List[<span class="type">System.Object</span>];</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$command</span> <span class="keyword">in</span> <span class="variable">$args</span>) &#123;</span><br><span class="line">        <span class="variable">$path</span> = (<span class="built_in">Get-Command</span> <span class="variable">$command</span>).Source</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$path</span>) &#123;</span><br><span class="line">            <span class="variable">$results</span>.Add(<span class="variable">$path</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$results</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">time</span></span> &#123;</span><br><span class="line">    <span class="variable">$Command</span> = <span class="string">&quot;<span class="variable">$args</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="variable">$time</span> = <span class="built_in">Measure-Command</span> &#123; <span class="built_in">Invoke-Expression</span> <span class="variable">$Command</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> | <span class="built_in">out-default</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="variable">$info</span> = <span class="string">&quot;&#123;0:d2&#125;:&#123;1:d2&#125;:&#123;2:d2&#125;.&#123;3&#125;&quot;</span> <span class="operator">-f</span> <span class="variable">$time</span>.Hours, <span class="variable">$time</span>.Minutes, <span class="variable">$time</span>.Seconds, <span class="variable">$time</span>.Milliseconds</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Write-Output</span> <span class="variable">$info</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Get-Size</span></span> &#123;</span><br><span class="line">    <span class="keyword">param</span>([<span class="built_in">string</span>]<span class="variable">$pth</span>)</span><br><span class="line">    <span class="string">&quot;&#123;0:n2&#125;&quot;</span> <span class="operator">-f</span> ((<span class="built_in">Get-ChildItem</span> <span class="literal">-path</span> <span class="variable">$pth</span> <span class="literal">-recurse</span> | <span class="built_in">measure-object</span> <span class="literal">-property</span> length <span class="literal">-sum</span>).sum / <span class="number">1</span>mb) + <span class="string">&quot; M&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="WSL-Windows-Subsystem-for-Linux"><a href="#WSL-Windows-Subsystem-for-Linux" class="headerlink" title="WSL(Windows Subsystem for Linux)"></a>WSL(Windows Subsystem for Linux)</h2><ol>
+<li>WSL的安装可以参考之前的博文 <a href="https://changediff.github.io/2022/08/25/notes-on-wsl/">Windows上的shell环境折腾笔记</a></li>
+<li>同时附上官方教程：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/wsl/install-manual">https://learn.microsoft.com/en-us/windows/wsl/install-manual</a></li>
+</ol>
+<h2 id="快捷键-PowerToys"><a href="#快捷键-PowerToys" class="headerlink" title="快捷键 PowerToys"></a>快捷键 PowerToys</h2><p>官方网址：<a target="_blank" rel="noopener" href="https://github.com/microsoft/PowerToys">https://github.com/microsoft/PowerToys</a></p>
+<p>从macOS切到Windows最不习惯的是快捷键，如果说是只使用一个操作系统，那可以重新记忆习惯，然而我是macOS和Windows切换使用，就有快捷键打架的问题。</p>
+<p>最近新发现的<code>PowerToys</code>的能够</p>
+<p>推荐使用winget安装，方便后续更新</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install Microsoft.PowerToys -s winget</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考键盘配置"><a href="#参考键盘配置" class="headerlink" title="参考键盘配置"></a>参考键盘配置</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/10/06/windows-work-env-setup/powertoy1.png" alt="powertoy1"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/10/06/windows-work-env-setup/powertoy2.png" alt="powertoy2"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/10/06/windows-work-env-setup/powertoy3.png" alt="powertoy3"></p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/09/20/dnsmasq-in-docker/">dnsmasq容器部署折腾<span class="note">较早</span></a><div class="line"></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.9.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

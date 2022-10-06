@@ -602,6 +602,7 @@ html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 body {
   background: var(--site-bg);
@@ -1025,10 +1026,16 @@ div.toast {
 }
 .page-footer .text p {
   margin: 4px 0;
-  line-height: 1.2;
+  line-height: 1.5;
 }
 .page-footer .text a {
   text-decoration: underline;
+  font-weight: 500;
+  margin: inherit;
+  padding: inherit;
+}
+.page-footer .text a:hover {
+  background: inherit;
 }
 .nav-wrap {
   position: sticky;
@@ -1211,6 +1218,7 @@ nav.cap a+a {
   width: 40vw;
   max-width: 460px;
   border: 1px solid var(--block-hover);
+  z-index: 1;
 }
 .related-wrap#related-posts .related-posts a .img {
   min-width: 100%;
@@ -3740,7 +3748,7 @@ article.md.error-page a#back {
   position: relative;
   padding-bottom: calc(1 * var(--gap-l));
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1400px) {
   .l_main {
     margin-left: calc(2 * var(--gap-l));
     margin-right: calc(2 * var(--gap-l) + var(--width-left));
