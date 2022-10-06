@@ -21,12 +21,12 @@
   <title>算法复杂度计算 - changediff</title>
 
   
-    <meta name="description" content="定义 算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下: $$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;c_1g(n)&lt;&#x3D;f(n)&lt;&#x3D;c_2g(n)} $$ $$ 渐进上界: O(g(n))&#x3D;{f(n):">
+    <meta name="description" content="定义算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下: $$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;c_1g(n)&lt;&#x3D;f(n)&lt;&#x3D;c_2g(n)} $$">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法复杂度计算">
 <meta property="og:url" content="https://changediff.github.io/2022/08/03/algorithm-interview/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="定义 算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下: $$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;c_1g(n)&lt;&#x3D;f(n)&lt;&#x3D;c_2g(n)} $$ $$ 渐进上界: O(g(n))&#x3D;{f(n):">
+<meta property="og:description" content="定义算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下: $$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;c_1g(n)&lt;&#x3D;f(n)&lt;&#x3D;c_2g(n)} $$">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://changediff.github.io/2022/08/03/algorithm-interview/3-1.png">
 <meta property="og:image" content="https://changediff.github.io/2022/08/03/algorithm-interview/compare.png">
@@ -101,51 +101,25 @@
 
 <article class='content md post'>
 <h1 class="article-title"><span>算法复杂度计算</span></h1>
-<h1>定义</h1>
-<p>算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下:</p>
-<p>$$ 渐进紧确界:  \Theta (g(n))={f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;=n_0, 有0&lt;=c_1g(n)&lt;=f(n)&lt;=c_2g(n)} $$<br>
-$$ 渐进上界: O(g(n))={f(n): 存在常量c和n_0, 使得对所有n&gt;=n_0, 有0&lt;=cg(n)&lt;=f(n)} $$<br>
-$$ 渐进下界:  \Omega (g(n))={f(n): 存在常量c和n_0, 使得对所有n&gt;=n_0, 有0&lt;=f(n)&lt;=cg(n)} $$<br>
-$$ 非渐进紧确上界:  o(g(n))={f(n): 对任意常量c&gt;0, 存在常量n_0&gt;0, 使得对所有n&gt;=n_0, 有0&lt;=f(n)&lt;cg(n)} $$<br>
-$$ 非渐进紧确下界:  \omega(g(n))={f(n): 对任意常量c&gt;0, 存在常量n_0&gt;0, 使得对所有n&gt;=n_0, 有0&lt;=cg(n)&lt;f(n)}$$</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下:</p>
+<p>$$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;c_1g(n)&lt;&#x3D;f(n)&lt;&#x3D;c_2g(n)} $$<br>$$ 渐进上界: O(g(n))&#x3D;{f(n): 存在常量c和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;cg(n)&lt;&#x3D;f(n)} $$<br>$$ 渐进下界:  \Omega (g(n))&#x3D;{f(n): 存在常量c和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;f(n)&lt;&#x3D;cg(n)} $$<br>$$ 非渐进紧确上界:  o(g(n))&#x3D;{f(n): 对任意常量c&gt;0, 存在常量n_0&gt;0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;f(n)&lt;cg(n)} $$<br>$$ 非渐进紧确下界:  \omega(g(n))&#x3D;{f(n): 对任意常量c&gt;0, 存在常量n_0&gt;0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;cg(n)&lt;f(n)}$$</p>
 <p>这些渐进记号中平常常用的是前三种($\Theta$, $O$, $\Omega$), 因为日常使用中我们最关心最坏情况下时间复杂度, 所以渐进上界$O$也是最为常用的记号. 对于这三种记号, 结合算法导论上的配图很好理解.</p>
 <ol>
 <li>$O$描述了最坏情况下的时间复杂度量级;</li>
 <li>$\Omega$描述了最好情况下的时间复杂度量级;</li>
 <li>$\Theta$是由$O$和$\Omega$组成的一个区间;</li>
 </ol>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="3-1.png" alt="定义"></p>
-<p>将渐进记号和实数之间的大小比较作类比, 也更好理解:<br>
-$$ f(n) = O(n) 类似于 a &lt;= b $$<br>
-$$ f(n) = \Omega (n) 类似于 a &gt;= b $$<br>
-$$ f(n) = \Theta (n) 类似于 a = b $$<br>
-$$ f(n) = o(n) 类似于 a &lt; b $$<br>
-$$ f(n) = \omega (n) 类似于 a &gt; b $$</p>
-<h1>运算</h1>
-<p>渐进函数具有传递性, 自反性, 对称性和转置对称性. 举例来说:<br>
-$$ 传递性: f(n) = O(g(n)) 且 g(n) = O(h(n)) /Rightarrow f(n)=O(h(n)) $$<br>
-$$ 自反性: f(n)=O(f(n)) $$<br>
-$$ 转置对称性: f(n) = O(g(n)) 当且仅当 g(n) = \Omega (f(n)) $$</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/08/03/algorithm-interview/3-1.png" alt="定义"></p>
+<p>将渐进记号和实数之间的大小比较作类比, 也更好理解:<br>$$ f(n) &#x3D; O(n) 类似于 a &lt;&#x3D; b $$<br>$$ f(n) &#x3D; \Omega (n) 类似于 a &gt;&#x3D; b $$<br>$$ f(n) &#x3D; \Theta (n) 类似于 a &#x3D; b $$<br>$$ f(n) &#x3D; o(n) 类似于 a &lt; b $$<br>$$ f(n) &#x3D; \omega (n) 类似于 a &gt; b $$</p>
+<h1 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h1><p>渐进函数具有传递性, 自反性, 对称性和转置对称性. 举例来说:<br>$$ 传递性: f(n) &#x3D; O(g(n)) 且 g(n) &#x3D; O(h(n)) &#x2F;Rightarrow f(n)&#x3D;O(h(n)) $$<br>$$ 自反性: f(n)&#x3D;O(f(n)) $$<br>$$ 转置对称性: f(n) &#x3D; O(g(n)) 当且仅当 g(n) &#x3D; \Omega (f(n)) $$</p>
 <p>利用这些性质可以通过推导的方式得出算法的时间复杂度.</p>
 <ul>
-<li>以快速排序为例</li>
-</ul>
+<li><p>以快速排序为例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 提供一个最好理解的递归实现</span><br><span class="line">def quiksort(l):</span><br><span class="line">    if len(l) &lt; 2:</span><br><span class="line">        return l</span><br><span class="line">    anchor = l[0]</span><br><span class="line">    left = [i for i in l[1:] if i &lt; anchor] #注意l[1:]</span><br><span class="line">    right = [i for i in l[1:] if i &gt;= anchor]</span><br><span class="line">    return quiksort(left) + [anchor] + quiksort(right)</span><br></pre></td></tr></table></figure>
-<p>时间复杂度推导公式如下:<br>
-$$<br>
-\begin{equation}<br>
-\begin{split}<br>
-T(n) &amp;= O(n) + 2 * T(n/2) \<br>
-&amp;= O(n) + 2 * O(n/2) + 4 * T(n/4) \<br>
-&amp;= \sum_{i=1}^{lg(n)} O(n) \<br>
-&amp;= O(nlg(n))<br>
-\end{split}<br>
-\end{equation}<br>
-$$</p>
-<ul>
-<li>附上不同算法复杂度的增长趋势:<br>
-<a target="_blank" rel="noopener" href="https://www.geogebra.org/calculator/brd6wjte">https://www.geogebra.org/calculator/brd6wjte</a><br>
-<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="compare.png" alt="compare"></li>
+<p>时间复杂度推导公式如下:<br>$$<br>\begin{equation}<br>\begin{split}<br>T(n) &amp;&#x3D; O(n) + 2 * T(n&#x2F;2) \<br>&amp;&#x3D; O(n) + 2 * O(n&#x2F;2) + 4 * T(n&#x2F;4) \<br>&amp;&#x3D; \sum_{i&#x3D;1}^{lg(n)} O(n) \<br>&amp;&#x3D; O(nlg(n))<br>\end{split}<br>\end{equation}<br>$$</p>
+</li>
+<li><p>附上不同算法复杂度的增长趋势:<br><a target="_blank" rel="noopener" href="https://www.geogebra.org/calculator/brd6wjte">https://www.geogebra.org/calculator/brd6wjte</a><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/08/03/algorithm-interview/compare.png" alt="compare"></p>
+</li>
 </ul>
 
 

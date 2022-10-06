@@ -115,26 +115,20 @@
 
   <div class="post-list post"><a class="post-card post " href="/2022/05/06/iptables-howto/">
 <article class="md"><h2 class="post-title">iptables入门笔记</h2><div class="excerpt"><p>iptables是基于Linux内核模块Netfilter的防火墙工具，可以按照一定的规则对ip packet执行监控、修改、转发、重定向、丢弃等操作；ipv6版本的是ip6talbles；nftables则是iptables的新实现。目前，iptables还是使用最广泛的Linux防火墙模块，本文也聚焦于iptables的入门使用。
-关键概念
-iptables的操作对象是ip包。Table...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-05-05T16:37:22.000Z">2022-05-06</time></span></div></article>
+关键概念iptables的操作对象是ip包。Tables...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-05-05T16:37:22.000Z">2022-05-06</time></span></div></article>
 </a><a class="post-card post " href="/2022/04/17/rpm-backports/">
 <article class="md"><h2 class="post-title">CentOS7升级systemd版本到416.1</h2><div class="excerpt"><p>本文主要记录下在CentOS7折腾升级systemd的过程中踩得坑，方便以后需要的时候能够快速复盘。CentOS7中默认开启cgorupv2需要升级systemd版本，当前最靠谱的升级方式为Facebook维护的backports
 具体打包过程中见GitHub
-0. 搭建本地仓库
-打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror
-123456789...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-04-17T09:19:56.000Z">2022-04-17</time></span></div></article>
+0. 搭建本地仓库打包好的rpm包在repo目录下，可以使用createrepo命令快速搭建自定义mirror
+1234567891...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-04-17T09:19:56.000Z">2022-04-17</time></span></div></article>
 </a><a class="post-card post " href="/2021/02/28/rpi4b-usb-boot/">
 <article class="md"><h2 class="post-title">从外接USB设备启动树莓派4b</h2><div class="excerpt"><p>树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。
-方案调查
-一番查资料，目前支持两种启动方案：
+方案调查一番查资料，目前支持两种启动方案：
 
-升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。
-找到的靠谱教程如下：
-1. New Raspberry Pi 4...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-28T12:46:00.000Z">2021-02-28</time></span></div></article>
+升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。找到的靠谱教程如下：1. New Raspberry Pi 4 Bo...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-28T12:46:00.000Z">2021-02-28</time></span></div></article>
 </a><a class="post-card post " href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">
 <article class="md"><h2 class="post-title">利用kube-state-metrics自动生成prometheus的配置文件</h2><div class="excerpt"><p>最近运维的k8s集群的node节点变动频繁，总是要手动更新prometheus配置文件表示很蛋疼。所以研究一下怎么对node节点做service discovery，自动更新监控targets列表。
-先看看已有的配置维护方案
-prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-09T05:05:00.000Z">2021-02-09</time></span></div></article>
+先看看已有的配置维护方案prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件。...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-09T05:05:00.000Z">2021-02-09</time></span></div></article>
 </a><a class="post-card post " href="/1970/01/01/hello-world/">
 <article class="md"><h2 class="post-title">Hello World</h2><div class="excerpt"><p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
 Qu...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="1970-01-01T00:00:00.000Z">1970-01-01</time></span></div></article>
