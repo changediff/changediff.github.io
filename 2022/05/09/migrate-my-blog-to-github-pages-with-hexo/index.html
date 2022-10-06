@@ -21,12 +21,12 @@
   <title>使用hexo将博客迁移到GitHub Pages - changediff</title>
 
   
-    <meta name="description" content="博客搭建和迁移hexo的官网文档很详细，这里主要记载使用hexo+Github Pages过程中遇到的坑  GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》 如果是按照步骤1新建的项目，_config.yml中的url只需要填写网址即可，不用加上project12345678# URL## Set your site url here. For example, if y">
+    <meta name="description" content="博客搭建和迁移 hexo的官网文档很详细，这里主要记载使用hexo+Github Pages过程中遇到的坑  GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》 如果是按照步骤1新建的项目，_config.yml中的url只需要填写网址即可，不用加上project  12345678# URL## Set your site url here. For example, i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用hexo将博客迁移到GitHub Pages">
 <meta property="og:url" content="https://changediff.github.io/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="博客搭建和迁移hexo的官网文档很详细，这里主要记载使用hexo+Github Pages过程中遇到的坑  GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》 如果是按照步骤1新建的项目，_config.yml中的url只需要填写网址即可，不用加上project12345678# URL## Set your site url here. For example, if y">
+<meta property="og:description" content="博客搭建和迁移 hexo的官网文档很详细，这里主要记载使用hexo+Github Pages过程中遇到的坑  GitHub项目创建可参考《超详细Hexo+Github博客搭建小白教程》 如果是按照步骤1新建的项目，_config.yml中的url只需要填写网址即可，不用加上project  12345678# URL## Set your site url here. For example, i">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/zheli-design/hexo-theme-one-paper/main/source/img/one-paper.png">
 <meta property="og:image" content="https://changediff.github.io/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/stellar.png">
@@ -101,33 +101,42 @@
 
 <article class='content md post'>
 <h1 class="article-title"><span>使用hexo将博客迁移到GitHub Pages</span></h1>
-<h2 id="博客搭建和迁移"><a href="#博客搭建和迁移" class="headerlink" title="博客搭建和迁移"></a>博客搭建和迁移</h2><p>hexo的<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/setup">官网文档</a>很详细，这里主要记载使用<code>hexo+Github Pages</code>过程中遇到的坑</p>
+<h2 id="博客搭建和迁移">博客搭建和迁移</h2>
+<p>hexo的<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/setup">官网文档</a>很详细，这里主要记载使用<code>hexo+Github Pages</code>过程中遇到的坑</p>
 <ol>
 <li>GitHub项目创建可参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35668237">《超详细Hexo+Github博客搭建小白教程》</a></li>
-<li>如果是按照步骤1新建的项目，<code>_config.yml</code>中的<code>url</code>只需要填写网址即可，不用加上project<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://changediff.github.io</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br></pre></td></tr></table></figure></li>
+<li>如果是按照步骤1新建的项目，<code>_config.yml</code>中的<code>url</code>只需要填写网址即可，不用加上project</li>
 </ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://changediff.github.io</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br></pre></td></tr></table></figure>
 <p>搭好之后就可以开始迁移了，不过我不打算将<a target="_blank" rel="noopener" href="https://www.cnblogs.com/carlsplace/">之前的文章</a>搬过来了。知识常学常新嘛，这里就记录2022年3月之后的学习感悟吧。</p>
-<h2 id="博客主题选择"><a href="#博客主题选择" class="headerlink" title="博客主题选择"></a>博客主题选择</h2><p>推荐两个主题one-paper和stellar，功能界面不华丽，但是很适合用来专注写作</p>
-<h3 id="one-paper"><a href="#one-paper" class="headerlink" title="one-paper"></a>one-paper</h3><p><a target="_blank" rel="noopener" href="https://github.com/zheli-design/hexo-theme-one-paper">one-paper</a>是一个很干净纯粹的阅读主题，界面很有设计感，不过目前功能很少，可以关注一波作者的更新。</p>
+<h2 id="博客主题选择">博客主题选择</h2>
+<p>推荐两个主题one-paper和stellar，功能界面不华丽，但是很适合用来专注写作</p>
+<h3 id="one-paper">one-paper</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/zheli-design/hexo-theme-one-paper">one-paper</a>是一个很干净纯粹的阅读主题，界面很有设计感，不过目前功能很少，可以关注一波作者的更新。</p>
 <p>具体使用方法参考官方链接即可，默认的配置只有文章和关于。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  首页: /</span><br><span class="line">  归档: /archives</span><br><span class="line">  关于: /about</span><br></pre></td></tr></table></figure>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://raw.githubusercontent.com/zheli-design/hexo-theme-one-paper/main/source/img/one-paper.png" alt="one-paper"></p>
-<h3 id="stellar"><a href="#stellar" class="headerlink" title="stellar"></a>stellar</h3><p><a target="_blank" rel="noopener" href="https://xaoxuu.com/wiki/stellar/#start">stellar</a>是一个内置 wiki 系统的 hexo 主题，拥有简约而精美的视觉设计和丰富又灵活的标签插件。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/stellar.png" alt="stellar"></p>
-<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><h3 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h3><ol>
-<li><p>安装markdown插件</p>
+<h3 id="stellar">stellar</h3>
+<p><a target="_blank" rel="noopener" href="https://xaoxuu.com/wiki/stellar/#start">stellar</a>是一个内置 wiki 系统的 hexo 主题，拥有简约而精美的视觉设计和丰富又灵活的标签插件。<br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="stellar.png" alt="stellar"></p>
+<h2 id="使用技巧">使用技巧</h2>
+<h3 id="插入图片">插入图片</h3>
+<ol>
+<li>安装markdown插件</li>
+</ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-marked --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>.config.yml</code>中打开图片路径配置</p>
+<ol start="2">
+<li><code>.config.yml</code>中打开图片路径配置</li>
+</ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">post_asset_folder: true</span><br><span class="line">marked:</span><br><span class="line">  prependRoot: true</span><br><span class="line">  postAsset: true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>插入图片的时候注意语法，<strong>只填写图片文件名</strong>，图片放在和md同级的资源目录中</p>
-</li>
+<ol start="3">
+<li>插入图片的时候注意语法，<strong>只填写图片文件名</strong>，图片放在和md同级的资源目录中</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># migrate-my-blog-to-github-pages-with-hexo/test-img.png</span><br><span class="line">![我是一张图片](flow_chart.png)</span><br></pre></td></tr></table></figure>
-
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/test-img.png" alt="我是一张图片"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="test-img.png" alt="我是一张图片"></p>
 <p><strong>后遗症：本地无法正常渲染预览markdown</strong></p>
-<h2 id="end"><a href="#end" class="headerlink" title="end"></a>end</h2><p>至此，虽然有点小瑕疵，我的博客发布流程全部迁移到了GitHub pages上面，可以愉快地使用<code>vscode+git</code>来写博客啦~</p>
+<h2 id="end">end</h2>
+<p>至此，虽然有点小瑕疵，我的博客发布流程全部迁移到了GitHub pages上面，可以愉快地使用<code>vscode+git</code>来写博客啦~</p>
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a>许可协议，转载请注明出处。</p>
@@ -159,7 +168,8 @@
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

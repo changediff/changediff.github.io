@@ -21,12 +21,12 @@
   <title>dnsmasq容器部署折腾 - changediff</title>
 
   
-    <meta name="description" content="蛋疼的华为云K8s的DNS问题最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。 华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华为云的">
+    <meta name="description" content="蛋疼的华为云K8s的DNS问题 最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。 华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华为云">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dnsmasq容器部署折腾">
 <meta property="og:url" content="https://changediff.github.io/2022/09/20/dnsmasq-in-docker/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="蛋疼的华为云K8s的DNS问题最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。 华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华为云的">
+<meta property="og:description" content="蛋疼的华为云K8s的DNS问题 最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。 华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华为云">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-20T13:31:46.000Z">
 <meta property="article:modified_time" content="2022-09-20T16:13:42.328Z">
@@ -97,28 +97,30 @@
 
 <article class='content md post'>
 <h1 class="article-title"><span>dnsmasq容器部署折腾</span></h1>
-<h2 id="蛋疼的华为云K8s的DNS问题"><a href="#蛋疼的华为云K8s的DNS问题" class="headerlink" title="蛋疼的华为云K8s的DNS问题"></a>蛋疼的华为云K8s的DNS问题</h2><p>最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。</p>
+<h2 id="蛋疼的华为云K8s的DNS问题">蛋疼的华为云K8s的DNS问题</h2>
+<p>最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。</p>
 <p>华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华为云的DNS做一些劫持（主要有dockerhub劫持、华为repo内网解析、华为容器镜像仓库地址解析），将Node的<code>/etc/resolv.conf</code>改到了自建DNS之后，上面的劫持就失效了，也就导致Node节点没法kube-system相关镜像，也没法yum安装软件包。</p>
-<p>所以，华为云的CCE的node节点的DNS是不能直接更换的，然而我又不得不换，因为普通网络模式的pod可以通过coredns配置将DNS请求转发到自己DNS，*但是host网络模式的pod使用的还是node上<code>/etc/resolv.conf</code>*。</p>
+<p>所以，华为云的CCE的node节点的DNS是不能直接更换的，然而我又不得不换，因为普通网络模式的pod可以通过coredns配置将DNS请求转发到自己DNS，<em>但是host网络模式的pod使用的还是node上<code>/etc/resolv.conf</code></em>。</p>
 <p>于是，我的需求就变成了，换掉node的DNS，但是不直接换，DNS请求先走华为云的DNS，找不到记录之后再去查找自建DNS（其实就是阿里云的Private Zone功能之一）</p>
-<h2 id="折腾解决"><a href="#折腾解决" class="headerlink" title="折腾解决"></a>折腾解决</h2><p>最终，通过在Node上部署dnsmasq，在dnsmasq中指定DNS服务器顺序，本机的DNS指向本机内网ip的方式解决了这个问题。这样相当于给K8s引入了外部依赖，不过可以通过初始化脚本解决这个问题</p>
-<h3 id="容器部署"><a href="#容器部署" class="headerlink" title="容器部署"></a>容器部署</h3><p>每个节点都需要部署的服务，使用DaemonSet部署是最方便的，配置可以使用configmap管理。既然折腾了就折腾导致，看看容器里面怎么跑dnsmasq（这其实会导致鸡生蛋蛋生鸡的问题，初始化node的时候需要先将dnsmasq的镜像放到node上才好启动服务）</p>
-<h4 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h4><p>一开始的启动参数是<code>ENTRYPOINT [&quot;dnsmasq&quot;, &quot;-k&quot;]</code>，容器启动直接退出了，没有任何报错；改为debug模式<code>ENTRYPOINT [&quot;dnsmasq&quot;, &quot;-d&quot;]</code>启动，服务则没有任何问题，然而线上服务不能跑在debug模式。反复尝试不同base镜像和版本，都其实失败，还没有任何日志。</p>
+<h2 id="折腾解决">折腾解决</h2>
+<p>最终，通过在Node上部署dnsmasq，在dnsmasq中指定DNS服务器顺序，本机的DNS指向本机内网ip的方式解决了这个问题。这样相当于给K8s引入了外部依赖，不过可以通过初始化脚本解决这个问题</p>
+<h3 id="容器部署">容器部署</h3>
+<p>每个节点都需要部署的服务，使用DaemonSet部署是最方便的，配置可以使用configmap管理。既然折腾了就折腾导致，看看容器里面怎么跑dnsmasq（这其实会导致鸡生蛋蛋生鸡的问题，初始化node的时候需要先将dnsmasq的镜像放到node上才好启动服务）</p>
+<h4 id="踩坑">踩坑</h4>
+<p>一开始的启动参数是<code>ENTRYPOINT [&quot;dnsmasq&quot;, &quot;-k&quot;]</code>，容器启动直接退出了，没有任何报错；改为debug模式<code>ENTRYPOINT [&quot;dnsmasq&quot;, &quot;-d&quot;]</code>启动，服务则没有任何问题，然而线上服务不能跑在debug模式。反复尝试不同base镜像和版本，都其实失败，还没有任何日志。</p>
 <p>最后尝试在物理机上使用<code>dnsmasq -k</code>正常启动，观察发现<code>-k</code>启动的进程运行用户是<code>nobody</code>，<code>-d</code>启动的进程用户是<code>root</code>，怀疑是容器中fork切换用户之后容器认为主进程退出运行了。<code>dnsmasq --help</code>查看帮助，发现可以指定用户。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-u, --user=&lt;username&gt;   Change to this user after startup. (defaults to nobody).</span><br></pre></td></tr></table></figure>
-
 <p>最终使用<code>ENTRYPOINT [&quot;dnsmasq&quot;, &quot;-k&quot;, &quot;-u&quot;, &quot;root&quot;]</code>在容器中成功启动进程</p>
-<h4 id="最终配置"><a href="#最终配置" class="headerlink" title="最终配置"></a>最终配置</h4><p>最终的可运行的容器配置如下：</p>
+<h4 id="最终配置">最终配置</h4>
+<p>最终的可运行的容器配置如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 使用centos镜像方便调试，最终部署可以换成alpine优化镜像大小，红帽的ubi8镜像也是不错的选择</span><br><span class="line">FROM centos:7</span><br><span class="line">RUN yum install -y dnsmasq</span><br><span class="line">ADD ./main.conf /etc/dnsmasq.d/</span><br><span class="line">ADD ./dns.conf /etc/dnsmasq.d/</span><br><span class="line">ENTRYPOINT [&quot;dnsmasq&quot;, &quot;-k&quot;, &quot;-u&quot;, &quot;root&quot;]</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># cat ./main.conf</span><br><span class="line">no-resolv</span><br><span class="line">domain-needed</span><br><span class="line">no-negcache</span><br><span class="line">max-cache-ttl=1</span><br><span class="line">enable-dbus</span><br><span class="line">dns-forward-max=10000</span><br><span class="line">cache-size=10000</span><br><span class="line">bind-dynamic</span><br><span class="line">min-port=1024</span><br><span class="line">except-interface=lo</span><br><span class="line"># End of config</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># cat ./dns.conf</span><br><span class="line">server=114.114.114.114  #自建DNS</span><br><span class="line">server=100.125.1.250</span><br><span class="line">server=100.125.64.250</span><br></pre></td></tr></table></figure>
-
-<h3 id="systemd部署"><a href="#systemd部署" class="headerlink" title="systemd部署"></a>systemd部署</h3><p>使用systemd部署，服务启动方便，避免和容器自身形成循环依赖</p>
+<h3 id="systemd部署">systemd部署</h3>
+<p>使用systemd部署，服务启动方便，避免和容器自身形成循环依赖</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y dnsmasq</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>为什么<code>dnsmasq -k</code>在容器中会退出？</p>
+<h2 id="未完待续">未完待续</h2>
+<p>为什么<code>dnsmasq -k</code>在容器中会退出？</p>
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a>许可协议，转载请注明出处。</p>
@@ -150,7 +152,8 @@
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

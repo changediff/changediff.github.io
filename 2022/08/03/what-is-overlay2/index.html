@@ -21,12 +21,12 @@
   <title>overlay2笔记 - changediff</title>
 
   
-    <meta name="description" content="overlay2文件系统的原理overlay2的实现原理直观如下图： 可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,cli">
+    <meta name="description" content="overlay2文件系统的原理 overlay2的实现原理直观如下图：  可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="overlay2笔记">
 <meta property="og:url" content="https://changediff.github.io/2022/08/03/what-is-overlay2/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="overlay2文件系统的原理overlay2的实现原理直观如下图： 可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,cli">
+<meta property="og:description" content="overlay2文件系统的原理 overlay2的实现原理直观如下图：  可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,c">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://changediff.github.io/2022/08/03/what-is-overlay2/overlay_constructs.jpeg">
 <meta property="og:image" content="https://changediff.github.io/2022/08/03/what-is-overlay2/two_dm_container.jpeg">
@@ -102,22 +102,40 @@
 
 <article class='content md post'>
 <h1 class="article-title"><span>overlay2笔记</span></h1>
-<h2 id="overlay2文件系统的原理"><a href="#overlay2文件系统的原理" class="headerlink" title="overlay2文件系统的原理"></a>overlay2文件系统的原理</h2><p>overlay2的实现原理直观如下图：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/08/03/what-is-overlay2/overlay_constructs.jpeg" alt="overlay2"></p>
+<h2 id="overlay2文件系统的原理">overlay2文件系统的原理</h2>
+<p>overlay2的实现原理直观如下图：<br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="overlay_constructs.jpeg" alt="overlay2"></p>
 <p>可以使用下面的命令做简单的模拟：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /overlaytest/client_1/&#123;upperdir,workdir&#125; /overlaytest/client_2/&#123;upperdir,workdir&#125; lowerdir merged/&#123;client_1,client_2&#125;</span><br><span class="line">mount -t overlay overlay -o lowerdir=/overlaytest/lowerdir -o upperdir=/overlaytest/client_1/upperdir -o workdir=/overlaytest/client_1/workdir /overlaytest/merged/client_1</span><br><span class="line">mount -t overlay overlay -o lowerdir=/overlaytest/lowerdir -o upperdir=/overlaytest/client_2/upperdir -o workdir=/overlaytest/client_2/workdir /overlaytest/merged/client_2</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>docker的文件驱动的发展路径是：<code>aufs --&gt; devicemapper --&gt; overlay --&gt; overlay2</code>，目前生产中用的最多的是devicemapper和overlay2。</p>
-<h3 id="devicemapper"><a href="#devicemapper" class="headerlink" title="devicemapper"></a>devicemapper</h3><p>devicemapper使用lvm作为底层实现技术，有thin pool空间满和inode占用高的问题。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/08/03/what-is-overlay2/two_dm_container.jpeg" alt="devicemapper"></p>
-<h3 id="squashfs"><a href="#squashfs" class="headerlink" title="squashfs"></a>squashfs</h3><p>只读文件系统，软路由系统openwrt推荐的文件系统格式。系统文件本身只读，变动通过overlay文件系统挂载，这样就实现了系统重置的功能。</p>
-<h3 id="mount-bind"><a href="#mount-bind" class="headerlink" title="mount --bind"></a><code>mount --bind</code></h3><p><code>mount --bind</code>可以实现类似于overlay2的功能，可以替换掉目录下的某一个文件或者文件夹</p>
-<h2 id="其他值得关注的点"><a href="#其他值得关注的点" class="headerlink" title="其他值得关注的点"></a>其他值得关注的点</h2><h3 id="inode性能问题"><a href="#inode性能问题" class="headerlink" title="inode性能问题"></a>inode性能问题</h3><p>哪些drive有inode问题？<br>devicemapper&#x2F;overlay有inode问题，overlay中使用硬链接可能导致inode问题，overlay2的inode利用率更高，规避了该问题</p>
-<h3 id="f-type"><a href="#f-type" class="headerlink" title="f_type"></a>f_type</h3><p>如果使用xfs文件系统，需要主要f_type选项设置为1，否则无法使用overlay2。具体可通过<code>xfs_info</code>查看</p>
-<h3 id="pagecache"><a href="#pagecache" class="headerlink" title="pagecache"></a>pagecache</h3><p>overlay2文件系统是共享pagecache的，这样对于底层文件系统中同一个文件的读取可以通过共用pagecache来提高效率，不过这也意味着容器化不能完全隔离pagecache</p>
-<h3 id="copy-on-write"><a href="#copy-on-write" class="headerlink" title="copy on write"></a>copy on write</h3><p>copy on write特性，导致如果先读取lowerdir的文件，会感知不到后续修改。该问题使用python脚本未复现，生产环境中通过挂载日志目录。</p>
-<h3 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h3><p>rename(2) systemcall的支持有差别，具体件参考文档</p>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt</a><br><a target="_blank" rel="noopener" href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/">https://docs.docker.com/storage/storagedriver/overlayfs-driver/</a><br><a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/</a><br><a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/</a><br><a target="_blank" rel="noopener" href="https://blog.k8s.li/Exploring-container-image.html">https://blog.k8s.li/Exploring-container-image.html</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ">https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ</a><br><a target="_blank" rel="noopener" href="https://blogs.cisco.com/developer/373-containerimages-03">https://blogs.cisco.com/developer/373-containerimages-03</a></p>
+<h2 id="对比">对比</h2>
+<p>docker的文件驱动的发展路径是：<code>aufs --&gt; devicemapper --&gt; overlay --&gt; overlay2</code>，目前生产中用的最多的是devicemapper和overlay2。</p>
+<h3 id="devicemapper">devicemapper</h3>
+<p>devicemapper使用lvm作为底层实现技术，有thin pool空间满和inode占用高的问题。<br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="two_dm_container.jpeg" alt="devicemapper"></p>
+<h3 id="squashfs">squashfs</h3>
+<p>只读文件系统，软路由系统openwrt推荐的文件系统格式。系统文件本身只读，变动通过overlay文件系统挂载，这样就实现了系统重置的功能。</p>
+<h3 id="mount-bind"><code>mount --bind</code></h3>
+<p><code>mount --bind</code>可以实现类似于overlay2的功能，可以替换掉目录下的某一个文件或者文件夹</p>
+<h2 id="其他值得关注的点">其他值得关注的点</h2>
+<h3 id="inode性能问题">inode性能问题</h3>
+<p>哪些drive有inode问题？<br>
+devicemapper/overlay有inode问题，overlay中使用硬链接可能导致inode问题，overlay2的inode利用率更高，规避了该问题</p>
+<h3 id="f-type">f_type</h3>
+<p>如果使用xfs文件系统，需要主要f_type选项设置为1，否则无法使用overlay2。具体可通过<code>xfs_info</code>查看</p>
+<h3 id="pagecache">pagecache</h3>
+<p>overlay2文件系统是共享pagecache的，这样对于底层文件系统中同一个文件的读取可以通过共用pagecache来提高效率，不过这也意味着容器化不能完全隔离pagecache</p>
+<h3 id="copy-on-write">copy on write</h3>
+<p>copy on write特性，导致如果先读取lowerdir的文件，会感知不到后续修改。该问题使用python脚本未复现，生产环境中通过挂载日志目录。</p>
+<h3 id="rename">rename</h3>
+<p>rename(2) systemcall的支持有差别，具体件参考文档</p>
+<h2 id="参考文档">参考文档</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt</a><br>
+<a target="_blank" rel="noopener" href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/">https://docs.docker.com/storage/storagedriver/overlayfs-driver/</a><br>
+<a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/</a><br>
+<a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/</a><br>
+<a target="_blank" rel="noopener" href="https://blog.k8s.li/Exploring-container-image.html">https://blog.k8s.li/Exploring-container-image.html</a><br>
+<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ">https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ</a><br>
+<a target="_blank" rel="noopener" href="https://blogs.cisco.com/developer/373-containerimages-03">https://blogs.cisco.com/developer/373-containerimages-03</a></p>
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a>许可协议，转载请注明出处。</p>
@@ -149,7 +167,8 @@
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>
