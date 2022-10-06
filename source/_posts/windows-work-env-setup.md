@@ -12,17 +12,18 @@ win98 --> winxp --> win vista（第一台自己的电脑） --> win7 --> win8 & 
                                                                                              --> macOS10 --> macOS11 --> macOS12 (日常使用)
 ```
 
-## Terminal 终端
 > 因为域管控的原因，工作电脑无法升级系统版本，所以以下的操作都是基于`win10(2009)`版本
 
-### scoop
+## 包管理器
+
+### scoop包管理器
 官方网址：https://scoop.sh/
 
 ```powershell
 > Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
 > irm get.scoop.sh | iex
 ```
-### Windows Terminal
+### winget包管理器
 官方网址：https://github.com/microsoft/terminal
 
 推荐先试用scoop安装winget，再使用winget安装Windows Terminal。Windows生态下另外一款包管理器[choco](https://chocolatey.org/)和公司安装的麦咖啡冲突导致蓝屏，所以略过。
@@ -30,7 +31,6 @@ win98 --> winxp --> win vista（第一台自己的电脑） --> win7 --> win8 & 
 #### scoop install winget
 高版本的Windows10和Windows11自带winget，对于没有集成winget的版本，推荐使用scoop安装winget，这也是目前找到的唯一可行不升级操作系统安装winget的方式。
 
-#### winget install 
 ```
 # 安装winget
 scoop bucket add main
@@ -39,6 +39,8 @@ scoop install winget
 scoop bucket add extras
 scoop install vcredist
 ```
+
+## Terminal 终端
 
 ### cmder
 官方网址：https://cmder.app/
