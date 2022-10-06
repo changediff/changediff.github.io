@@ -155,7 +155,7 @@ function Get-Size {
 
 从macOS切到Windows最不习惯的是快捷键，如果说是只使用一个操作系统，那可以重新记忆习惯，然而我是macOS和Windows切换使用，就有快捷键打架的问题。
 
-最近新发现的`PowerToys`的能够
+最近新发现的`PowerToys`的能够将常见的Windows快捷键映射成macOS快捷键，且可以一键开关映射，这样就完美解决的快捷键打架的问题，打架都用macOS的快捷键就好。
 
 
 推荐使用winget安装，方便后续更新
