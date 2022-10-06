@@ -1,6 +1,6 @@
 ---
 title: Windows10(2009)工作环境配置
-date: 2022-10-06 22:35:52
+date: 2022-10-06 23:59:59
 tags: ["Windows", "WSL"]
 ---
 
@@ -34,7 +34,7 @@ scoop install git
 ### winget
 官方网址：https://github.com/microsoft/terminal
 
-推荐先试用scoop安装winget，再使用winget安装Windows Terminal。Windows生态下另外一款包管理器[choco](https://chocolatey.org/)和公司安装的麦咖啡冲突导致蓝屏，所以略过。
+推荐使用scoop安装winget，然后根据实际需求选择scoop或者winget安装其他软件。Windows生态下另外一款包管理器[choco](https://chocolatey.org/)和公司安装的麦咖啡冲突导致蓝屏，此处略过。
 
 #### scoop install winget
 高版本的Windows10和Windows11自带winget，对于没有集成winget的版本，推荐使用scoop安装winget，这也是目前找到的唯一可行不升级操作系统安装winget的方式。
@@ -84,7 +84,7 @@ winget install --id=Microsoft.VisualStudioCode -e
 
 ### PowerShell配置
 #### Shell工具安装(awk, grep, vim)
-以下4个工具建议使用scoop安装，scoop安装的软件大多为portable模式，方便管理
+这些工具建议使用scoop安装，scoop安装的软件大多为portable模式，方便管理
 ```
 # awk
 scoop bucket add main
