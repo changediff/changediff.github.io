@@ -94,6 +94,11 @@ scoop bucket add main
 scoop install vim
 ```
 
+#### 安装新版本PowerShell
+```
+winget install Microsoft.PowerShell
+```
+
 #### PowerShell profile配置
 `PowerShell`的`$profile`，相当于Linux的`.bashrc`
 ```powershell
