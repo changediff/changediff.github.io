@@ -16,14 +16,22 @@ win98 --> winxp --> win vista（第一台自己的电脑） --> win7 --> win8 & 
 
 ## 包管理器
 
-### scoop包管理器
+工欲善其事必先利其器，首先得有趁手的包管理器
+
+### scoop
 官方网址：https://scoop.sh/
 
+受macOS上的homebrew启发的包管理，使用体验相近
+
 ```powershell
+# 本体安装
 > Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
 > irm get.scoop.sh | iex
+# 依赖安装
+scoop install git
 ```
-### winget包管理器
+
+### winget
 官方网址：https://github.com/microsoft/terminal
 
 推荐先试用scoop安装winget，再使用winget安装Windows Terminal。Windows生态下另外一款包管理器[choco](https://chocolatey.org/)和公司安装的麦咖啡冲突导致蓝屏，所以略过。
@@ -70,7 +78,7 @@ winget install --id=Microsoft.VisualStudioCode -e
 
 
 ### PowerShell配置
-#### Shell工具安装(awk, grep, vim, git)
+#### Shell工具安装(awk, grep, vim)
 以下4个工具建议使用scoop安装，scoop安装的软件大多为portable模式，方便管理
 ```
 # awk
@@ -84,10 +92,6 @@ scoop install grep
 # vim
 scoop bucket add main
 scoop install vim
-
-# git
-scoop bucket add main
-scoop install git
 ```
 
 #### PowerShell profile配置
