@@ -69,7 +69,12 @@ winget install --id=Microsoft.WindowsTerminal -e
 
 #### 终端字体安装
 
-推荐使用Fira Code https://github.com/tonsky/FiraCode
+官方网址：https://github.com/tonsky/FiraCode
+
+```
+scoop bucket add nerd-fonts
+scoop install FiraCode
+```
 
 ### Visual Studio Code
 ```
