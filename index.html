@@ -2,7 +2,7 @@
 <html lang='zh-CN'>
 
 <head>
-  <meta name="generator" content="Hexo 6.2.0">
+  <meta name="generator" content="Hexo 6.3.0">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
   
@@ -99,81 +99,60 @@
 
   <div class="post-list post"><a class="post-card post " href="/2022/10/31/kindle-howto/">
 <article class="md-text"><h2 class="post-title">Kindle使用笔记</h2><div class="excerpt"><p>亚马逊Kindle退出中国市场真的是噩耗，最蛋疼的是之前的书库没法用了，还是改回自己囤书，calibre的方式吧。数据掌握在自己手里最安心。
-使用技巧记录
-漫画转换格式
-
+使用技巧记录漫画转换格式
 部分epub漫画资源在转换成mobi之后有空白页的问题，在mobi输出转换选项中勾选忽略边距选项，mobi文件类型选择both，通过该方式转换后的mobi可在kindle上正常阅读
-如果还是不行的话，也可以选择转换为pdf...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-10-30T17:22:25.000Z">2022-10-31</time></span></div></article>
+如果还是不行的话，也可以选择转换为pdf格式...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-10-30T17:22:25.000Z">2022-10-31</time></span></div></article>
 </a><a class="post-card post " href="/2022/10/06/windows-work-env-setup/">
 <article class="md-text"><h2 class="post-title">Windows10(2009)工作环境配置</h2><div class="excerpt"><p>最近工作电脑换成了Windows 10，也就重新开始了我的Windows折腾之旅。回顾下当年的操作系统折腾时间线
 123win98 --&gt; winxp --&gt; win vista（第一台自己的电脑） --&gt; win7 --&gt; win8 &amp; windows phone 8 --&gt; win10 &amp; win10mobile --&gt; win11 (...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-10-06T15:59:59.000Z">2022-10-06</time></span></div></article>
 </a><a class="post-card post " href="/2022/09/20/dnsmasq-in-docker/">
-<article class="md-text"><h2 class="post-title">dnsmasq容器部署折腾</h2><div class="excerpt"><p>蛋疼的华为云K8s的DNS问题
-最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。
-华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-09-20T13:31:46.000Z">2022-09-20</time></span></div></article>
+<article class="md-text"><h2 class="post-title">dnsmasq容器部署折腾</h2><div class="excerpt"><p>蛋疼的华为云K8s的DNS问题最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。
+华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-09-20T13:31:46.000Z">2022-09-20</time></span></div></article>
 </a><a class="post-card post " href="/2022/08/25/notes-on-wsl/">
 <article class="md-text"><h2 class="post-title">Windows上的shell环境折腾笔记</h2><div class="excerpt"><p>最近工作电脑从MacOS换到了Windows 10，shell环境的缺失让我很不习惯，于是便开启我的折腾之旅。
 工作电脑的Windows系统没有管理员UAC权限，没有微软应用商店，只能从内网软件中心安装软件，这也就导致操作有很多限制。
 下面按照时间顺序记录下尝试过的方案
-Cygwin类
-都是基于Cygwin的方案，使用mingw64编译器移植的Linux系工具
-git for windows...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-25T14:52:38.000Z">2022-08-25</time></span></div></article>
+Cygwin类都是基于Cygwin的方案，使用mingw64编译器移植的Linux系工具
+git for windows软...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-25T14:52:38.000Z">2022-08-25</time></span></div></article>
 </a><a class="post-card post " href="/2022/08/17/cidr/">
-<article class="md-text"><h2 class="post-title">cidr网段划分笔记</h2><div class="excerpt"><p>哭笑不得的网段划分
-最近在搞服务迁移网段，将测试服务从生产网段迁移到测试网段，为了方便配置新服务器的ip，划分网段的时候计划保持最后一位不变，也即：
+<article class="md-text"><h2 class="post-title">cidr网段划分笔记</h2><div class="excerpt"><p>哭笑不得的网段划分最近在搞服务迁移网段，将测试服务从生产网段迁移到测试网段，为了方便配置新服务器的ip，划分网段的时候计划保持最后一位不变，也即：
 1210.0.0.190 --&gt; 10.0.66.19010.0.0.240 --&gt; 10.0.66.240
-然而同事在帮忙创建VPC时候，从网段的最后切了两个网段10.0.66.224/28和10.0.66.240/28出去用作V...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-17T15:57:37.000Z">2022-08-17</time></span></div></article>
+然而同事在帮忙创建VPC时候，从网段的最后切了两个网段10.0.66.224/28和10.0.66.240/28出去用作VP...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-17T15:57:37.000Z">2022-08-17</time></span></div></article>
 </a><a class="post-card post " href="/2022/08/03/algorithm-interview/">
-<article class="md-text"><h2 class="post-title">算法复杂度计算</h2><div class="excerpt"><p>定义
-算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下:
-$$ 渐进紧确界:  \Theta (g(n))={f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;=n_0, 有0&lt;=c_1g(n)&lt;=f(n)&lt;=c_2g(n)} $$
-$$ 渐进上界: O(g(n))={f(...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T13:05:19.000Z">2022-08-03</time></span></div></article>
+<article class="md-text"><h2 class="post-title">算法复杂度计算</h2><div class="excerpt"><p>定义算法的时间复杂度使用渐进记号($\Theta$, $O$, $\Omega$, $o$, $\omega$)来描述, 它们的定义如下:
+$$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使得对所有n&gt;&#x3D;n_0, 有0&lt;&#x3D;c_1g(n)&lt;&#x3D;f(n)&lt;&#x3D;c_2g(n)}...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T13:05:19.000Z">2022-08-03</time></span></div></article>
 </a><a class="post-card post " href="/2022/08/03/what-is-overlay2/">
-<article class="md-text"><h2 class="post-title">overlay2笔记</h2><div class="excerpt"><p>overlay2文件系统的原理
-overlay2的实现原理直观如下图：
-
+<article class="md-text"><h2 class="post-title">overlay2笔记</h2><div class="excerpt"><p>overlay2文件系统的原理overlay2的实现原理直观如下图：
 可以使用下面的命令做简单的模拟：
-123mkdir -p /overlaytest/client_1/&#123;upperdir,workdir&#125; /overlaytest/client_2/&#123;upperdir,workdir&#125; lowerdir merged/&#123;client_...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T12:58:42.000Z">2022-08-03</time></span></div></article>
+123mkdir -p /overlaytest/client_1/&#123;upperdir,workdir&#125; /overlaytest/client_2/&#123;upperdir,workdir&#125; lowerdir merged/&#123;client_1,...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T12:58:42.000Z">2022-08-03</time></span></div></article>
 </a><a class="post-card post " href="/2022/06/21/user-space-kernel-space/">
 <article class="md-text"><h2 class="post-title">理解用户空间与内核空间</h2><div class="excerpt"><p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。
-什么是用户空间和内核空间？
-在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。
-为什么要区分用户空间和内核空间
-系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></span></div></article>
+什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。
+为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></span></div></article>
 </a><a class="post-card post " href="/2022/05/18/uninstall-wuying/">
 <article class="md-text"><h2 class="post-title">卸载无影云桌面以及相关插件</h2><div class="excerpt"><p>最近阿里云的无影云桌面在做免费推广，出于好奇试用了下。分别尝试了mac桌面端和网页版，发现网页版已经满足使用需求了。于是决定卸载桌面端。
-round 1
-在访达finder的应用程序文件夹中找到对应的app执行删除
-
+round 1在访达finder的应用程序文件夹中找到对应的app执行删除
 然而今天重启笔记本之后发现有个Elastic Desktop Service还是会开机自启
-
-round 2
-猜测和第一次启动的时候安装的插件有关，但是程序弹窗要求提权
-
-查看...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-05-18T13:00:54.000Z">2022-05-18</time></span></div></article>
+round 2猜测和第一次启动的时候安装的插件有关，但是程序弹窗要求提权
+查看任务管理器...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-05-18T13:00:54.000Z">2022-05-18</time></span></div></article>
 </a><a class="post-card post " href="/2022/05/16/learning-network/">
 <article class="md-text"><h2 class="post-title">计算机网络学习笔记</h2><div class="excerpt"><p>最近复习计算机网络相关的知识，发现了一个很适合用来入门计算机网络的博客《小菜学网络》。一口气读完，有种酣畅淋漓的感觉，作者的讲解让我将脑海中计算机网络基础知识串了起来。
 我的笔记
-
-URL
-https://fasionchan.com/network/http/url/
+URLhttps://fasionchan.com/network/http/url/
 
 7层网络模型和协议
-
 </p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-05-15T17:01:42.000Z">2022-05-16</time></span></div></article>
 </a></div>
   
   <div class='paginator-wrap dis-select'>
-  <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"></a>
+  <span class="extend prev" rel="prev"></span><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"></a>
   </div>
 
 
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
-本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br>
-<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">浙ICP备2023000465号</a></p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备2023000465号</a></p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

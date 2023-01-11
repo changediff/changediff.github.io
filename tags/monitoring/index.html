@@ -2,7 +2,7 @@
 <html lang='zh-CN'>
 
 <head>
-  <meta name="generator" content="Hexo 6.2.0">
+  <meta name="generator" content="Hexo 6.3.0">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
   <meta name="robots" content="noindex,follow">
@@ -101,8 +101,7 @@
 
   <div class="post-list post"><a class="post-card post " href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">
 <article class="md-text"><h2 class="post-title">利用kube-state-metrics自动生成prometheus的配置文件</h2><div class="excerpt"><p>最近运维的k8s集群的node节点变动频繁，总是要手动更新prometheus配置文件表示很蛋疼。所以研究一下怎么对node节点做service discovery，自动更新监控targets列表。
-先看看已有的配置维护方案
-prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-09T05:05:00.000Z">2021-02-09</time></span></div></article>
+先看看已有的配置维护方案prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件。...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-02-09T05:05:00.000Z">2021-02-09</time></span></div></article>
 </a></div>
   
 
@@ -111,9 +110,7 @@ prometheus的配置通过file_sd_config实现动态加载，用Python脚本访�
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
-本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br>
-<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">浙ICP备2023000465号</a></p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备2023000465号</a></p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>
