@@ -3,12 +3,13 @@
 
 <head>
   <meta name="generator" content="Hexo 6.2.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
-  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -18,15 +19,16 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
+  
   <title>overlay2笔记 - changediff</title>
 
   
-    <meta name="description" content="overlay2文件系统的原理overlay2的实现原理直观如下图： 可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,cli">
+    <meta name="description" content="overlay2文件系统的原理 overlay2的实现原理直观如下图：  可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="overlay2笔记">
 <meta property="og:url" content="https://changediff.github.io/2022/08/03/what-is-overlay2/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="overlay2文件系统的原理overlay2的实现原理直观如下图： 可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,cli">
+<meta property="og:description" content="overlay2文件系统的原理 overlay2的实现原理直观如下图：  可以使用下面的命令做简单的模拟： 123mkdir -p &#x2F;overlaytest&#x2F;client_1&#x2F;&amp;#123;upperdir,workdir&amp;#125; &#x2F;overlaytest&#x2F;client_2&#x2F;&amp;#123;upperdir,workdir&amp;#125; lowerdir merged&#x2F;&amp;#123;client_1,c">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://changediff.github.io/2022/08/03/what-is-overlay2/overlay_constructs.jpeg">
 <meta property="og:image" content="https://changediff.github.io/2022/08/03/what-is-overlay2/two_dm_container.jpeg">
@@ -77,15 +79,19 @@
 
   
 
-<header class="header">
+<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title">changediff</div></a></div>
 
-<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
-<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav></header>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav>
+</header>
 
 
 <div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#overlay2%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">overlay2文件系统的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94"><span class="toc-text">对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#devicemapper"><span class="toc-text">devicemapper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#squashfs"><span class="toc-text">squashfs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mount-bind"><span class="toc-text">mount --bind</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E7%82%B9"><span class="toc-text">其他值得关注的点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inode%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">inode性能问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f-type"><span class="toc-text">f_type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pagecache"><span class="toc-text">pagecache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copy-on-write"><span class="toc-text">copy on write</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rename"><span class="toc-text">rename</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-text">参考文档</span></a></li></ol></div></div></div>
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">overlay2笔记</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#overlay2%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">overlay2文件系统的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94"><span class="toc-text">对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#devicemapper"><span class="toc-text">devicemapper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#squashfs"><span class="toc-text">squashfs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mount-bind"><span class="toc-text">mount --bind</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E7%82%B9"><span class="toc-text">其他值得关注的点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inode%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">inode性能问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f-type"><span class="toc-text">f_type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pagecache"><span class="toc-text">pagecache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copy-on-write"><span class="toc-text">copy on write</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rename"><span class="toc-text">rename</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="toc-text">参考文档</span></a></li></ol></div></div></widget>
+
+
 
 
 </div>
@@ -100,56 +106,76 @@
 
 <div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-08-03T12:58:42.000Z">2022-08-03</time></div></div>
 
-<article class='content md post'>
+<article class='md-text content post'>
 <h1 class="article-title"><span>overlay2笔记</span></h1>
-<h2 id="overlay2文件系统的原理"><a href="#overlay2文件系统的原理" class="headerlink" title="overlay2文件系统的原理"></a>overlay2文件系统的原理</h2><p>overlay2的实现原理直观如下图：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/08/03/what-is-overlay2/overlay_constructs.jpeg" alt="overlay2"></p>
+<h2 id="overlay2文件系统的原理">overlay2文件系统的原理</h2>
+<p>overlay2的实现原理直观如下图：<br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="overlay_constructs.jpeg" alt="overlay2"></p>
 <p>可以使用下面的命令做简单的模拟：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /overlaytest/client_1/&#123;upperdir,workdir&#125; /overlaytest/client_2/&#123;upperdir,workdir&#125; lowerdir merged/&#123;client_1,client_2&#125;</span><br><span class="line">mount -t overlay overlay -o lowerdir=/overlaytest/lowerdir -o upperdir=/overlaytest/client_1/upperdir -o workdir=/overlaytest/client_1/workdir /overlaytest/merged/client_1</span><br><span class="line">mount -t overlay overlay -o lowerdir=/overlaytest/lowerdir -o upperdir=/overlaytest/client_2/upperdir -o workdir=/overlaytest/client_2/workdir /overlaytest/merged/client_2</span><br></pre></td></tr></table></figure>
+<h2 id="对比">对比</h2>
+<p>docker的文件驱动的发展路径是：<code>aufs --&gt; devicemapper --&gt; overlay --&gt; overlay2</code>，目前生产中用的最多的是devicemapper和overlay2。</p>
+<h3 id="devicemapper">devicemapper</h3>
+<p>devicemapper使用lvm作为底层实现技术，有thin pool空间满和inode占用高的问题。<br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="two_dm_container.jpeg" alt="devicemapper"></p>
+<h3 id="squashfs">squashfs</h3>
+<p>只读文件系统，软路由系统openwrt推荐的文件系统格式。系统文件本身只读，变动通过overlay文件系统挂载，这样就实现了系统重置的功能。</p>
+<h3 id="mount-bind"><code>mount --bind</code></h3>
+<p><code>mount --bind</code>可以实现类似于overlay2的功能，可以替换掉目录下的某一个文件或者文件夹</p>
+<h2 id="其他值得关注的点">其他值得关注的点</h2>
+<h3 id="inode性能问题">inode性能问题</h3>
+<p>哪些drive有inode问题？<br>
+devicemapper/overlay有inode问题，overlay中使用硬链接可能导致inode问题，overlay2的inode利用率更高，规避了该问题</p>
+<h3 id="f-type">f_type</h3>
+<p>如果使用xfs文件系统，需要主要f_type选项设置为1，否则无法使用overlay2。具体可通过<code>xfs_info</code>查看</p>
+<h3 id="pagecache">pagecache</h3>
+<p>overlay2文件系统是共享pagecache的，这样对于底层文件系统中同一个文件的读取可以通过共用pagecache来提高效率，不过这也意味着容器化不能完全隔离pagecache</p>
+<h3 id="copy-on-write">copy on write</h3>
+<p>copy on write特性，导致如果先读取lowerdir的文件，会感知不到后续修改。该问题使用python脚本未复现，生产环境中通过挂载日志目录。</p>
+<h3 id="rename">rename</h3>
+<p>rename(2) systemcall的支持有差别，具体件参考文档</p>
+<h2 id="参考文档">参考文档</h2>
+<p><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt</a><br>
+<a target="_blank" rel="noopener" href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/">https://docs.docker.com/storage/storagedriver/overlayfs-driver/</a><br>
+<a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/</a><br>
+<a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/</a><br>
+<a target="_blank" rel="noopener" href="https://blog.k8s.li/Exploring-container-image.html">https://blog.k8s.li/Exploring-container-image.html</a><br>
+<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ">https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ</a><br>
+<a target="_blank" rel="noopener" href="https://blogs.cisco.com/developer/373-containerimages-03">https://blogs.cisco.com/developer/373-containerimages-03</a></p>
 
 
-
-<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>docker的文件驱动的发展路径是：<code>aufs --&gt; devicemapper --&gt; overlay --&gt; overlay2</code>，目前生产中用的最多的是devicemapper和overlay2。</p>
-<h3 id="devicemapper"><a href="#devicemapper" class="headerlink" title="devicemapper"></a>devicemapper</h3><p>devicemapper使用lvm作为底层实现技术，有thin pool空间满和inode占用高的问题。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/08/03/what-is-overlay2/two_dm_container.jpeg" alt="devicemapper"></p>
-<h3 id="squashfs"><a href="#squashfs" class="headerlink" title="squashfs"></a>squashfs</h3><p>只读文件系统，软路由系统openwrt推荐的文件系统格式。系统文件本身只读，变动通过overlay文件系统挂载，这样就实现了系统重置的功能。</p>
-<h3 id="mount-bind"><a href="#mount-bind" class="headerlink" title="mount --bind"></a><code>mount --bind</code></h3><p><code>mount --bind</code>可以实现类似于overlay2的功能，可以替换掉目录下的某一个文件或者文件夹</p>
-<h2 id="其他值得关注的点"><a href="#其他值得关注的点" class="headerlink" title="其他值得关注的点"></a>其他值得关注的点</h2><h3 id="inode性能问题"><a href="#inode性能问题" class="headerlink" title="inode性能问题"></a>inode性能问题</h3><p>哪些drive有inode问题？<br>devicemapper&#x2F;overlay有inode问题，overlay中使用硬链接可能导致inode问题，overlay2的inode利用率更高，规避了该问题</p>
-<h3 id="f-type"><a href="#f-type" class="headerlink" title="f_type"></a>f_type</h3><p>如果使用xfs文件系统，需要主要f_type选项设置为1，否则无法使用overlay2。具体可通过<code>xfs_info</code>查看</p>
-<h3 id="pagecache"><a href="#pagecache" class="headerlink" title="pagecache"></a>pagecache</h3><p>overlay2文件系统是共享pagecache的，这样对于底层文件系统中同一个文件的读取可以通过共用pagecache来提高效率，不过这也意味着容器化不能完全隔离pagecache</p>
-<h3 id="copy-on-write"><a href="#copy-on-write" class="headerlink" title="copy on write"></a>copy on write</h3><p>copy on write特性，导致如果先读取lowerdir的文件，会感知不到后续修改。该问题使用python脚本未复现，生产环境中通过挂载日志目录。</p>
-<h3 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h3><p>rename(2) systemcall的支持有差别，具体件参考文档</p>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt</a><br><a target="_blank" rel="noopener" href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/">https://docs.docker.com/storage/storagedriver/overlayfs-driver/</a><br><a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/</a><br><a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/</a><br><a target="_blank" rel="noopener" href="https://blog.k8s.li/Exploring-container-image.html">https://blog.k8s.li/Exploring-container-image.html</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ">https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ</a><br><a target="_blank" rel="noopener" href="https://blogs.cisco.com/developer/373-containerimages-03">https://blogs.cisco.com/developer/373-containerimages-03</a></p>
-
-
-<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a>许可协议，转载请注明出处。</p>
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
 </div></section></div>
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/2022/08/03/algorithm-interview/">算法复杂度计算<span class="note">较新</span></a></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/08/03/algorithm-interview/">算法复杂度计算</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2022/06/21/user-space-kernel-space/">理解用户空间与内核空间</a></div></section></div>
 
 
 
 
 
 
-  <div class='related-wrap md reveal' id="comments">
-    <div class='cmt-title cap theme'>
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
       快来参与讨论吧
-    </div>
-    <div class='cmt-body beaudar'>
+    </section>
+    <section class='body cmt-body beaudar'>
       
 
 <svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
 
 <div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
 
-    </div>
+    </section>
   </div>
 
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br>
+<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">浙ICP备2023000465号</a></p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>
@@ -162,7 +188,7 @@
   </div>
   <div class='scripts'>
     <script type="text/javascript">
-  stellar = {
+  const stellar = {
     // 懒加载 css https://github.com/filamentgroup/loadCSS
     loadCSS: (href, before, media, attributes) => {
       var doc = window.document;
@@ -253,7 +279,8 @@
       }
     }
   };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.9.0';
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
   stellar.config = {
     date_suffix: {
       just: '刚刚',
@@ -266,30 +293,40 @@
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-    ghinfo: '/js/plugins/ghinfo.js',
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
-    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
   }
 </script>
 

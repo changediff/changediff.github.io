@@ -3,12 +3,13 @@
 
 <head>
   <meta name="generator" content="Hexo 6.2.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
-  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -18,15 +19,16 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
+  
   <title>从外接USB设备启动树莓派4b - changediff</title>
 
   
-    <meta name="description" content="树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。 方案调查一番查资料，目前支持两种启动方案：  升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。找到的靠谱教程如下：1. New Raspberry Pi 4 Bootl">
+    <meta name="description" content="树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。 方案调查 一番查资料，目前支持两种启动方案：  升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。 找到的靠谱教程如下： 1. New Raspberry Pi 4 Bo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从外接USB设备启动树莓派4b">
 <meta property="og:url" content="https://changediff.github.io/2021/02/28/rpi4b-usb-boot/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。 方案调查一番查资料，目前支持两种启动方案：  升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。找到的靠谱教程如下：1. New Raspberry Pi 4 Bootl">
+<meta property="og:description" content="树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。 方案调查 一番查资料，目前支持两种启动方案：  升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。 找到的靠谱教程如下： 1. New Raspberry Pi 4 Bo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-28T12:46:00.000Z">
 <meta property="article:modified_time" content="2022-04-14T16:16:53.016Z">
@@ -72,15 +74,19 @@
 
   
 
-<header class="header">
+<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title">changediff</div></a></div>
 
-<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
-<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav></header>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav>
+</header>
 
 
 <div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%B0%83%E6%9F%A5"><span class="toc-text">方案调查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E5%AE%9E%E6%96%BD"><span class="toc-text">方案实施</span></a></li></ol></div></div></div>
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">从外接USB设备启动树莓派4b</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%B0%83%E6%9F%A5"><span class="toc-text">方案调查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E5%AE%9E%E6%96%BD"><span class="toc-text">方案实施</span></a></li></ol></div></div></widget>
+
+
 
 
 </div>
@@ -95,66 +101,77 @@
 
 <div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2021-02-28T12:46:00.000Z">2021-02-28</time></div></div>
 
-<article class='content md post'>
+<article class='md-text content post'>
 <h1 class="article-title"><span>从外接USB设备启动树莓派4b</span></h1>
 <p>树莓派默认从tf卡启动系统，io性能太弱了。最近入手了Argon ONE外壳，可以通过usb外接一个m.2 sata接口的固态硬盘；那么，折腾一下从ssd吧。</p>
-<h2 id="方案调查"><a href="#方案调查" class="headerlink" title="方案调查"></a>方案调查</h2><p>一番查资料，目前支持两种启动方案：</p>
+<h2 id="方案调查">方案调查</h2>
+<p>一番查资料，目前支持两种启动方案：</p>
 <ol>
-<li>升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。<br>找到的靠谱教程如下：<br><a target="_blank" rel="noopener" href="https://jamesachambers.com/new-raspberry-pi-4-bootloader-usb-network-boot-guide/">1. New Raspberry Pi 4 Bootloader USB &#x2F; Network Boot Guide</a><br><a target="_blank" rel="noopener" href="https://www.instructables.com/Raspberry-Pi-4-USB-Boot-No-SD-Card/">2. Raspberry Pi 4 Ubuntu USB Boot (No SD Card)</a></li>
+<li>升级固件，这也是网上推荐的主流方案。这个方案需要先用原版的raspbian升级固件，这样就可以直接设置从USB设备引导。<br>
+找到的靠谱教程如下：<br>
+<a target="_blank" rel="noopener" href="https://jamesachambers.com/new-raspberry-pi-4-bootloader-usb-network-boot-guide/">1. New Raspberry Pi 4 Bootloader USB / Network Boot Guide</a><br>
+<a target="_blank" rel="noopener" href="https://www.instructables.com/Raspberry-Pi-4-USB-Boot-No-SD-Card/">2. Raspberry Pi 4 Ubuntu USB Boot (No SD Card)</a></li>
 </ol>
 <p>然鹅，我现在用的是Ubuntu系统，这个方案折腾起来比较麻烦，可能还需要重装系统。pass</p>
 <ol start="2">
-<li>从tf卡引导，将根目录替换成ssd的分区。这样理论上兼容性更好，而且可以在现有的系统上升级。不犹豫，马上开搞。<br>参考教程：<a target="_blank" rel="noopener" href="https://jamesachambers.com/raspberry-pi-4-usb-boot-config-guide-for-ssd-flash-drives/">Raspberry Pi 4 USB Boot Config Guide for SSD &#x2F; Flash Drives</a></li>
+<li>从tf卡引导，将根目录替换成ssd的分区。这样理论上兼容性更好，而且可以在现有的系统上升级。不犹豫，马上开搞。<br>
+参考教程：<a target="_blank" rel="noopener" href="https://jamesachambers.com/raspberry-pi-4-usb-boot-config-guide-for-ssd-flash-drives/">Raspberry Pi 4 USB Boot Config Guide for SSD / Flash Drives</a></li>
 </ol>
-<h2 id="方案实施"><a href="#方案实施" class="headerlink" title="方案实施"></a>方案实施</h2><ol>
-<li><p>复制现有系统到ssd，&#x3D;&#x3D;注意，这个操作会清空SSD上面的数据&#x3D;&#x3D;</p>
+<h2 id="方案实施">方案实施</h2>
+<ol>
+<li>复制现有系统到ssd，==注意，这个操作会清空SSD上面的数据==</li>
+</ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd bs=4M if=/dev/mmcblk0 of=/dev/sda</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>确认usb设备id，我的是<code>174c:55aa</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsusb</span><br><span class="line"></span><br><span class="line">Bus 002 Device 003: ID 174c:55aa ASMedia Technology Inc. Name: ASM1051E SATA 6Gb</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改cmdline.txt，树莓派是通过这个文件来确认系统启动目录的，直接修改fstab无效</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 备份</span><br><span class="line">cp cmdline.txt cmdline.txt.bak</span><br><span class="line"># 修改为如下内容：</span><br><span class="line">## 1. 注意将XXXX:XXXX替换为上一步获取的usb id</span><br><span class="line">## 2. 注意root=的配置，需要和硬盘对应的LABEL或者UUID一致（如果是dd复制的数据，这块应该不用改）</span><br><span class="line">usb-storage.quirks=XXXX:XXXX:u net.ifnames=0 dwc_otg.lpm_enable=0 console=serial</span><br><span class="line">0,115200 console=tty1 root=LABEL=writable rootfstype=ext4 elevator=deadline</span><br><span class="line">rootwait fixrtc</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更新<code>/etc/fstab</code>，这一步其实不是必须的，为了不造成迷惑，还是和<code>cmdline.txt</code>的配置保持一致了。</p>
-</li>
-<li><p>reboot之后就可以看到<code>/</code>目录已经切换到ssd上面了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@rpi:~$ findmnt -n -o SOURCE /</span><br><span class="line">/dev/sdb2</span><br></pre></td></tr></table></figure></li>
-<li><p>不服跑个分，io速度提升10倍，哈哈：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo curl https://raw.githubusercontent.com/TheRemote/PiBenchmarks/master/Storage.sh | sudo bash</span><br><span class="line"></span><br><span class="line">     Category                  Test                      Result</span><br><span class="line">HDParm                    Disk Read                 185.42 MB/s</span><br><span class="line">HDParm                    Cached Disk Read          185.55 MB/s</span><br><span class="line">DD                        Disk Write                92.6 MB/s</span><br><span class="line">FIO                       4k random read            4429 IOPS (17716 KB/s)</span><br><span class="line">FIO                       4k random write           5109 IOPS (20439 KB/s)</span><br><span class="line">IOZone                    4k read                   21790 KB/s</span><br><span class="line">IOZone                    4k write                  19337 KB/s</span><br><span class="line">IOZone                    4k random read            16226 KB/s</span><br><span class="line">IOZone                    4k random write           20809 KB/s</span><br><span class="line"></span><br><span class="line">                          Score: 4777</span><br></pre></td></tr></table></figure></li>
+<ol start="2">
+<li>确认usb设备id，我的是<code>174c:55aa</code></li>
 </ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsusb</span><br><span class="line"></span><br><span class="line">Bus 002 Device 003: ID 174c:55aa ASMedia Technology Inc. Name: ASM1051E SATA 6Gb</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改cmdline.txt，树莓派是通过这个文件来确认系统启动目录的，直接修改fstab无效</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 备份</span><br><span class="line">cp cmdline.txt cmdline.txt.bak</span><br><span class="line"># 修改为如下内容：</span><br><span class="line">## 1. 注意将XXXX:XXXX替换为上一步获取的usb id</span><br><span class="line">## 2. 注意root=的配置，需要和硬盘对应的LABEL或者UUID一致（如果是dd复制的数据，这块应该不用改）</span><br><span class="line">usb-storage.quirks=XXXX:XXXX:u net.ifnames=0 dwc_otg.lpm_enable=0 console=serial</span><br><span class="line">0,115200 console=tty1 root=LABEL=writable rootfstype=ext4 elevator=deadline</span><br><span class="line">rootwait fixrtc</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>更新<code>/etc/fstab</code>，这一步其实不是必须的，为了不造成迷惑，还是和<code>cmdline.txt</code>的配置保持一致了。</li>
+<li>reboot之后就可以看到<code>/</code>目录已经切换到ssd上面了</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@rpi:~$ findmnt -n -o SOURCE /</span><br><span class="line">/dev/sdb2</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>不服跑个分，io速度提升10倍，哈哈：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo curl https://raw.githubusercontent.com/TheRemote/PiBenchmarks/master/Storage.sh | sudo bash</span><br><span class="line"></span><br><span class="line">     Category                  Test                      Result</span><br><span class="line">HDParm                    Disk Read                 185.42 MB/s</span><br><span class="line">HDParm                    Cached Disk Read          185.55 MB/s</span><br><span class="line">DD                        Disk Write                92.6 MB/s</span><br><span class="line">FIO                       4k random read            4429 IOPS (17716 KB/s)</span><br><span class="line">FIO                       4k random write           5109 IOPS (20439 KB/s)</span><br><span class="line">IOZone                    4k read                   21790 KB/s</span><br><span class="line">IOZone                    4k write                  19337 KB/s</span><br><span class="line">IOZone                    4k random read            16226 KB/s</span><br><span class="line">IOZone                    4k random write           20809 KB/s</span><br><span class="line"></span><br><span class="line">                          Score: 4777</span><br></pre></td></tr></table></figure>
 
-
-<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a>许可协议，转载请注明出处。</p>
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
 </div></section></div>
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/2022/04/17/rpm-backports/">CentOS7升级systemd版本到416.1<span class="note">较新</span></a></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/04/17/rpm-backports/">CentOS7升级systemd版本到416.1</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/">利用kube-state-metrics自动生成prometheus的配置文件</a></div></section></div>
 
 
 
 
 
 
-  <div class='related-wrap md reveal' id="comments">
-    <div class='cmt-title cap theme'>
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
       快来参与讨论吧
-    </div>
-    <div class='cmt-body beaudar'>
+    </section>
+    <section class='body cmt-body beaudar'>
       
 
 <svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
 
 <div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
 
-    </div>
+    </section>
   </div>
 
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br>
+<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">浙ICP备2023000465号</a></p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>
@@ -167,7 +184,7 @@
   </div>
   <div class='scripts'>
     <script type="text/javascript">
-  stellar = {
+  const stellar = {
     // 懒加载 css https://github.com/filamentgroup/loadCSS
     loadCSS: (href, before, media, attributes) => {
       var doc = window.document;
@@ -258,7 +275,8 @@
       }
     }
   };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.9.0';
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
   stellar.config = {
     date_suffix: {
       just: '刚刚',
@@ -271,30 +289,40 @@
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-    ghinfo: '/js/plugins/ghinfo.js',
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
-    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
   }
 </script>
 

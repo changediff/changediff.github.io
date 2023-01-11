@@ -3,12 +3,13 @@
 
 <head>
   <meta name="generator" content="Hexo 6.2.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
-  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -18,15 +19,16 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
+  
   <title>理解用户空间与内核空间 - changediff</title>
 
   
-    <meta name="description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口">
+    <meta name="description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？ 在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间 系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了">
 <meta property="og:type" content="article">
 <meta property="og:title" content="理解用户空间与内核空间">
 <meta property="og:url" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口">
+<meta property="og:description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？ 在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间 系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png">
 <meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-system-calls-gears.png">
@@ -79,15 +81,19 @@
 
   
 
-<header class="header">
+<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title">changediff</div></a></div>
 
-<div class="logo-wrap"><a class="title" href="/"><div class="main">changediff</div></a></div>
-<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav></header>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav>
+</header>
 
 
 <div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%EF%BC%9F"><span class="toc-text">什么是用户空间和内核空间？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8C%BA%E5%88%86%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4"><span class="toc-text">为什么要区分用户空间和内核空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#system-calls"><span class="toc-text">system calls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD"><span class="toc-text">中断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%E5%9C%A8Linux%E3%80%81Windows%E5%92%8CMacOS%E4%B8%AD%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">用户空间和内核空间在Linux、Windows和MacOS中的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div></div></div>
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">理解用户空间与内核空间</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%EF%BC%9F"><span class="toc-text">什么是用户空间和内核空间？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8C%BA%E5%88%86%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4"><span class="toc-text">为什么要区分用户空间和内核空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#system-calls"><span class="toc-text">system calls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD"><span class="toc-text">中断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E5%92%8C%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4%E5%9C%A8Linux%E3%80%81Windows%E5%92%8CMacOS%E4%B8%AD%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">用户空间和内核空间在Linux、Windows和MacOS中的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div></div></widget>
+
+
 
 
 </div>
@@ -102,32 +108,47 @@
 
 <div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></div></div>
 
-<article class='content md post'>
+<article class='md-text content post'>
 <h1 class="article-title"><span>理解用户空间与内核空间</span></h1>
 <p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。</p>
-<h2 id="什么是用户空间和内核空间？"><a href="#什么是用户空间和内核空间？" class="headerlink" title="什么是用户空间和内核空间？"></a>什么是用户空间和内核空间？</h2><p>在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。</p>
-<h2 id="为什么要区分用户空间和内核空间"><a href="#为什么要区分用户空间和内核空间" class="headerlink" title="为什么要区分用户空间和内核空间"></a>为什么要区分用户空间和内核空间</h2><p>系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口，可以让用户进程访问硬件资源，并且负责管理硬件资源的调度。<br>具体来说，内核主要干这四件事情：</p>
+<h2 id="什么是用户空间和内核空间？">什么是用户空间和内核空间？</h2>
+<p>在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。</p>
+<h2 id="为什么要区分用户空间和内核空间">为什么要区分用户空间和内核空间</h2>
+<p>系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口，可以让用户进程访问硬件资源，并且负责管理硬件资源的调度。<br>
+具体来说，内核主要干这四件事情：</p>
 <ol>
 <li>内存管理：跟踪所有进程用了哪些内存、用了多少、存在了哪个物理地址等等</li>
 <li>进程管理：管理进程对CPU时间分片的占用</li>
 <li>设备驱动：作为中间人或者解释器，替进程访问硬件设备（Unix系统中一切皆文件的思想，就是对硬件设备的绝妙抽象）</li>
 <li>系统调用system calls与安全：接收从用户空间传来的系统调用，做安全检查并执行（什么是系统调用后面细说）</li>
 </ol>
-<p>以上可以看出为什么要区分用户空间和内核空间，一方面这样的分层设计可以让系统内核的维护更加灵活，另一方面可以让系统更加安全，敏感的操作通过统一的syscalls接口切换到内核空间中完成。<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png" alt="syscalls"></p>
-<p>Linux中的系统调用流程如下图，syscalls是通过汇编语言指令的方式提供的，我们最经常接触的进程实际上是调用的<code>glibc/解释器/编译器</code>等库提供的功能，这也是为什么Linux发行版中单独升级glibc版本是一个风险很大的操作（glibc的版本变更可能导致很多系统基础组件的syscalls不兼容）<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-system-calls-gears.png" alt="syscalls调用"></p>
-<h2 id="system-calls"><a href="#system-calls" class="headerlink" title="system calls"></a>system calls</h2><p>系统调用如此重要，那么它具体提供了哪些功能呢？syscalls的详细内容可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">man syscalls</a>，主要包含进程控制(fork,exit,wait)、文件管理(open,read,write,close)、设备管理(ioctl,read,write)、进程信息维护(getpid,alarm,sleep)、进程间通信(pipe,shmget,mmap)等等。</p>
-<p>下面简单介绍下常见的syscall的作用：<br><code>open()</code>：打开文件，返回文件描述符，详细可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kelamoyujuzhen/p/9638710.html">链接</a></p>
+<p>以上可以看出为什么要区分用户空间和内核空间，一方面这样的分层设计可以让系统内核的维护更加灵活，另一方面可以让系统更加安全，敏感的操作通过统一的syscalls接口切换到内核空间中完成。<br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="user-space-vs-kernel-space-basic-system-calls.png" alt="syscalls"></p>
+<p>Linux中的系统调用流程如下图，syscalls是通过汇编语言指令的方式提供的，我们最经常接触的进程实际上是调用的<code>glibc/解释器/编译器</code>等库提供的功能，这也是为什么Linux发行版中单独升级glibc版本是一个风险很大的操作（glibc的版本变更可能导致很多系统基础组件的syscalls不兼容）<br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="user-space-vs-kernel-space-system-calls-gears.png" alt="syscalls调用"></p>
+<h2 id="system-calls">system calls</h2>
+<p>系统调用如此重要，那么它具体提供了哪些功能呢？syscalls的详细内容可以参考<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">man syscalls</a>，主要包含进程控制(fork,exit,wait)、文件管理(open,read,write,close)、设备管理(ioctl,read,write)、进程信息维护(getpid,alarm,sleep)、进程间通信(pipe,shmget,mmap)等等。</p>
+<p>下面简单介绍下常见的syscall的作用：<br>
+<code>open()</code>：打开文件，返回文件描述符，详细可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kelamoyujuzhen/p/9638710.html">链接</a></p>
 <p><code>read()</code>：读取文件，读取的文件需要有文件描述符标识，读取前需要先执行<code>open()</code>，read()系统调用需要传入三个参数（文件描述符fd、文件读缓存的地址、读取的字节数）；这里涉及到了读写缓存的概念，这个缓存是由内核维护在内存中的page cache，具体可参考<a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/understanding-the-linux/0596005652/ch15s01.html#:~:text=The%20page%20cache%20is%20the,User%20Mode%20processes's%20read%20requests.">链接</a></p>
 <p><code>write()</code>：写入文件，这是程序输入的常见方式之一，write()系统调用需要传入三个参数（文件描述符、写缓存的地址、写入的字节数）</p>
 <p><code>close()</code>：关闭文件，释放文件描述符</p>
 <p><code>fork()</code>：创建子进程，详细参考<a target="_blank" rel="noopener" href="https://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/fork/create.html">链接</a></p>
-<p><code>wait()</code>：等待子进程结束，返回子进程的返回值。如果子进程执行结束了，父进程没有执行wait，就会产生僵尸进程。运维层面解决僵尸进程的方法是kill父进程，让僵尸进程成为孤儿进程，又init进程来执行wait，让僵尸进程死亡。程序代码实现层面有两种方式避免僵尸进程，1)调用wait(), 2) fork()两次让init进程来管理子进程。<strong>需要注意的是</strong>，kill父进程和fork()两次在容器里面不管用，因为容器里面通常没有init进程存在，这种情况需要重启容器来解决。<br>对于僵尸进程的详细讲解可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/anker/p/3271773.html">链接</a></p>
+<p><code>wait()</code>：等待子进程结束，返回子进程的返回值。如果子进程执行结束了，父进程没有执行wait，就会产生僵尸进程。运维层面解决僵尸进程的方法是kill父进程，让僵尸进程成为孤儿进程，又init进程来执行wait，让僵尸进程死亡。程序代码实现层面有两种方式避免僵尸进程，1)调用wait(), 2) fork()两次让init进程来管理子进程。<strong>需要注意的是</strong>，kill父进程和fork()两次在容器里面不管用，因为容器里面通常没有init进程存在，这种情况需要重启容器来解决。<br>
+对于僵尸进程的详细讲解可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/anker/p/3271773.html">链接</a></p>
 <p><code>exit()</code>：退出进程，返回值为0，在多线程场景中则表示该线程执行结束。操作系统会回收exit()进程的资源</p>
 <p><code>kill()</code>：可以参考常用的kill命令理解，发送不同信号量例如SIGINT、SIGKILL等等。</p>
-<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>pass</p>
-<h2 id="用户空间和内核空间在Linux、Windows和MacOS中的区别？"><a href="#用户空间和内核空间在Linux、Windows和MacOS中的区别？" class="headerlink" title="用户空间和内核空间在Linux、Windows和MacOS中的区别？"></a>用户空间和内核空间在Linux、Windows和MacOS中的区别？</h2><p>上面关于用户空间和内核空间的讨论都是基于Linux的，这些功能在Windows和macOS上的实现是又差别的，具体又涉及到了宏内核和微内核设计的差异，我的知识还不足以讲清楚这些。<strong>但不管那种实现都提供了类似的用户空间和内核空间的抽象。</strong><br>下面仅提供文章和图片用于参考~</p>
-<p><a target="_blank" rel="noopener" href="https://www.yinwang.org/blog-cn/2019/08/19/microkernel">关于微内核的对话</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040898100">聊了聊宏内核和微内核，并吹了一波 Linux</a><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/macro-micro-kernel.webp" alt="宏内核和微内核"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/2022/06/21/user-space-kernel-space/type-of-syscalls.png" alt="windows-linux"></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<h2 id="中断">中断</h2>
+<p>pass</p>
+<h2 id="用户空间和内核空间在Linux、Windows和MacOS中的区别？">用户空间和内核空间在Linux、Windows和MacOS中的区别？</h2>
+<p>上面关于用户空间和内核空间的讨论都是基于Linux的，这些功能在Windows和macOS上的实现是又差别的，具体又涉及到了宏内核和微内核设计的差异，我的知识还不足以讲清楚这些。<strong>但不管那种实现都提供了类似的用户空间和内核空间的抽象。</strong><br>
+下面仅提供文章和图片用于参考~</p>
+<p><a target="_blank" rel="noopener" href="https://www.yinwang.org/blog-cn/2019/08/19/microkernel">关于微内核的对话</a><br>
+<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040898100">聊了聊宏内核和微内核，并吹了一波 Linux</a><br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="macro-micro-kernel.webp" alt="宏内核和微内核"><br>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="type-of-syscalls.png" alt="windows-linux"></p>
+<h2 id="参考资料">参考资料</h2>
+<ol>
 <li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/topics/linux/what-is-the-linux-kernel">https://www.redhat.com/en/topics/linux/what-is-the-linux-kernel</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/architecting-containers-part-1-why-understanding-user-space-vs-kernel-space-matters">https://www.redhat.com/en/blog/architecting-containers-part-1-why-understanding-user-space-vs-kernel-space-matters</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/architecting-containers-part-2-why-user-space-matters">https://www.redhat.com/en/blog/architecting-containers-part-2-why-user-space-matters</a></li>
@@ -140,36 +161,38 @@
 </ol>
 
 
-<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a>许可协议，转载请注明出处。</p>
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
 </div></section></div>
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/2022/08/03/what-is-overlay2/">overlay2笔记<span class="note">较新</span></a></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/08/03/what-is-overlay2/">overlay2笔记</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2022/05/18/uninstall-wuying/">卸载无影云桌面以及相关插件</a></div></section></div>
 
 
 
 
 
 
-  <div class='related-wrap md reveal' id="comments">
-    <div class='cmt-title cap theme'>
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
       快来参与讨论吧
-    </div>
-    <div class='cmt-body beaudar'>
+    </section>
+    <section class='body cmt-body beaudar'>
       
 
 <svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
 
 <div id="beaudar" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme" input-position="top" comment-order="desc" loading="false" branch="main"></div>
 
-    </div>
+    </section>
   </div>
 
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@anonymity</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br>
+<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">浙ICP备2023000465号</a></p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>
@@ -182,7 +205,7 @@
   </div>
   <div class='scripts'>
     <script type="text/javascript">
-  stellar = {
+  const stellar = {
     // 懒加载 css https://github.com/filamentgroup/loadCSS
     loadCSS: (href, before, media, attributes) => {
       var doc = window.document;
@@ -273,7 +296,8 @@
       }
     }
   };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.9.0';
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
   stellar.config = {
     date_suffix: {
       just: '刚刚',
@@ -286,30 +310,40 @@
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-    ghinfo: '/js/plugins/ghinfo.js',
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
-    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
   }
 </script>
 
