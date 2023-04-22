@@ -7,8 +7,8 @@ sidebar:
     notes: '[笔记](/notes/)'
     more: '[关于](/more/)'
 comments:
-  service: beaudar
-  beaudar:
+  service: utterances
+  utterances:
     repo: changediff/blog-comments
 
 ######## Footer ########
