@@ -118,5 +118,5 @@ chown -R shairport-sync:shairport-sync /home/shairport-sync/
 2. `/etc/shairport-sync.conf`中有音量相关的配置，有待尝试
 
 ## 后续计划
-[ ] 使用单独usb声卡，解决自带3.5mm接口的底噪问题
-[ ] 重新连接后音量设置有时不会记忆的问题解决
+- [ ] 使用单独usb声卡，解决自带3.5mm接口的底噪问题
+- [ ] 重新连接后音量设置有时不会记忆的问题解决
