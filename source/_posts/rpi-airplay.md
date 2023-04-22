@@ -1,5 +1,5 @@
 ---
-title: 树莓派Airplay将有限音箱变成WiFi音箱
+title: 树莓派Airplay将有线音箱变成WiFi音箱
 date: 2023-04-15 17:44:05
 tags:
 ---
@@ -105,6 +105,7 @@ https://superuser.com/questions/53957/what-do-alsa-devices-like-hw0-0-mean-how-d
 iw dev wlan0 set power_save off
 ```
 ### 其他小问题修复
+#### 目录权限问题
 `journal -u shairport-sync`发现有报错提示没有目录权限，不影响正常使用
 
 ```
@@ -112,5 +113,10 @@ mkdir -p /home/shairport-sync/.config/pulse
 chown -R shairport-sync:shairport-sync /home/shairport-sync/
 ```
 
+#### 最大音量调整
+1. 为了避免扰民，可以使用`alsamixer`设置树莓派的最大输出音量
+2. `/etc/shairport-sync.conf`中有音量相关的配置，有待尝试
+
 ## 后续计划
-- [ ] 使用单独usb声卡，解决自带3.5mm接口的底噪问题
+[ ] 使用单独usb声卡，解决自带3.5mm接口的底噪问题
+[ ] 重新连接后音量设置有时不会记忆的问题解决
