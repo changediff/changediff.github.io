@@ -118,5 +118,12 @@ chown -R shairport-sync:shairport-sync /home/shairport-sync/
 2. `/etc/shairport-sync.conf`中有音量相关的配置，有待尝试
 
 ## 后续计划
-- [ ] 使用单独usb声卡，解决自带3.5mm接口的底噪问题
+- [x] 使用单独usb声卡，解决自带3.5mm接口的底噪问题
 - [ ] 重新连接后音量设置有时不会记忆的问题解决
+
+### 底噪问题解决
+京东18块购入海贝思USB声卡，插入后免驱运行，修改配置为`hw:3`和`Speaker`，重启服务后获得了更大的音量上限和更低的底噪（还是有，小了很多）
+```
+	output_device = "hw:3";
+	mixer_control_name = "Speaker";
+```
