@@ -16,17 +16,20 @@ sudo apt install linux-modules-extra-raspi
 https://docs.k3s.io/quick-start
 
 ### install
-#### master
+#### master (Rockylinux8)
 ```
-curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=stable sh -s - --prefer-bundled-bin
+# disable firewalld
+systemctl disable firewalld --now
+
+# install k3s
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=v1.26 sh -
 ```
 
-INSTALL_K3S_VERSION
 #### node
 /var/lib/rancher/k3s/server/node-token
 ```
 token=xxx
-curl -sfL https://get.k3s.io | K3S_URL=https://k3s.lan.com:6443 K3S_TOKEN=$token INSTALL_K3S_CHANNEL=v1.26 sh -s - --prefer-bundled-bin
+curl -sfL https://get.k3s.io | K3S_URL=https://rk01.lan.com:6443 K3S_TOKEN=$token INSTALL_K3S_CHANNEL=v1.26 sh -s - --prefer-bundled-bin
 ```
 
 
@@ -61,6 +64,13 @@ https://www.cnblogs.com/yangyuliufeng/p/14227590.html
 
 root@rpi1:/etc/rancher/k3s# cat /etc/rancher/k3s/config.yaml
 data-dir: "/mnt/ssd/server/k3s"
+
+#### loadbalancer
+
+#### prometheus
+
+kubectl get IngressClass
+
 
 ## 内网服务
 
