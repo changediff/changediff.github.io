@@ -75,7 +75,7 @@
 <div class="widgets">
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" placeholder="站内搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/04/15/rpi-airplay/"><span class="title">树莓派Airplay将有线音箱变成WiFi音箱</span></a><a class="item title" href="/2023/03/19/etcd-ops/"><span class="title">etcd运维踩坑记录</span></a><a class="item title" href="/2022/10/31/kindle-howto/"><span class="title">Kindle使用笔记</span></a><a class="item title" href="/2022/10/06/windows-work-env-setup/"><span class="title">Windows10(2009)工作环境配置</span></a><a class="item title" href="/2022/09/20/dnsmasq-in-docker/"><span class="title">dnsmasq容器部署折腾</span></a></div></widget>
+<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/08/14/upstream-timecost-simulate-with-openresty/"><span class="title">压测中使用openresty作为upstream来业务耗时</span></a><a class="item title" href="/2023/04/15/rpi-airplay/"><span class="title">树莓派Airplay将有线音箱变成WiFi音箱</span></a><a class="item title" href="/2023/03/19/etcd-ops/"><span class="title">etcd运维踩坑记录</span></a><a class="item title" href="/2022/10/31/kindle-howto/"><span class="title">Kindle使用笔记</span></a><a class="item title" href="/2022/10/06/windows-work-env-setup/"><span class="title">Windows10(2009)工作环境配置</span></a></div></widget>
 
 
 </div>
@@ -97,7 +97,11 @@
 
 <div class="nav-wrap"><nav class="sub post cap"><a class="active" href="/">近期发布</a><a href="/tags">标签</a><a href="/archives">归档</a></nav></div>
 
-  <div class="post-list post"><a class="post-card post " href="/2023/04/15/rpi-airplay/">
+  <div class="post-list post"><a class="post-card post " href="/2023/08/14/upstream-timecost-simulate-with-openresty/">
+<article class="md-text"><h2 class="post-title">压测中使用openresty作为upstream来业务耗时</h2><div class="excerpt"><p>最近在压测Apisix，需要按照一定的概率分布模拟请求耗时，以便达到模拟真实业务请求来压测的目的。
+第一版后端程序使用Go语言，性能不达标，没法压到Apisix的极限；第二版使用Nginx作为后端程序，性能达标，压测4C8G的Apisix，极限TPS约1.4W；第三版使用openresty配合lua来模拟耗时，性能达标，4C8G的实例TPS约1.2W。
+1234567891011121314...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-08-14T14:00:59.000Z">2023-08-14</time></span></div></article>
+</a><a class="post-card post " href="/2023/04/15/rpi-airplay/">
 <article class="md-text"><h2 class="post-title">树莓派Airplay将有线音箱变成WiFi音箱</h2><div class="excerpt"><p>方案选择因为是想要作为WiFi音箱使用，方案二shairport-sync更适合我
 视频airplay教程：https://zhuanlan.zhihu.com/p/340535327项目地址：https://github.com/FD-/RPiPlay
 音频airplay教程：https://sspai.com/post/74318项目地址：https://github.com/mikeb...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-04-15T09:44:05.000Z">2023-04-15</time></span></div></article>
@@ -133,10 +137,6 @@ $$ 渐进紧确界:  \Theta (g(n))&#x3D;{f(n): 存在常量c_1, c_2和n_0, 使�
 <article class="md-text"><h2 class="post-title">overlay2笔记</h2><div class="excerpt"><p>overlay2文件系统的原理overlay2的实现原理直观如下图：
 可以使用下面的命令做简单的模拟：
 123mkdir -p /overlaytest/client_1/&#123;upperdir,workdir&#125; /overlaytest/client_2/&#123;upperdir,workdir&#125; lowerdir merged/&#123;client_1,...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-08-03T12:58:42.000Z">2022-08-03</time></span></div></article>
-</a><a class="post-card post " href="/2022/06/21/user-space-kernel-space/">
-<article class="md-text"><h2 class="post-title">理解用户空间与内核空间</h2><div class="excerpt"><p>最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。
-什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。
-为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-06-21T15:13:31.000Z">2022-06-21</time></span></div></article>
 </a></div>
   
   <div class='paginator-wrap dis-select'>
