@@ -3,7 +3,7 @@
 
 <head>
   <meta name="generator" content="Hexo 6.3.0">
-  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
   <meta charset="utf-8">
   
 
@@ -43,6 +43,8 @@
 <meta name="twitter:image" content="https://changediff.github.io/2022/08/03/what-is-overlay2/overlay_constructs.jpeg">
   
   
+  
+  <meta name="keywords" content="docker,overlay2,devicemapper,union filesystem">
 
   <!-- feed -->
   
@@ -104,6 +106,7 @@
       
 
 
+
 <div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-08-03T12:58:42.000Z">2022-08-03</time></div></div>
 
 <article class='md-text content post'>
@@ -124,6 +127,7 @@
 <h3 id="copy-on-write"><a href="#copy-on-write" class="headerlink" title="copy on write"></a>copy on write</h3><p>copy on write特性，导致如果先读取lowerdir的文件，会感知不到后续修改。该问题使用python脚本未复现，生产环境中通过挂载日志目录。</p>
 <h3 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h3><p>rename(2) systemcall的支持有差别，具体件参考文档</p>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt">https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt</a><br><a target="_blank" rel="noopener" href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/">https://docs.docker.com/storage/storagedriver/overlayfs-driver/</a><br><a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/overlayfs-driver/</a><br><a target="_blank" rel="noopener" href="https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/">https://gdevillele.github.io/engine/userguide/storagedriver/device-mapper-driver/</a><br><a target="_blank" rel="noopener" href="https://blog.k8s.li/Exploring-container-image.html">https://blog.k8s.li/Exploring-container-image.html</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ">https://mp.weixin.qq.com/s/yacj95ltAZ3NfM-lv2NyXQ</a><br><a target="_blank" rel="noopener" href="https://blogs.cisco.com/developer/373-containerimages-03">https://blogs.cisco.com/developer/373-containerimages-03</a></p>
+
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
@@ -231,6 +235,9 @@
     // 从 butterfly 和 volantis 获得灵感
     loadScript: (src, opt) => new Promise((resolve, reject) => {
       var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
       script.src = src;
       if (opt) {
         for (let key of Object.keys(opt)) {
@@ -259,8 +266,8 @@
       }
     }
   };
-  stellar.version = '1.18.5';
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
   stellar.config = {
     date_suffix: {
       just: '刚刚',
@@ -269,6 +276,7 @@
       day: '天前',
       month: '个月前',
     },
+    root : '/',
   };
 
   // required plugins (only load if needs)
@@ -307,6 +315,9 @@
   }
   if ('false' == 'true') {
     stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
   }
 </script>
 
