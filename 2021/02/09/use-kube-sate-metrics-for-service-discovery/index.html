@@ -23,7 +23,7 @@
     <meta name="description" content="最近运维的k8s集群的node节点变动频繁，总是要手动更新prometheus配置文件表示很蛋疼。所以研究一下怎么对node节点做service discovery，自动更新监控targets列表。 先看看已有的配置维护方案prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件。 这个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用kube-state-metrics自动生成prometheus的配置文件">
-<meta property="og:url" content="https://changediff.github.io/2021/02/09/use-kube-sate-metrics-for-service-discovery/">
+<meta property="og:url" content="https://changediff.top/2021/02/09/use-kube-sate-metrics-for-service-discovery/">
 <meta property="og:site_name" content="changediff">
 <meta property="og:description" content="最近运维的k8s集群的node节点变动频繁，总是要手动更新prometheus配置文件表示很蛋疼。所以研究一下怎么对node节点做service discovery，自动更新监控targets列表。 先看看已有的配置维护方案prometheus的配置通过file_sd_config实现动态加载，用Python脚本访问每个集群的apiserver获取node节点然后生成对应的json配置文件。 这个">
 <meta property="og:locale" content="zh_CN">
@@ -50,7 +50,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2021-02-09T13:05:00+08:00","dateModified":"2026-03-07T14:15:57+08:00","datePublished":"2021-02-09T13:05:00+08:00","description":"","headline":"利用kube-state-metrics自动生成prometheus的配置文件","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.github.io/2021/02/09/use-kube-sate-metrics-for-service-discovery/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.github.io/2021/02/09/use-kube-sate-metrics-for-service-discovery/","keywords":"kubernetes, k8s, prometheus, monitoring","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2021-02-09T13:05:00+08:00","dateModified":"2026-03-07T14:15:57+08:00","datePublished":"2021-02-09T13:05:00+08:00","description":"","headline":"利用kube-state-metrics自动生成prometheus的配置文件","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.top/2021/02/09/use-kube-sate-metrics-for-service-discovery/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.top/2021/02/09/use-kube-sate-metrics-for-service-discovery/","keywords":"kubernetes, k8s, prometheus, monitoring","image":[]}</script>
   
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">

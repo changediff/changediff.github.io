@@ -23,7 +23,7 @@
     <meta name="description" content="最近在压测Apisix，需要按照一定的概率分布模拟请求耗时，以便达到模拟真实业务请求来压测的目的。 第一版后端程序使用Go语言，性能不达标，没法压到Apisix的极限；第二版使用Nginx作为后端程序，性能达标，压测4C8G的Apisix，极限TPS约1.4W；第三版使用openresty配合lua来模拟耗时，性能达标，4C8G的实例TPS约1.2W。 1234567891011121314151">
 <meta property="og:type" content="article">
 <meta property="og:title" content="压测中使用openresty作为upstream来业务耗时">
-<meta property="og:url" content="https://changediff.github.io/2023/08/14/upstream-timecost-simulate-with-openresty/">
+<meta property="og:url" content="https://changediff.top/2023/08/14/upstream-timecost-simulate-with-openresty/">
 <meta property="og:site_name" content="changediff">
 <meta property="og:description" content="最近在压测Apisix，需要按照一定的概率分布模拟请求耗时，以便达到模拟真实业务请求来压测的目的。 第一版后端程序使用Go语言，性能不达标，没法压到Apisix的极限；第二版使用Nginx作为后端程序，性能达标，压测4C8G的Apisix，极限TPS约1.4W；第三版使用openresty配合lua来模拟耗时，性能达标，4C8G的实例TPS约1.2W。 1234567891011121314151">
 <meta property="og:locale" content="zh_CN">
@@ -48,7 +48,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2023-08-14T22:00:59+08:00","dateModified":"2026-03-07T14:15:57+08:00","datePublished":"2023-08-14T22:00:59+08:00","description":"","headline":"压测中使用openresty作为upstream来业务耗时","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.github.io/2023/08/14/upstream-timecost-simulate-with-openresty/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.github.io/2023/08/14/upstream-timecost-simulate-with-openresty/","keywords":"load test, openresty","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2023-08-14T22:00:59+08:00","dateModified":"2026-03-07T14:15:57+08:00","datePublished":"2023-08-14T22:00:59+08:00","description":"","headline":"压测中使用openresty作为upstream来业务耗时","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.top/2023/08/14/upstream-timecost-simulate-with-openresty/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.top/2023/08/14/upstream-timecost-simulate-with-openresty/","keywords":"load test, openresty","image":[]}</script>
   
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">

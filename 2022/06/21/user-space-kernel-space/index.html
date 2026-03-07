@@ -23,14 +23,14 @@
     <meta name="description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口">
 <meta property="og:type" content="article">
 <meta property="og:title" content="理解用户空间与内核空间">
-<meta property="og:url" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/">
+<meta property="og:url" content="https://changediff.top/2022/06/21/user-space-kernel-space/">
 <meta property="og:site_name" content="changediff">
 <meta property="og:description" content="最近面试被问到了用户空间和内核空间的问题，发现脑子以为懂了和嘴巴说出来之间有一段距离，就用写作来填平吧。 什么是用户空间和内核空间？在Linux中，系统内存可以分为用户空间(user space)和内核空间(kernel space)，用户空间是运行用户进程的内存空间，内核空间是运行内核进程的内存空间。 为什么要区分用户空间和内核空间系统内核位于用户进程和硬件资源之间，将硬件资源虚拟化，提供了接口">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png">
-<meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-system-calls-gears.png">
-<meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/macro-micro-kernel.webp">
-<meta property="og:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/type-of-syscalls.png">
+<meta property="og:image" content="https://changediff.top/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png">
+<meta property="og:image" content="https://changediff.top/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-system-calls-gears.png">
+<meta property="og:image" content="https://changediff.top/2022/06/21/user-space-kernel-space/macro-micro-kernel.webp">
+<meta property="og:image" content="https://changediff.top/2022/06/21/user-space-kernel-space/type-of-syscalls.png">
 <meta property="article:published_time" content="2022-06-21T15:13:31.000Z">
 <meta property="article:modified_time" content="2026-03-07T06:15:57.197Z">
 <meta property="article:author" content="changediff">
@@ -39,7 +39,7 @@
 <meta property="article:tag" content="kernel-space">
 <meta property="article:tag" content="八股文">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://changediff.github.io/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png">
+<meta name="twitter:image" content="https://changediff.top/2022/06/21/user-space-kernel-space/user-space-vs-kernel-space-basic-system-calls.png">
   
   
   
@@ -55,7 +55,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2022-06-21T23:13:31+08:00","dateModified":"2026-03-07T14:15:57+08:00","datePublished":"2022-06-21T23:13:31+08:00","description":"","headline":"理解用户空间与内核空间","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.github.io/2022/06/21/user-space-kernel-space/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.github.io/2022/06/21/user-space-kernel-space/","keywords":"linux, user-space, kernel-space, 八股文","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2022-06-21T23:13:31+08:00","dateModified":"2026-03-07T14:15:57+08:00","datePublished":"2022-06-21T23:13:31+08:00","description":"","headline":"理解用户空间与内核空间","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.top/2022/06/21/user-space-kernel-space/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.top/2022/06/21/user-space-kernel-space/","keywords":"linux, user-space, kernel-space, 八股文","image":[]}</script>
   
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
