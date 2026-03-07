@@ -4,6 +4,8 @@ tags:
   - Linux
   - iptables
 date: 2022-05-06 00:37:22
+categories:
+  - 运维
 ---
 
 `iptables`是基于Linux内核模块[Netfilter](https://en.wikipedia.org/wiki/Netfilter)的防火墙工具，可以按照一定的规则对ip packet执行监控、修改、转发、重定向、丢弃等操作；ipv6版本的是`ip6talbles`；`nftables`则是iptables的新实现。目前，iptables还是使用最广泛的Linux防火墙模块，本文也聚焦于iptables的入门使用。

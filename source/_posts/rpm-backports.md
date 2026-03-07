@@ -5,6 +5,8 @@ tags:
   - CentOS
   - rpm
 date: 2022-04-17 17:19:56
+categories:
+  - 运维
 ---
 
 

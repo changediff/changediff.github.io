@@ -109,5 +109,5 @@ theme: stellar
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: git@github.com:changediff/changediff.github.io.git
+  repository: https://github.com/changediff/changediff.github.io.git
   branch: main

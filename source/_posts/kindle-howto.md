@@ -1,6 +1,8 @@
 ---
 title: Kindle使用笔记
 date: 2022-10-31 01:22:25
+categories:
+  - 阅读
 tags: ["kindle", "epub", "mobi"]
 ---
 亚马逊Kindle退出中国市场真的是噩耗，最蛋疼的是之前的书库没法用了，还是改回自己囤书，calibre的方式吧。数据掌握在自己手里最安心。

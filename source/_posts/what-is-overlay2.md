@@ -6,6 +6,8 @@ tags:
   - devicemapper
   - union filesystem
 date: 2022-08-03 20:58:42
+categories:
+  - 运维
 ---
 
 

@@ -1,6 +1,8 @@
 ---
 title: dnsmasq容器部署折腾
 date: 2022-09-20 21:31:46
+categories:
+  - 运维
 tags: ["dnsmasq", "docker"]
 ---
 ## 蛋疼的华为云K8s的DNS问题

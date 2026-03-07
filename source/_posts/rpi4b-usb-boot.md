@@ -1,6 +1,8 @@
 ---
 title: 从外接USB设备启动树莓派4b
 date: 2021-02-28 20:46:00
+categories:
+  - 树莓派
 tags: ["rpi", "Linux"]
 ---
 

@@ -1,6 +1,7 @@
+logo:
+  avatar: /images/cat-logo.png
+  title: changediff
 sidebar:
-  # logo:
-  #   title: '[<img no-lazy height="32px" src="xxx"/>](/)'
   menu:
     post: '[btn.blog](/)'
     wiki: '[btn.wiki](/wiki/)'

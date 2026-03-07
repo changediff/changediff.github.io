@@ -1,6 +1,8 @@
 ---
 title: 树莓派Airplay将有线音箱变成WiFi音箱
 date: 2023-04-15 17:44:05
+categories:
+  - 树莓派
 tags:
 ---
 

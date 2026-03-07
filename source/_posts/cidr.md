@@ -1,6 +1,8 @@
 ---
 title: cidr网段划分笔记
 date: 2022-08-17 23:57:37
+categories:
+  - 运维
 tags: ["cidr"]
 ---
 

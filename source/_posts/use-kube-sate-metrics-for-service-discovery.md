@@ -1,6 +1,8 @@
 ---
 title: 利用kube-state-metrics自动生成prometheus的配置文件 
 date: 2021-02-09 13:05:00
+categories:
+  - 运维
 tags: ["k8s", "kubernetes", "prometheus", "monitoring"]
 ---
 

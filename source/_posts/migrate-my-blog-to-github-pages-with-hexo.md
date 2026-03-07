@@ -4,6 +4,8 @@ tags:
   - hexo
   - GitHub Pages
 date: 2022-05-09 16:25:28
+categories:
+  - 运维
 ---
 
 

@@ -1,6 +1,8 @@
 ---
 title: 压测中使用openresty作为upstream来业务耗时
 date: 2023-08-14 22:00:59
+categories:
+  - 运维
 tags: ["load test", "openresty"]
 ---
 最近在压测Apisix，需要按照一定的概率分布模拟请求耗时，以便达到模拟真实业务请求来压测的目的。
