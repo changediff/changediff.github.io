@@ -17,18 +17,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Tailscale Peer Relays 正式发布 - changediff</title>
+  <title>【翻译】Tailscale Peer Relays 正式发布 - changediff</title>
 
   
     <meta name="description" content="摘要：Tailscale Peer Relays（点对点中继）现已正式发布（GA）。这项技术最初是为了解决硬 NAT 的限制，如今已发展成为生产级别的网络连接方案。它能在直接 P2P 连接受阻时提供高吞吐量的中继服务，支持在受限的云环境中部署，并提供更好的可观测性和调试能力。   当 Tailscale 工作得最好时，它感觉毫不费力，甚至有些”无聊”——设备直接连接，数据包走最短路径，性能不再是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tailscale Peer Relays 正式发布">
+<meta property="og:title" content="【翻译】Tailscale Peer Relays 正式发布">
 <meta property="og:url" content="https://changediff.top/2026/03/08/tailscale-peer-relays-ga/">
 <meta property="og:site_name" content="changediff">
 <meta property="og:description" content="摘要：Tailscale Peer Relays（点对点中继）现已正式发布（GA）。这项技术最初是为了解决硬 NAT 的限制，如今已发展成为生产级别的网络连接方案。它能在直接 P2P 连接受阻时提供高吞吐量的中继服务，支持在受限的云环境中部署，并提供更好的可观测性和调试能力。   当 Tailscale 工作得最好时，它感觉毫不费力，甚至有些”无聊”——设备直接连接，数据包走最短路径，性能不再是">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-03-07T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-07T18:06:36.716Z">
+<meta property="article:modified_time" content="2026-03-07T18:18:16.194Z">
 <meta property="article:author" content="changediff">
 <meta property="article:tag" content="局域网">
 <meta property="article:tag" content="Tailscale">
@@ -50,7 +50,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2026-03-08T02:00:00+08:00","dateModified":"2026-03-08T02:06:36+08:00","datePublished":"2026-03-08T02:00:00+08:00","description":"","headline":"Tailscale Peer Relays 正式发布","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.top/2026/03/08/tailscale-peer-relays-ga/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.top/2026/03/08/tailscale-peer-relays-ga/","keywords":"局域网, Tailscale, WireGuard, 网络","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"changediff","sameAs":[]},"dateCreated":"2026-03-08T02:00:00+08:00","dateModified":"2026-03-08T02:18:16+08:00","datePublished":"2026-03-08T02:00:00+08:00","description":"","headline":"【翻译】Tailscale Peer Relays 正式发布","mainEntityOfPage":{"@type":"WebPage","@id":"https://changediff.top/2026/03/08/tailscale-peer-relays-ga/"},"publisher":{"@type":"Organization","name":"changediff","sameAs":[]},"url":"https://changediff.top/2026/03/08/tailscale-peer-relays-ga/","keywords":"局域网, Tailscale, WireGuard, 网络","image":[]}</script>
   
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
@@ -73,7 +73,7 @@
 
 
 
-<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/03/08/tailscale-peer-relays-ga/"><span class="title">Tailscale Peer Relays 正式发布</span></a><a class="item title" href="/2026/03/07/ssh-key-mfa-debian/"><span class="title">Debian SSH 配置密钥 + MFA 双重认证指南</span></a><a class="item title" href="/2026/03/07/blog-management-thoughts/"><span class="title">博客维护与管理心得</span></a><a class="item title" href="/2022/05/06/iptables-howto/"><span class="title">iptables入门笔记</span></a><a class="item title" href="/2022/04/17/rpm-backports/"><span class="title">CentOS7升级systemd版本到416.1</span></a><a class="item title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/"><span class="title">利用kube-state-metrics自动生成prometheus的配置文件</span></a><a class="item title" href="/2022/08/03/algorithm-interview/"><span class="title">算法复杂度计算</span></a><a class="item title" href="/2023/03/19/etcd-ops/"><span class="title">etcd运维踩坑记录</span></a><a class="item title" href="/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/"><span class="title">使用hexo将博客迁移到GitHub Pages</span></a><a class="item title" href="/2022/08/25/notes-on-wsl/"><span class="title">Windows上的shell环境折腾笔记</span></a></div></widget>
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/03/08/tailscale-peer-relays-ga/"><span class="title">【翻译】Tailscale Peer Relays 正式发布</span></a><a class="item title" href="/2026/03/07/ssh-key-mfa-debian/"><span class="title">Debian SSH 配置密钥 + MFA 双重认证指南</span></a><a class="item title" href="/2026/03/07/blog-management-thoughts/"><span class="title">博客维护与管理心得</span></a><a class="item title" href="/2022/05/06/iptables-howto/"><span class="title">iptables入门笔记</span></a><a class="item title" href="/2022/04/17/rpm-backports/"><span class="title">CentOS7升级systemd版本到416.1</span></a><a class="item title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/"><span class="title">利用kube-state-metrics自动生成prometheus的配置文件</span></a><a class="item title" href="/2022/08/03/algorithm-interview/"><span class="title">算法复杂度计算</span></a><a class="item title" href="/2023/03/19/etcd-ops/"><span class="title">etcd运维踩坑记录</span></a><a class="item title" href="/2022/05/09/migrate-my-blog-to-github-pages-with-hexo/"><span class="title">使用hexo将博客迁移到GitHub Pages</span></a><a class="item title" href="/2022/08/25/notes-on-wsl/"><span class="title">Windows上的shell环境折腾笔记</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -86,12 +86,12 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BF%BB%E8%AF%91/">翻译</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-03-07T18:00:00.000Z">2026-03-08</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-03-07T18:06:36.716Z">2026-03-08</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-03-07T18:00:00.000Z">2026-03-08</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-03-07T18:18:16.194Z">2026-03-08</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>Tailscale Peer Relays 正式发布</span></h1>
+        <h1 class="text title"><span>【翻译】Tailscale Peer Relays 正式发布</span></h1>
         
       </div>
     </div>
