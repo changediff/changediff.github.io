@@ -1,3 +1,4 @@
+https://changediff.github.io/2026/03/07/ssh-key-mfa-debian/
 https://changediff.github.io/2026/03/07/blog-management-thoughts/
 https://changediff.github.io/2022/05/06/iptables-howto/
 https://changediff.github.io/2022/04/17/rpm-backports/
@@ -65,6 +66,10 @@ https://changediff.github.io/tags/overlay2/
 https://changediff.github.io/tags/devicemapper/
 https://changediff.github.io/tags/union-filesystem/
 https://changediff.github.io/tags/Windows/
+https://changediff.github.io/tags/SSH/
+https://changediff.github.io/tags/%E5%AE%89%E5%85%A8/
+https://changediff.github.io/tags/Debian/
+https://changediff.github.io/tags/MFA/
 https://changediff.github.io/categories/%E7%BC%96%E7%A8%8B/
 https://changediff.github.io/categories/%E8%BF%90%E7%BB%B4/
 https://changediff.github.io/categories/%E9%98%85%E8%AF%BB/
