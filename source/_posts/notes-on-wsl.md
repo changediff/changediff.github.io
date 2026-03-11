@@ -94,4 +94,37 @@ Add-AppxPackage .\app_name.appx
 
 1. docker官网下载安装包并安装：https://www.docker.com/products/docker-desktop/
 2. 按照教程加的docker-user用户组权限`C:\WINDOWS\system32\compmgmt.msc`：https://blog.csdn.net/fragrant_no1/article/details/84256775
-3. 安装的【 Linux 内核更新包】：https://docs.microsoft.com/zh-cn/windows/wsl/install-manual#step-4
+3. 安装的【 Linux 内核更新包】：https://docs.microsoft.com/zh-cn/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
+4. 重启笔记本
+
+至此，已经拥有了完整的Linux环境。然而容器环境启动和文件操作不方便，每次重启笔记本都需要重新启动容器，Docker本身的冷启动时间较长。
+
+### Ubuntu-22.04 on WSL
+
+既然已经安装好了`wsl`环境，那干脆尝试安装下其他发行版吧，考虑到使用便利性，我选择了`Ubuntu22.04`([下载地址](https://aka.ms/wslubuntu2204))
+下载完成后使用一下命令安装，**注意，双击打开安装会报错**：
+```
+Add-AppxPackage .\app_name.appx
+```
+此时打开Windows-Terminal发现已经添加好了Ubuntu-22.04的启动配置，新建终端标签启动即可。第一次启动需要初始化，耗时较长。
+
+其他发行版安装可参考官方教程：
+https://docs.microsoft.com/en-us/windows/wsl/install-manual
+
+至此，已经拥有了可以快速启动，无缝启动，丝般顺滑。然而WSL无法使用systemd，这就导致dockerd无法启动
+
+### Ubuntu-22.04 on WSL2
+
+于是我将目标瞄准了虚拟化更彻底的WSL2
+
+将WSL的Linux发行版转换成WSL2很方便，只需要一条命令即可拥有，过程中不需要UAC提权：
+```
+wsl --set-version Ubuntu-22.04 2
+```
+
+使用wsl-distrod方案安装systemd，具体教程见官方repo的`Option 2: Make your Current Distro Run Systemd`部分：
+
+https://github.com/nullpo-head/wsl-distrod
+
+至此，我就在Windows上拥有了无缝的bash体验，使用过程中不需要UAC提权，还拥有WSL系统的root权限，完结，撒花！！！
+

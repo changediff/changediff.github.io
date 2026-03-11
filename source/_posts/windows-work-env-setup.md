@@ -176,3 +176,82 @@ function Get-Size {
 ```
 > winget search kali
 名称                ID                       版本    匹配      源
+----------------------------------------------------------------------
+Kali Linux          9PKR34TNCV07             Unknown           msstore
+KALITI              9WZDNCRDBPKV             Unknown           msstore
+Kalipso Profesyonel 9N4DWTDRZT9C             Unknown           msstore
+Kalipso Tüketici    9N7BL6GKFB2C             Unknown           msstore
+Kali Linux          kalilinux.kalilinux      1.1.9.0 Tag: kali winget
+SiriKali            FrancisBanyikwa.SiriKali 1.5.0             winget
+
+> winget install 9PKR34TNCV07
+```
+
+#### 简洁高效Arch
+官方网址：https://github.com/yuk7/ArchWSL
+```
+scoop bucket add extras
+scoop install archwsl
+```
+
+#### 官方默认Ubuntu
+
+```
+> winget search ubuntu
+名称               ID                    版本            匹配        源
+----------------------------------------------------------------------------
+Ubuntu             9PDXGNCFSCZV          Unknown                     msstore
+Ubuntu 20.04.5 LTS 9MTTCL66CPXJ          Unknown                     msstore
+Ubuntu 22.04.1 LTS 9PN20MSR04DW          Unknown                     msstore
+Ubuntu 18.04.5 LTS 9PNKSF5ZN4SW          Unknown                     msstore
+Ubuntu (Preview)   9P7BDVKVNXZ6          Unknown                     msstore
+Ubuntu             Canonical.Ubuntu      2004.2021.825.0             winget
+Ubuntu 22.04 LTS   Canonical.Ubuntu.2204 2204.0.10.0     Tag: ubuntu winget
+Ubuntu 20.04 LTS   Canonical.Ubuntu.2004 2004.2021.825.0 Tag: ubuntu winget
+Ubuntu 18.04 LTS   Canonical.Ubuntu.1804 1804.2019.522.0 Tag: ubuntu winget
+Ubuntu 16.04 LTS   Canonical.Ubuntu.1604 1604.2019.523.0 Tag: ubuntu winget
+
+> winget install Canonical.Ubuntu.2204
+```
+
+### WSL配置管理
+
+#### `wsl --help`
+优先参考wsl帮助命令
+
+#### easyWSL
+提供图形界面管理已安装发行版，同时支持将Docker镜像转化成WSL子系统
+```
+> winget search easyWSL
+名称    ID           版本    源
+-------------------------------------
+easyWSL 9NHBTMKS47RB Unknown msstore
+```
+
+#### 默认登录用户修改
+非官方版本的wsl可能没有初始化创建用户的过程，默认账户为`root`，可手动创建用户后，添加对应的配置实现默认用户更改
+```
+$ cat /etc/wsl.conf
+[user]
+default=用户名
+```
+
+## 快捷键 PowerToys
+
+官方网址：https://github.com/microsoft/PowerToys
+
+从macOS切到Windows最不习惯的是快捷键，如果说是只使用一个操作系统，那可以重新记忆习惯，然而我是macOS和Windows切换使用，就有快捷键打架的问题。
+
+最近新发现的`PowerToys`的能够将常见的Windows快捷键映射成macOS快捷键，且可以一键开关映射，这样就完美解决的快捷键打架的问题，打架都用macOS的快捷键就好。
+
+
+推荐使用winget安装，方便后续更新
+```
+winget install Microsoft.PowerToys -s winget
+```
+
+### 参考键盘配置
+
+![powertoy1](powertoy1.png)
+![powertoy2](powertoy2.png)
+![powertoy3](powertoy3.png)
