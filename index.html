@@ -79,7 +79,7 @@
 <div class="widgets">
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" placeholder="站内搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2026/03/11/openclaw-xiaolongxia-incident/"><span class="title">一次小龙虾事件带来的教训</span></a><a class="item title" href="/2023/03/19/etcd-ops/"><span class="title">etcd运维踩坑记录</span></a><a class="item title" href="/2022/08/25/notes-on-wsl/"><span class="title">Windows上的shell环境折腾笔记</span></a><a class="item title" href="/2022/10/06/windows-work-env-setup/"><span class="title">Windows10(2009)工作环境配置</span></a><a class="item title" href="/2026/03/07/tailscale-peer-relays-ga/"><span class="title">【翻译】Tailscale Peer Relays 正式发布</span></a></div></widget>
+<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2026/09/01/macos-weekend-tools/"><span class="title">周末做了两个 macOS 小工具：桌面悬浮时钟 & 菜单栏双猫</span></a><a class="item title" href="/2022/10/06/windows-work-env-setup/"><span class="title">Windows10(2009)工作环境配置</span></a><a class="item title" href="/2022/08/03/what-is-overlay2/"><span class="title">overlay2笔记</span></a><a class="item title" href="/2023/08/14/upstream-timecost-simulate-with-openresty/"><span class="title">压测中使用openresty作为upstream来业务耗时</span></a><a class="item title" href="/2021/02/09/use-kube-sate-metrics-for-service-discovery/"><span class="title">利用kube-state-metrics自动生成prometheus的配置文件</span></a></div></widget>
 
 
 </div>
@@ -101,10 +101,16 @@
 
 <div class="nav-wrap"><nav class="sub post cap"><a class="active" href="/">近期发布</a><a href="/categories">分类</a><a href="/tags">标签</a><a href="/archives">归档</a></nav></div>
 
-  <div class="post-list post"><a class="post-card post " href="/2026/03/11/openclaw-xiaolongxia-incident/">
+  <div class="post-list post"><a class="post-card post " href="/2026/09/01/macos-weekend-tools/">
+<article class="md-text"><h2 class="post-title">周末做了两个 macOS 小工具：桌面悬浮时钟 & 菜单栏双猫</h2><div class="excerpt"><p>周末顺手做了两个 macOS 小工具，都是平时自己觉得很顺手就开源出来的：一个桌面悬浮时钟，一个菜单栏里的双猫跑者。记录一下。
+ClockOnScreen — macOS 桌面悬浮时钟轻量的小时钟，常驻菜单栏，时钟面板悬浮在桌面上。不用的时候是透明的小卡片，用的时候按需求自己调。
+
+桌面悬浮：无边框圆角面板，置顶显示，跨空间、在全屏应用之上依然可见；按住即可拖动，位置自动记忆。
+显示秒 · ...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2026-09-01T12:30:00.000Z">2026-09-01</time></span><span class="cap breadcrumb">macOS</span></div></article>
+</a><a class="post-card post " href="/2026/03/11/openclaw-xiaolongxia-incident/">
 <article class="md-text"><h2 class="post-title">一次小龙虾事件带来的教训</h2><div class="excerpt"><p>我也成了”小龙虾”的受害者。
 之前让一个运行在树莓派上面的 OpenClaw（编号 #001，昵称”树莓派”）帮我整理博客历史文章，添加分类和标签。这本是一个简单的任务——读取所有文章、检查内容完整性、补充元数据。然而在实际执行过程中，因为涉及 20 多篇文章，每篇都要读取，分析、重写 frontmatter，累计的 Token 消耗远超预期，最终导致大模型在处理后续文章时，上下文被截断，部...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2026-03-11T08:55:00.000Z">2026-03-11</time></span><span class="cap breadcrumb">OpenClaw</span></div></article>
-</a><a class="post-card post " href="/2026/03/07/tailscale-peer-relays-ga/">
+</a><a class="post-card post " href="/2026/03/08/tailscale-peer-relays-ga/">
 <article class="md-text"><h2 class="post-title">【翻译】Tailscale Peer Relays 正式发布</h2><div class="excerpt"><p>
 摘要：Tailscale Peer Relays（点对点中继）现已正式发布（GA）。这项技术最初是为了解决硬 NAT 的限制，如今已发展成为生产级别的网络连接方案。它能在直接 P2P 连接受阻时提供高吞吐量的中继服务，支持在受限的云环境中部署，并提供更好的可观测性和调试能力。
 
@@ -140,7 +146,7 @@ Markdown 写作 - 用熟悉的 Markdown 语法写文章...</p></div><div class="
 <article class="md-text"><h2 class="post-title">etcd运维踩坑记录</h2><div class="excerpt"><p>etcd运维踩坑记录
 1. 没有开启压缩导致 dbsize 一直增长etcd 的默认启动参数不会开启定期数据压缩 compact，一般程序使用 etcd 时会主动调用etcd 接口做压缩，例如 kubernetes。如果没有开启定期压缩，并且程序也没有主动调用压缩接口，那么就会有dbsize增长到上限（默认2GiB），etcd无法写入的风险。
 etcd手动压缩SOP假设etcd为3节点部署，...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-03-19T10:47:10.000Z">2023-03-19</time></span><span class="cap breadcrumb">运维</span></div></article>
-</a><a class="post-card post " href="/2022/10/30/kindle-howto/">
+</a><a class="post-card post " href="/2022/10/31/kindle-howto/">
 <article class="md-text"><h2 class="post-title">Kindle使用笔记</h2><div class="excerpt"><p>亚马逊Kindle退出中国市场真的是噩耗，最蛋疼的是之前的书库没法用了，还是改回自己囤书，calibre的方式吧。数据掌握在自己手里最安心。
 使用技巧记录漫画转换格式
 部分epub漫画资源在转换成mobi之后有空白页的问题，在mobi输出转换选项中勾选忽略边距选项，mobi文件类型选择both，通过该方式转换后的mobi可在kindle上正常阅读
@@ -148,9 +154,6 @@ etcd手动压缩SOP假设etcd为3节点部署，...</p></div><div class="meta ca
 </a><a class="post-card post " href="/2022/10/06/windows-work-env-setup/">
 <article class="md-text"><h2 class="post-title">Windows10(2009)工作环境配置</h2><div class="excerpt"><p>最近工作电脑换成了Windows 10，也就重新开始了我的Windows折腾之旅。回顾下当年的操作系统折腾时间线
 123win98 --&gt; winxp --&gt; win vista（第一台自己的电脑） --&gt; win7 --&gt; win8 &amp; windows phone 8 --&gt; win10 &amp; win10mobile --&gt; win11 (...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-10-06T15:59:59.000Z">2022-10-06</time></span><span class="cap breadcrumb">效率</span></div></article>
-</a><a class="post-card post " href="/2022/09/20/dnsmasq-in-docker/">
-<article class="md-text"><h2 class="post-title">dnsmasq容器部署折腾</h2><div class="excerpt"><p>蛋疼的华为云K8s的DNS问题最近换工作，接触各个云厂商的服务比较多，忍不住想吐槽下华为云。
-华为云不支持云DNS转发，也就是说如果想要解析公司其他DNS域名的内网域名就得更换华为云的默认DNS（阿里云的Private Zone功能支持将云DNS的上游加上自建DNS，直接解决了这个问题）。如果只是用云服务器，那么换成自建DNS也不用影响，然而华为云的CCE（托管版K8s）的Node节点依赖华...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2022-09-20T13:31:46.000Z">2022-09-20</time></span><span class="cap breadcrumb">运维</span></div></article>
 </a></div>
   
   <div class='paginator-wrap dis-select'>
