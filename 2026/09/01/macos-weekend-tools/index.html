@@ -23,15 +23,15 @@
   <title>周末做了两个 macOS 小工具：桌面悬浮时钟 & 菜单栏双猫 - changediff</title>
 
   
-    <meta name="description" content="周末顺手做了两个 macOS 小工具，都是平时自己觉得很顺手就开源出来的：一个桌面悬浮时钟，一个菜单栏里的双猫跑者。这篇记录是趁 zcode 的 GLM-5.3-Flash 周末免费 3 亿 token 活动，由 AI 小助手帮忙整理写的。 ClockOnScreen — macOS 桌面悬浮时钟轻量的小时钟，常驻菜单栏，时钟面板悬浮在桌面上。不用的时候是透明的小卡片，用的时候按需求自己调。  桌">
+    <meta name="description" content="周末顺手做了两个 macOS 小工具，都是平时自己觉得很顺手就开源出来的：一个桌面悬浮时钟，一个菜单栏里的双猫跑者。记录一下。 ClockOnScreen — macOS 桌面悬浮时钟 轻量的小时钟，常驻菜单栏，时钟面板悬浮在桌面上。不用的时候是透明的小卡片，用的时候按需求自己调。  桌面悬浮：无边框圆角面板，置顶显示，跨空间、在全屏应用之上依然可见；按住即可拖动，位置自动记忆。 显示秒 · 闪动">
 <meta property="og:type" content="article">
 <meta property="og:title" content="周末做了两个 macOS 小工具：桌面悬浮时钟 &amp; 菜单栏双猫">
 <meta property="og:url" content="https://changediff.github.io/2026/09/01/macos-weekend-tools/index.html">
 <meta property="og:site_name" content="changediff">
-<meta property="og:description" content="周末顺手做了两个 macOS 小工具，都是平时自己觉得很顺手就开源出来的：一个桌面悬浮时钟，一个菜单栏里的双猫跑者。这篇记录是趁 zcode 的 GLM-5.3-Flash 周末免费 3 亿 token 活动，由 AI 小助手帮忙整理写的。 ClockOnScreen — macOS 桌面悬浮时钟轻量的小时钟，常驻菜单栏，时钟面板悬浮在桌面上。不用的时候是透明的小卡片，用的时候按需求自己调。  桌">
+<meta property="og:description" content="周末顺手做了两个 macOS 小工具，都是平时自己觉得很顺手就开源出来的：一个桌面悬浮时钟，一个菜单栏里的双猫跑者。记录一下。 ClockOnScreen — macOS 桌面悬浮时钟 轻量的小时钟，常驻菜单栏，时钟面板悬浮在桌面上。不用的时候是透明的小卡片，用的时候按需求自己调。  桌面悬浮：无边框圆角面板，置顶显示，跨空间、在全屏应用之上依然可见；按住即可拖动，位置自动记忆。 显示秒 · 闪动">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-01T12:30:00.000Z">
-<meta property="article:modified_time" content="2026-09-02T01:46:02.194Z">
+<meta property="article:modified_time" content="2026-09-21T15:38:24.267Z">
 <meta property="article:author" content="changediff">
 <meta property="article:tag" content="macOS">
 <meta property="article:tag" content="工具">
@@ -111,41 +111,39 @@
 
 <article class='md-text content post'>
 <h1 class="article-title"><span>周末做了两个 macOS 小工具：桌面悬浮时钟 & 菜单栏双猫</span></h1>
-<p>周末顺手做了两个 macOS 小工具，都是平时自己觉得很顺手就开源出来的：一个桌面悬浮时钟，一个菜单栏里的双猫跑者。这篇记录是趁 zcode 的 GLM-5.3-Flash 周末免费 3 亿 token 活动，由 AI 小助手帮忙整理写的。</p>
-<h2 id="ClockOnScreen-—-macOS-桌面悬浮时钟"><a href="#ClockOnScreen-—-macOS-桌面悬浮时钟" class="headerlink" title="ClockOnScreen — macOS 桌面悬浮时钟"></a>ClockOnScreen — macOS 桌面悬浮时钟</h2><p>轻量的小时钟，常驻菜单栏，时钟面板悬浮在桌面上。不用的时候是透明的小卡片，用的时候按需求自己调。</p>
+<p>周末顺手做了两个 macOS 小工具，都是平时自己觉得很顺手就开源出来的：一个桌面悬浮时钟，一个菜单栏里的双猫跑者。记录一下。</p>
+<h2 id="ClockOnScreen-—-macOS-桌面悬浮时钟">ClockOnScreen — macOS 桌面悬浮时钟</h2>
+<p>轻量的小时钟，常驻菜单栏，时钟面板悬浮在桌面上。不用的时候是透明的小卡片，用的时候按需求自己调。</p>
 <ul>
 <li><strong>桌面悬浮</strong>：无边框圆角面板，置顶显示，跨空间、在全屏应用之上依然可见；按住即可拖动，位置自动记忆。</li>
 <li><strong>显示秒 · 闪动冒号</strong>：等宽数字字体，走字不抖；秒可隐藏，冒号可设为每秒闪动。</li>
-<li><strong>颜色与反色</strong>：黑 &#x2F; 蓝 &#x2F; 绿 &#x2F; 粉 &#x2F; 紫 &#x2F; 红 &#x2F; 白 &#x2F; 黄 8 色一键切换；「反色」就像 Windows 反色鼠标指针那样，按身后内容逐像素反相，任何背景都清晰。</li>
+<li><strong>颜色与反色</strong>：黑 / 蓝 / 绿 / 粉 / 紫 / 红 / 白 / 黄 8 色一键切换；「反色」就像 Windows 反色鼠标指针那样，按身后内容逐像素反相，任何背景都清晰。</li>
 <li><strong>三种背景</strong>：黑色、白色半透明圆角卡片，或纯透明（自动加文字投影，浅色壁纸上也能看清）。</li>
-<li><strong>实时网速</strong>：每秒采样网卡流量，显示上下行速率，自动适配 B&#x2F;s → KB&#x2F;s → MB&#x2F;s → GB&#x2F;s。</li>
-<li><strong>倒计时</strong>：30 秒到 60 分钟默认预设，运行时面板变为剩余时间，支持暂停 &#x2F; 继续 &#x2F; 取消，结束时响铃并闪动提醒。</li>
+<li><strong>实时网速</strong>：每秒采样网卡流量，显示上下行速率，自动适配 B/s → KB/s → MB/s → GB/s。</li>
+<li><strong>倒计时</strong>：30 秒到 60 分钟默认预设，运行时面板变为剩余时间，支持暂停 / 继续 / 取消，结束时响铃并闪动提醒。</li>
 <li><strong>字号随意调</strong>：16–160pt 一步到位，秒与网速行按比例跟随。</li>
 <li><strong>中英双语</strong>：跟随系统语言自动切换。</li>
 </ul>
-<p>支持 macOS 12.3+，Apple Silicon 和 Intel 都可运行（Swift &#x2F; AppKit）。功能设计与交互参考了 <strong>zClock Lite</strong>（原作者 zcode），本项目是其功能的<strong>独立开源实现</strong>，未使用其任何代码与资源，感谢原作者的创意与启发。</p>
+<p>支持 macOS 12.3+，Apple Silicon 和 Intel 都可运行（Swift / AppKit）。功能设计与交互参考了 zClock Lite，本项目是其功能的独立开源实现，未使用其任何代码与资源。</p>
 <ul>
 <li>项目主页：<a href="https://changediff.github.io/ClockOnScreen/">https://changediff.github.io/ClockOnScreen/</a></li>
 <li>仓库：<a target="_blank" rel="noopener" href="https://github.com/changediff/ClockOnScreen">https://github.com/changediff/ClockOnScreen</a></li>
 </ul>
-<h2 id="RunCat-Neo-Twocats-—-菜单栏里的双猫版"><a href="#RunCat-Neo-Twocats-—-菜单栏里的双猫版" class="headerlink" title="RunCat Neo Twocats — 菜单栏里的双猫版"></a>RunCat Neo Twocats — 菜单栏里的双猫版</h2><p>RunCat Neo 是一只跟随 CPU 负载在菜单栏奔跑的猫（原作者 Kyome22 &#x2F; Takuto Nakamura）。这是它的非官方修改版，按个人需求加了「双猫」能力：</p>
+<h2 id="RunCat-Neo-Twocats-—-菜单栏里的双猫版">RunCat Neo Twocats — 菜单栏里的双猫版</h2>
+<p>RunCat Neo 是一只跟随 CPU 负载在菜单栏奔跑的猫（原作者 Kyome22 / Takuto Nakamura）。这是它的非官方修改版，按个人需求加了「双猫」能力：</p>
 <ul>
 <li><strong>双跑者同屏</strong>：菜单栏可同时显示两只跑者（主跑者 + 第二跑者），各自独立播放关键帧动画、独立按素材类型着色（剪影跟随菜单栏深浅模式，彩色保留原色）。第二跑者可在菜单里随时选择或取消。</li>
 <li><strong>跑者间距可配置</strong>：两只跑者的间隔可用滑块调整（0–20px，默认 3px），拖动即时生效并持久化。</li>
 <li><strong>可与原版共存</strong>：使用独立 bundle id（<code>com.changediff.twocats.RunCatNeo</code>），与原版 RunCat Neo 或 App Store 版互不冲突，可同时运行、偏好设置彼此隔离。</li>
-<li><strong>其余与原版一致</strong>：CPU 负载动画与速度联动、系统指标条、自定义指标、自定义跑者（编辑器 &#x2F; 素材导入）等功能全部继承自原版。</li>
+<li><strong>其余与原版一致</strong>：CPU 负载动画与速度联动、系统指标条、自定义指标、自定义跑者（编辑器 / 素材导入）等功能全部继承自原版。</li>
 </ul>
-<p>这是个人向的二次修改，<strong>核心设计与代码均归原作者 <a target="_blank" rel="noopener" href="https://github.com/Kyome22/RunCatNeo">Kyome22 &#x2F; Takuto Nakamura</a> 所有</strong>，喜欢的话请支持原版。感谢原作者的优秀作品。</p>
+<p>这是个人向的二次修改，核心设计与代码均归原作者所有，喜欢的话请支持原版。</p>
 <ul>
 <li>项目主页：<a href="https://changediff.github.io/RunCatNeo2cats/">https://changediff.github.io/RunCatNeo2cats/</a></li>
 <li>仓库：<a target="_blank" rel="noopener" href="https://github.com/changediff/RunCatNeo2cats">https://github.com/changediff/RunCatNeo2cats</a></li>
 </ul>
 <hr>
 <p>两个都是周末琢磨出来的小东西，主打一个「自己用着顺手」。有需要的话可以拿源码自己构建，代码都在仓库里。🛠️</p>
-<hr>
-<blockquote>
-<p>📝 本文由 AI 小助手协助整理完成（趁 zcode 的 GLM-5.3-Flash 周末免费 3 亿 token 活动）。</p>
-</blockquote>
 
 
 
@@ -154,7 +152,7 @@
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/03/11/openclaw-xiaolongxia-incident/">一次小龙虾事件带来的教训</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/09/21/zcode-internal-mirror/">自建 ZCode 内部 mirror：mirrors.changediff.top 与 apt 源落地记录</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/03/11/openclaw-xiaolongxia-incident/">一次小龙虾事件带来的教训</a></div></section></div>
 
 
 
@@ -178,7 +176,9 @@
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备2023000465号</a></p>
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br>
+<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">浙ICP备2023000465号</a></p>
 </div></footer>
 
       <div class='float-panel mobile-only blur' style='display:none'>

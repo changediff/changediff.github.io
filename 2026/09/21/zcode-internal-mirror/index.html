@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>自建 ZCode 内部 mirror：mirrors.changediff.top 与 apt 源落地记录 - changediff</title>
+
+  
+    <meta name="description" content="最近把 ZCode 的安装方式从「人工下载 + dpkg -i」改成了内部 apt 源。这篇记录整个方案和踩过的四个坑。 背景：为什么要自己搭 mirrorZCode（智谱 Z.AI 的 IDE 产品）官方的分发方式对国内用户不太友好：  官网下载页 https:&#x2F;&#x2F;zcode.z.ai 只宣传 AppImage 真实 CDN 在 https:&#x2F;&#x2F;cdn-zcode.z.ai&#x2F;zcode&#x2F;elec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自建 ZCode 内部 mirror：mirrors.changediff.top 与 apt 源落地记录">
+<meta property="og:url" content="https://changediff.github.io/2026/09/21/zcode-internal-mirror/index.html">
+<meta property="og:site_name" content="changediff">
+<meta property="og:description" content="最近把 ZCode 的安装方式从「人工下载 + dpkg -i」改成了内部 apt 源。这篇记录整个方案和踩过的四个坑。 背景：为什么要自己搭 mirrorZCode（智谱 Z.AI 的 IDE 产品）官方的分发方式对国内用户不太友好：  官网下载页 https:&#x2F;&#x2F;zcode.z.ai 只宣传 AppImage 真实 CDN 在 https:&#x2F;&#x2F;cdn-zcode.z.ai&#x2F;zcode&#x2F;elec">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-21T14:30:00.000Z">
+<meta property="article:modified_time" content="2026-09-21T15:35:00.053Z">
+<meta property="article:author" content="changediff">
+<meta property="article:tag" content="ZCode">
+<meta property="article:tag" content="镜像源">
+<meta property="article:tag" content="apt">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="Ansible">
+<meta property="article:tag" content="certbot">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  <meta name="keywords" content="ZCode,镜像源,apt,nginx,Ansible,certbot">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/cat-logo.png" onerror="javascript:this.classList.add('error');this.src='/images/cat-logo.png';"></a><a class="title" href="/"><div class="main" ff="title">changediff</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/more/">关于</a></nav>
+</header>
+
+
+<div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">自建 ZCode 内部 mirror：mirrors.changediff.top 与 apt 源落地记录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%87%AA%E5%B7%B1%E6%90%AD-mirror"><span class="toc-text">背景：为什么要自己搭 mirror</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88"><span class="toc-text">方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E7%95%99%E7%AD%96%E7%95%A5"><span class="toc-text">保留策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apt-%E6%BA%90%E5%BD%A2%E5%BC%8F%EF%BC%9AFlat-Repository"><span class="toc-text">apt 源形式：Flat Repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%B5%81%E7%A8%8B"><span class="toc-text">同步流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E5%9D%91"><span class="toc-text">四个坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AF%81%E4%B9%A6%E7%AD%BE%E5%8F%91%E9%A1%BA%E5%BA%8F%EF%BC%9A%E5%85%88%E5%BB%BA-nginx-%E7%AB%99%E7%82%B9%EF%BC%8C%E5%86%8D%E6%89%A9-SAN"><span class="toc-text">1. 证书签发顺序：先建 nginx 站点，再扩 SAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-certbot-%E7%9A%84-webroot-%E5%BF%85%E9%A1%BB%E6%98%AF-blog-%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="toc-text">2. certbot 的 webroot 必须是 blog 的目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Flat-Repository-%E5%BF%85%E9%A1%BB%E7%94%9F%E6%88%90-Packages-%E7%B4%A2%E5%BC%95"><span class="toc-text">3. Flat Repository 必须生成 Packages 索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Release-%E7%9A%84-checksum-%E6%AE%B5%E4%B8%8D%E8%83%BD%E6%B7%B7%E7%AE%97%E6%B3%95"><span class="toc-text">4. Release 的 checksum 段不能混算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD/">基础设施</a></div><div id="post-meta">发布于&nbsp;<time datetime="2026-09-21T14:30:00.000Z">2026-09-21</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>自建 ZCode 内部 mirror：mirrors.changediff.top 与 apt 源落地记录</span></h1>
+<p>最近把 ZCode 的安装方式从「人工下载 + <code>dpkg -i</code>」改成了内部 apt 源。这篇记录整个方案和踩过的四个坑。</p>
+<h2 id="背景：为什么要自己搭-mirror"><a href="#背景：为什么要自己搭-mirror" class="headerlink" title="背景：为什么要自己搭 mirror"></a>背景：为什么要自己搭 mirror</h2><p>ZCode（智谱 Z.AI 的 IDE 产品）官方的分发方式对国内用户不太友好：</p>
+<ul>
+<li>官网下载页 <a target="_blank" rel="noopener" href="https://zcode.z.ai/">https://zcode.z.ai</a> 只宣传 <strong>AppImage</strong></li>
+<li>真实 CDN 在 <code>https://cdn-zcode.z.ai/zcode/electron/releases/&lt;版本&gt;/linux-x64/</code>，同目录下其实有 <code>deb</code>&#x2F;<code>rpm</code>，但页面没写</li>
+<li>国内直连 CDN 慢，且<strong>没有 apt 源</strong></li>
+</ul>
+<p>对 deb03 这台开发机来说，每次升级都要人工去 CDN 找版本号、下载、<code>dpkg -i</code>。既然 ali 上已经有 nginx + certbot + 博客站点，顺手加一个 mirror 是最自然的做法。</p>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><p>在 <strong>ali</strong>（阿里云 ECS）上建内部 mirror，deb03 通过 apt 源安装&#x2F;升级。</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>域名</td>
+<td><code>mirrors.changediff.top</code></td>
+</tr>
+<tr>
+<td>站点根</td>
+<td><code>/var/www/mirrors</code></td>
+</tr>
+<tr>
+<td>包目录</td>
+<td><code>/var/www/mirrors/zcode/deb</code>、<code>/var/www/mirrors/zcode/rpm</code></td>
+</tr>
+<tr>
+<td>apt 源路径</td>
+<td><code>https://mirrors.changediff.top/zcode/deb/</code></td>
+</tr>
+<tr>
+<td>nginx 配置</td>
+<td><code>/etc/nginx/sites-available/mirrors.changediff.top.conf</code></td>
+</tr>
+<tr>
+<td>同步脚本</td>
+<td><code>/usr/local/bin/zcode-mirror-sync.sh</code>（每日 03:17 cron）</td>
+</tr>
+<tr>
+<td>索引脚本</td>
+<td><code>/usr/local/bin/zcode-mirror-index.sh</code></td>
+</tr>
+<tr>
+<td>同步日志</td>
+<td><code>/var/log/zcode-mirror-sync.log</code></td>
+</tr>
+<tr>
+<td>deb03 apt 源</td>
+<td><code>/etc/apt/sources.list.d/zcode-mirror.list</code></td>
+</tr>
+</tbody></table>
+<p>全部由 Ansible playbook <code>zcode_mirror.yml</code> 管理，代码在 ccops 仓库。</p>
+<h3 id="保留策略"><a href="#保留策略" class="headerlink" title="保留策略"></a>保留策略</h3><p>只保留官方<strong>最近 3 个版本</strong>的 deb + rpm，不存 AppImage。当前是 <code>3.14.1</code> &#x2F; <code>3.14.0</code> &#x2F; <code>3.12.3</code>，旧版本由同步脚本的 <code>KEEP=3</code> 自动清理。</p>
+<p>版本发现方式是抓官方 changelog 页面，正则取版本号后按语义版本降序排前 3。</p>
+<h3 id="apt-源形式：Flat-Repository"><a href="#apt-源形式：Flat-Repository" class="headerlink" title="apt 源形式：Flat Repository"></a>apt 源形式：Flat Repository</h3><p>deb 目录直接当 flat repository 用，不需要 reprepro&#x2F;dak 这类仓库工具：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># /etc/apt/sources.list.d/zcode-mirror.list</span><br><span class="line">deb [trusted=yes] https://mirrors.changediff.top/zcode/deb ./</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>索引由 <code>dpkg-scanpackages --multiversion</code> 生成 <code>Packages</code>（同时产出 <code>.gz</code> &#x2F; <code>.xz</code>）</li>
+<li><code>Release</code> 由脚本生成；因为用了 <code>[trusted=yes]</code>，apt 不校验签名，但仍写入 checksum 条目</li>
+<li>单行 sources.list，不需要 <code>signed-by</code>、不需要分发 GPG key</li>
+</ul>
+<p>源现在已经在线，可以直接看索引：<a target="_blank" rel="noopener" href="https://mirrors.changediff.top/zcode/deb/Packages">https://mirrors.changediff.top/zcode/deb/Packages</a></p>
+<h3 id="同步流程"><a href="#同步流程" class="headerlink" title="同步流程"></a>同步流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cron 03:17 → zcode-mirror-sync.sh</span><br><span class="line">  1. 抓官方 changelog，确定最近 3 个版本</span><br><span class="line">  2. 逐个版本检查 deb/rpm 是否已在本地（有则 skip）</span><br><span class="line">  3. 缺失的从 CDN 下载，校验大小/md5（.part 原子写入后再 mv）</span><br><span class="line">  4. 清理不在最近 3 版清单里的旧包</span><br><span class="line">  5. 调用 zcode-mirror-index.sh 重建 Packages/Release</span><br><span class="line">  6. 写日志；正常情况静默，异常才推送</span><br></pre></td></tr></table></figure>
+
+<p>deb03 侧之后就是标准的 <code>apt update &amp;&amp; apt install zcode</code> &#x2F; <code>apt upgrade</code>。</p>
+<h2 id="四个坑"><a href="#四个坑" class="headerlink" title="四个坑"></a>四个坑</h2><h3 id="1-证书签发顺序：先建-nginx-站点，再扩-SAN"><a href="#1-证书签发顺序：先建-nginx-站点，再扩-SAN" class="headerlink" title="1. 证书签发顺序：先建 nginx 站点，再扩 SAN"></a>1. 证书签发顺序：先建 nginx 站点，再扩 SAN</h3><p>首次 <code>certbot certonly --expand</code> 报 404：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Detail: Invalid response from https://mirrors.changediff.top/.well-known/acme-challenge/xxx: 404</span><br></pre></td></tr></table></figure>
+
+<p>原因：<code>mirrors.changediff.top</code> 的 server 块还不存在时，这个域名的 HTTP 请求落到 nginx 的 <code>default_server</code>（<code>return 444</code>），ACME 挑战文件写下去了也取不到。</p>
+<p><strong>正确顺序</strong>：先建 nginx 站点并 reload，<strong>再</strong>跑 certbot。playbook 里用 <code>meta: flush_handlers</code> 保证 reload 先发生。</p>
+<h3 id="2-certbot-的-webroot-必须是-blog-的目录"><a href="#2-certbot-的-webroot-必须是-blog-的目录" class="headerlink" title="2. certbot 的 webroot 必须是 blog 的目录"></a>2. certbot 的 webroot 必须是 blog 的目录</h3><p>换对顺序后仍然 404，因为用了 <code>-w /var/www/mirrors</code>（mirror 自己的 root）——mirror 站点没有 <code>acme-challenge</code> location，挑战文件放进去同样取不到。</p>
+<p>最终生效的命令用了<strong>博客站点的 webroot</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">certbot certonly --webroot -w /var/www/changediff-blog \</span><br><span class="line">  --cert-name changediff.top --<span class="built_in">expand</span> --non-interactive \</span><br><span class="line">  -d changediff.top -d www.changediff.top -d ali.changediff.top \</span><br><span class="line">  -d mirrors.changediff.top</span><br></pre></td></tr></table></figure>
+
+<p><code>mirrors.changediff.top</code> 进 SAN，与 blog 共用同一张证书。</p>
+<h3 id="3-Flat-Repository-必须生成-Packages-索引"><a href="#3-Flat-Repository-必须生成-Packages-索引" class="headerlink" title="3. Flat Repository 必须生成 Packages 索引"></a>3. Flat Repository 必须生成 Packages 索引</h3><p>一开始只把 deb 丢进目录就配 apt 源，结果 404：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E: The repository &#x27;https://mirrors.changediff.top/zcode/deb ./&#x27; does not have a Release file.</span><br></pre></td></tr></table></figure>
+
+<p>deb 目录需要 <code>dpkg-scanpackages</code> 生成的 <code>Packages</code> 索引。装 <code>dpkg-dev</code> 提供该工具。</p>
+<h3 id="4-Release-的-checksum-段不能混算法"><a href="#4-Release-的-checksum-段不能混算法" class="headerlink" title="4. Release 的 checksum 段不能混算法"></a>4. Release 的 checksum 段不能混算法</h3><p>第一版脚本把 md5 和 sha256 都写进了 <code>MD5Sum:</code> 段，apt 报：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">W: 无法鉴别的 .../Release: 无哈希条目</span><br></pre></td></tr></table></figure>
+
+<p><strong>正确写法</strong>：<code>MD5Sum:</code> 段只放 md5 行，<code>SHA256:</code> 段只放 sha256 行，各自独立。索引脚本里用 Python 分段生成。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>四个坑里有三个都指向同一个教训：<strong>nginx 站点结构（default_server、location、webroot）会直接影响 ACME 和 apt 客户端的行为</strong>，搭 mirror 时不能只想着”文件放进目录就行”。</p>
+<p>现在 deb03 装 ZCode 就是一行命令，ali 上每天自动同步最新 3 版。playbook 和脚本都在 ccops 仓库，<code>ansible/playbooks/zcode_mirror.yml</code>，完整文档见 <code>docs/zcode-mirror.md</code>。</p>
+
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/09/01/macos-weekend-tools/">周末做了两个 macOS 小工具：桌面悬浮时钟 & 菜单栏双猫</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body utterances'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="utterances" repo="changediff/blog-comments" issue-term="pathname" theme="preferred-color-scheme"></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@changediff</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>
+本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br>
+<a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">浙ICP备2023000465号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadUtterances() {
+    const els = document.querySelectorAll("#comments #utterances");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://utteranc.es/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadUtterances();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
